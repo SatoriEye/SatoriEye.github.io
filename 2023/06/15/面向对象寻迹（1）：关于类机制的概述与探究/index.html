@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/satori.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/satori.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/satori.jpg">
+  <link rel="mask-icon" href="/images/satori.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"satorieye.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言面向对象是一种程序设计的思想和方法，它将程序中的数据和操作封装成对象，通过对象之间的交互来实现程序的功能。面向对象是一种抽象和模块化的编程方式，它具有灵活、可扩展、易维护等优点，被广泛应用于软件开发领域。 面向对象的设计和编程是一种重要的软件开发方法，它强调对问题领域的建模和抽象，注重封装、继承和多态等核心概念的运用，通过对象之间的交互实现程序的功能。 本期，瞳将以输出代输入，使用费曼学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面向对象寻迹（1）：关于类机制的概述与探究">
+<meta property="og:url" content="https://satorieye.github.io/2023/06/15/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%AF%BB%E8%BF%B9%EF%BC%881%EF%BC%89%EF%BC%9A%E5%85%B3%E4%BA%8E%E7%B1%BB%E6%9C%BA%E5%88%B6%E7%9A%84%E6%A6%82%E8%BF%B0%E4%B8%8E%E6%8E%A2%E7%A9%B6/index.html">
+<meta property="og:site_name" content="搞知识的觉之瞳">
+<meta property="og:description" content="前言面向对象是一种程序设计的思想和方法，它将程序中的数据和操作封装成对象，通过对象之间的交互来实现程序的功能。面向对象是一种抽象和模块化的编程方式，它具有灵活、可扩展、易维护等优点，被广泛应用于软件开发领域。 面向对象的设计和编程是一种重要的软件开发方法，它强调对问题领域的建模和抽象，注重封装、继承和多态等核心概念的运用，通过对象之间的交互实现程序的功能。 本期，瞳将以输出代输入，使用费曼学习">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/ff2cee0b-8127-47db-9bc7-02adb0c33e67">
+<meta property="article:published_time" content="2023-06-15T07:12:22.000Z">
+<meta property="article:modified_time" content="2023-06-15T08:50:21.971Z">
+<meta property="article:author" content="万年学习的小伞君">
+<meta property="article:tag" content="计算机">
+<meta property="article:tag" content="面向对象">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/ff2cee0b-8127-47db-9bc7-02adb0c33e67">
+
+<link rel="canonical" href="https://satorieye.github.io/2023/06/15/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%AF%BB%E8%BF%B9%EF%BC%881%EF%BC%89%EF%BC%9A%E5%85%B3%E4%BA%8E%E7%B1%BB%E6%9C%BA%E5%88%B6%E7%9A%84%E6%A6%82%E8%BF%B0%E4%B8%8E%E6%8E%A2%E7%A9%B6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>面向对象寻迹（1）：关于类机制的概述与探究 | 搞知识的觉之瞳</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">搞知识的觉之瞳</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">分类</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/SatoriEye" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://satorieye.github.io/2023/06/15/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%AF%BB%E8%BF%B9%EF%BC%881%EF%BC%89%EF%BC%9A%E5%85%B3%E4%BA%8E%E7%B1%BB%E6%9C%BA%E5%88%B6%E7%9A%84%E6%A6%82%E8%BF%B0%E4%B8%8E%E6%8E%A2%E7%A9%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="万年学习的小伞君">
+      <meta itemprop="description" content="个人知识分享网站！内容包含计算机，数学，物理等个人感兴趣的领域，欢迎各位大佬前来参观。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="搞知识的觉之瞳">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          面向对象寻迹（1）：关于类机制的概述与探究
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-06-15 15:12:22 / 修改时间：16:50:21" itemprop="dateCreated datePublished" datetime="2023-06-15T15:12:22+08:00">2023-06-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index"><span itemprop="name">计算机程序语言</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <br>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>面向对象是一种程序设计的思想和方法，它将程序中的数据和操作封装成对象，通过对象之间的交互来实现程序的功能。面向对象是一种抽象和模块化的编程方式，它具有灵活、可扩展、易维护等优点，被广泛应用于软件开发领域。</p>
+<p>面向对象的设计和编程是一种重要的软件开发方法，它强调对问题领域的建模和抽象，注重封装、继承和多态等核心概念的运用，通过对象之间的交互实现程序的功能。</p>
+<p>本期，瞳将以输出代输入，使用费曼学习法对各个语言的面向对象机制进行探究，因此相关分享的知识可能存在差错或者错误理解，感谢各位的阅读与指正！</p>
+<span id="more"></span>
+
+<h2 id="这里是目录"><a href="#这里是目录" class="headerlink" title="这里是目录~"></a>这里是目录~</h2><p>[toc]</p>
+<h2 id="通俗一点来说，什么是面向对象编程？"><a href="#通俗一点来说，什么是面向对象编程？" class="headerlink" title="通俗一点来说，什么是面向对象编程？"></a>通俗一点来说，什么是面向对象编程？</h2><p><strong>教科书+百科（或者说某著名LLM）会说的玩意儿：</strong></p>
+<p>面向对象编程（Object-Oriented Programming，简称OOP）是一种编程范式，它是以对象为中心来组织和管理程序的。对象是指具有一定状态和行为的实体，例如人、动物、汽车、书等。在面向对象编程中，程序员将现实世界中的实体抽象为对象，并通过类来定义对象的属性和方法，从而实现程序的设计和实现。</p>
+<p>面向对象编程的核心思想包括：</p>
+<ol>
+<li>封装（Encapsulation）：将数据和操作封装在对象中，通过接口来实现对对象的访问，从而实现数据的保护和功能的隔离。</li>
+<li>继承（Inheritance）：通过继承机制，实现代码的复用和扩展，使得类之间可以建立层次结构，从而提高程序的可维护性和可扩展性。</li>
+<li>多态（Polymorphism）：通过多态机制，实现相同的接口可以有不同的实现方式，使得程序更加灵活和可扩展，同时提高了程序的可读性和可维护性。</li>
+</ol>
+<p>面向对象编程具有以下优点：</p>
+<ol>
+<li>提高程序的可维护性和可扩展性：面向对象编程可以将程序分解为多个独立的对象，使得程序更加模块化和易于管理。</li>
+<li>提高程序的可读性和可理解性：面向对象编程将现实世界中的实体抽象为对象，使得程序的设计和实现更加贴近现实世界，从而提高程序的可读性和可理解性。</li>
+<li>提高程序的复用性和灵活性：面向对象编程通过继承和多态机制，实现代码的复用和扩展，使得程序更加灵活和可扩展。</li>
+</ol>
+<p>总之，面向对象编程是一种以对象为中心的编程范式，它将现实世界中的实体抽象为对象，并通过类来定义对象的属性和方法，从而实现程序的设计和实现。面向对象编程具有提高程序的可维护性、可扩展性、可读性和可理解性等优点。</p>
+<p><strong>上面的玩意儿过时了！</strong></p>
+<p><strong>看这里~</strong></p>
+<p><del>面向对象编程本质上是对现实中“个体”的模拟。</del></p>
+<p>就像现在在屏幕面前看这篇文章的你，注意如下事实：</p>
+<ol>
+<li>你是一个<strong>人类个体</strong>。</li>
+<li>“人类个体”这个概念<strong>看不见摸不着</strong>，它是<strong>被定义的</strong>，<strong>写在教科书上</strong>的。我们称之为<strong>类</strong>。</li>
+<li>但是<strong>你是”人类个体”这个概念的一个实体</strong>。你有血有肉，你现实存在，你不是“<strong>仅存在于教科书上</strong>”的。我们称之为：你是一个“人类个体”类的<strong>类实例</strong>。</li>
+<li>“人类个体”有若干种<strong>属性</strong>，例如性别，年龄，生日……等等，我们称之为<strong>类属性</strong>。</li>
+<li>“人类个体”能够<strong>做一些事</strong>，例如发音，观察，爬行等等，我们称之为<strong>类方法</strong>。</li>
+<li>你肯定有公开的信息（例如QQ，微信号，手机号等等），也有私密的信息（例如胎记，一些秘密等），同样也有“只对好朋友说的信息”，<strong>我们称之为public，private，protected等等，不同语言使用的“代号可能不同”</strong>。</li>
+<li>你<strong>出现在这个世界上</strong>的时候，你就具有了性别，年龄，生日，你出生过程中对你的类属性进行初始化（娘胎里决定男女，出生时间决定初始年龄与生日等等）的这个过程是“人类个体”的一个<strong>特殊的类方法</strong>，我们称之为<strong>构造函数</strong>。</li>
+<li>你是一个“生活在文明社会的人类”。“生活在文明社会的人类”是一个类，不过其具有“人类个体”的属性与方法的基础上又多了一些属性与方法，我们称“生活在文明社会的人类”是“人类个体”的一个<strong>子类</strong>。我们称这个过程是<strong>“生活在文明社会的人类”继承了“人类个体”</strong>。“人类个体”是“生活在文明社会的人类”的<strong>父类</strong>。</li>
+<li>你<strong>先是</strong>一个人类个体，<strong>再然后</strong>才具备“生活在文明社会的人类”的相关能力（属性与方法，下同）。<strong>“生活在文明社会的人类”与“人类个体”均有构造函数</strong>。我们称之为“先调用父类构造函数（有些语言可能不这么干），再调用子类构造方法初始化。”</li>
+<li>你有了儿子&#x2F;女儿，一些私密的信息你肯定也不想被它们知道吧，同样的，一些公开的信息它们会知道，一些“只对好朋友说的信息”也是，所以它们自然而然的继承了public与protected并具备一定的访问权限，不同的语言这个权限的约束可能不同，<strong>这称为类继承的继承权限机制。类属性与方法的可见性与可使用性取决于其的保密级别：public，private，protected等等。</strong></li>
+<li>8，9，10提到了面向对象的第一个核心：继承。</li>
+<li>有些你个人的属性，例如手机号，微信号，为了避免骚扰，你不会轻易给外人，除非别人问起来且有必要，别人通过你的嘴巴访问相关的信息，而不是直接查看你的类属性且无需经过任何同意，<strong>这称之为一个封装</strong>。学术点说：<strong>封装操作</strong>将数据和操作封装在对象中，通过接口来实现对对象的访问，从而实现数据的保护和功能的隔离。说白了就是：别人要get你的手机号等信息必须有你的同意（你的接口），而不是直接抢你的手机看号码（直接访问♂你的类属性）</li>
+<li>12提到了第二个核心点：封装。</li>
+<li>中国人，美国人，日本人，韩国人，俄国人…….还有世界上的其他人类都是“生活在文明社会的人类”。如果我们把这些理解为“生活在文明社会的人类”的子类，显然，中国人的习惯于美国人大不相同，哪怕是吃饭这一“名字一样的类方法”，差别也相当之大。（我们啃大米面条，美国佬啃沙拉）<strong>我们称之为多态。即对于同一父类某一能力的不同体现。</strong></li>
+<li>14提到了最后一个核心点：多态。</li>
+<li>对于继承，我们通过子类与父类的机制来完成。</li>
+<li>对于封装，我们通过接口机制（也是函数，或者是一个类）与函数（能够访问&#x2F;修改类元素的，特定的类方法）来实现。</li>
+<li>对于多态，我们通过子类与父类机制，重写与重载来实现。</li>
+<li>现在，想象你在射箭，你手上有一把弓（函数方法），弓需要箭（参数）进行发射。这个事件的结果（返回值）是箭命中了靶子。</li>
+<li>然后，你对射箭的流程做了一点优化，例如让箭发射出去时携带火焰效果与硫磺火减益，然后附带引雷Ⅲ与激流Ⅰ……但结果（返回值）是箭命中了靶子。<strong>结果没变化（中靶），参数没变化（还是一根箭）。但是箭射出的流程出现了亿点点变化，这叫重写</strong>。</li>
+<li>你并不满意，你使用了投影魔术EX，投影出了“大伊万”同志搭载到弓上，射箭流程不变（你也可以变，但不建议），然后射箭的结果出现了变化——远处的红魔馆出现了大规模爆炸现象。<strong>结果变化了（Homo馆日常爆炸），参数变化了（核弹），流程基本没变（还是那个功能），这叫重载。</strong></li>
+<li>好了，面向对象编程学完了。（狗头）</li>
+<li><strong>当然，不同语言的面向对象实现也不尽相同，都在封装，继承，多态，类实现，权限等不同细节做了不同的约束。</strong></li>
+</ol>
+<h2 id="面向对象的核心是什么？"><a href="#面向对象的核心是什么？" class="headerlink" title="面向对象的核心是什么？"></a>面向对象的核心是什么？</h2><p>封装，继承，多态。</p>
+<h2 id="世界上主流的语言中，有哪些具备面向对象机制？"><a href="#世界上主流的语言中，有哪些具备面向对象机制？" class="headerlink" title="世界上主流的语言中，有哪些具备面向对象机制？"></a>世界上主流的语言中，有哪些<u>具备</u>面向对象机制？</h2><p>那首先我们先看看世界上主流的语言有哪些？</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/ff2cee0b-8127-47db-9bc7-02adb0c33e67"></p>
+<p>如下图：</p>
+<p>让我们先“带有个人色彩”的删除一些不是那么重要&#x2F;想调查的语言：</p>
+<p>VB及CVB，Fortran，Delphi（“元老”语言），R与MATLAB（其实是数学语言），SQL（数据库有面向对象没错，但关系型一般占主导），Assembly Language（汇编语言凑什么面向对象的热闹），C（理由通汇编语言，底层大佬不参与原则），Scratch（理由……需要吗？）</p>
+<p>那么，最终的待调查语言如下：</p>
+<p>第一梯队（优先调查）：Java，C++，Python，JavaScript</p>
+<p>第二梯队：PHP，Ruby，Swift，C#，Go，Rust</p>
+<p><strong>下期我们将从第一梯队开始，好好谈谈面向对象编程。</strong></p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a target="_blank" rel="noopener" href="https://www.tiobe.com/tiobe-index/">TIOBE Index - TIOBE</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/" rel="tag"># 计算机</a>
+              <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" rel="tag"># 面向对象</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/06/06/%E6%A8%A1%E6%9D%BF/" rel="prev" title="模板">
+      <i class="fa fa-chevron-left"></i> 模板
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/06/15/%E9%AB%98%E8%BE%93%E5%87%BA%E8%AF%BE%E5%86%85%E5%A4%8D%E4%B9%A0%EF%BC%88%E5%A4%A7%E4%BA%8C%E4%B8%8B%E5%AD%A6%E6%9C%9F%EF%BC%89%EF%BC%9A%E9%A9%AC%E5%85%8B%E6%80%9D%E4%B8%BB%E4%B9%89%E5%8E%9F%E7%90%86/" rel="next" title="高输出课内复习（大二下学期）：马克思主义原理">
+      高输出课内复习（大二下学期）：马克思主义原理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E9%87%8C%E6%98%AF%E7%9B%AE%E5%BD%95"><span class="nav-number">2.</span> <span class="nav-text">这里是目录~</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E4%BF%97%E4%B8%80%E7%82%B9%E6%9D%A5%E8%AF%B4%EF%BC%8C%E4%BB%80%E4%B9%88%E6%98%AF%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">通俗一点来说，什么是面向对象编程？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%A0%B8%E5%BF%83%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">面向对象的核心是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%96%E7%95%8C%E4%B8%8A%E4%B8%BB%E6%B5%81%E7%9A%84%E8%AF%AD%E8%A8%80%E4%B8%AD%EF%BC%8C%E6%9C%89%E5%93%AA%E4%BA%9B%E5%85%B7%E5%A4%87%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E6%9C%BA%E5%88%B6%EF%BC%9F"><span class="nav-number">5.</span> <span class="nav-text">世界上主流的语言中，有哪些具备面向对象机制？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-number">6.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">万年学习的小伞君</p>
+  <div class="site-description" itemprop="description">个人知识分享网站！内容包含计算机，数学，物理等个人感兴趣的领域，欢迎各位大佬前来参观。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/SatoriEye" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;SatoriEye" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:lanjiayi_official@163.com" title="E-Mail → mailto:lanjiayi_official@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">万年学习的小伞君</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div> -->
+<script type="text/javascript" src="/js/click-live.js" />
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

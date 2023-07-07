@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/satori.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/satori.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/satori.jpg">
+  <link rel="mask-icon" href="/images/satori.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"satorieye.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="python能够干什么？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python能够做什么很酷的事？">
+<meta property="og:url" content="https://satorieye.github.io/2023/07/07/python%E8%83%BD%E5%A4%9F%E5%81%9A%E4%BB%80%E4%B9%88%E5%BE%88%E9%85%B7%E7%9A%84%E4%BA%8B%EF%BC%9F/index.html">
+<meta property="og:site_name" content="搞知识的觉之瞳">
+<meta property="og:description" content="python能够干什么？">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-07-07T08:04:35.000Z">
+<meta property="article:modified_time" content="2023-07-07T08:06:22.817Z">
+<meta property="article:author" content="万年学习的小伞君">
+<meta property="article:tag" content="计算机">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://satorieye.github.io/2023/07/07/python%E8%83%BD%E5%A4%9F%E5%81%9A%E4%BB%80%E4%B9%88%E5%BE%88%E9%85%B7%E7%9A%84%E4%BA%8B%EF%BC%9F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>python能够做什么很酷的事？ | 搞知识的觉之瞳</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">搞知识的觉之瞳</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">分类</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/SatoriEye" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://satorieye.github.io/2023/07/07/python%E8%83%BD%E5%A4%9F%E5%81%9A%E4%BB%80%E4%B9%88%E5%BE%88%E9%85%B7%E7%9A%84%E4%BA%8B%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="万年学习的小伞君">
+      <meta itemprop="description" content="个人知识分享网站！内容包含计算机，数学，物理等个人感兴趣的领域，欢迎各位大佬前来参观。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="搞知识的觉之瞳">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          python能够做什么很酷的事？
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-07-07 16:04:35 / 修改时间：16:06:22" itemprop="dateCreated datePublished" datetime="2023-07-07T16:04:35+08:00">2023-07-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index"><span itemprop="name">计算机程序语言</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <br>
+
+<p>python能够干什么？</p>
+<span id="more"></span>
+
+<p>[toc]</p>
+<h2 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h2><p>本篇文章的目的是介绍Python究竟可以用在多少个领域，以及它到底有多好用，有什么可用的工具包这一点上，以及对Python的相关管理环境和集成开发环境做一个简单的科普，<strong>没有任何包含适合于无脑按图配置操作的内容，需要这种内容可能还需要您去csdn上小搜一下。</strong>本篇文章主要来讲，还是以扩展视野为主要目的。</p>
+<p><strong>(但是关于Python安装的流程还有之后可以怎么用？还是大概说了一下的)</strong></p>
+<p>万字长文，收好~</p>
+<h2 id="python有哪些用途？"><a href="#python有哪些用途？" class="headerlink" title="python有哪些用途？"></a>python有哪些用途？</h2><p>Python是一种高级编程语言，它被广泛用于各种不同的领域。以下是Python的一些常见用途：</p>
+<ol>
+<li>网络应用开发：Python可以用于编写Web应用程序、API、爬虫、网络服务器等。</li>
+<li>数据科学和机器学习：Python拥有许多流行的数据科学和机器学习库，例如NumPy、Pandas、SciPy、Scikit-learn等，可以用于数据分析、机器学习、人工智能等领域。</li>
+<li>自动化和脚本编写：Python可以用于编写脚本和自动化任务，例如自动化测试、批量处理、文件操作等。</li>
+<li>游戏开发：Python可以用于编写游戏和游戏引擎，例如Pygame、Panda3D等。</li>
+<li>科学计算和工程计算：Python可以用于编写科学计算和工程计算程序，例如有限元分析、计算流体力学等。</li>
+<li>金融分析：Python可以用于金融数据分析和量化交易，例如pandas-datareader、pyfolio等。</li>
+<li>教育和科普：Python易于学习，因此被广泛用于教育和科普领域，例如编程入门、绘图等。</li>
+</ol>
+<p>总之，Python是一种通用、灵活和易学易用的编程语言，因此在各个领域都有广泛的应用。</p>
+<h2 id="首先，我需要有一个python环境……"><a href="#首先，我需要有一个python环境……" class="headerlink" title="首先，我需要有一个python环境……"></a>首先，我需要有一个python环境……</h2><h4 id="方法一，从官网安装Python。"><a href="#方法一，从官网安装Python。" class="headerlink" title="方法一，从官网安装Python。"></a>方法一，从官网安装Python。</h4><p>这种方法简单粗暴，首先你需要学会一点魔法(kxsw，去github上面找一个，免费的付费的都可以，github可以通过绿色加速成功登上)(当然也可以不使用魔法，但是下载速度极慢，而且之后你需要花点力气把下载源更换为清华源或者阿里源(不过其实使用魔法也需要更换代理，都需要一点小技术))</p>
+<p>这种方法的优点就是简单易懂想安装在哪就安装在哪而且轻量化，缺点是如果你忘记设置全局路径的话，很有可能一台电脑上最后会多出3~5个python，并且安装上去的Python是光的，你需要使用pip来安装相关的软件，相对比较容易出错</p>
+<h4 id="方法2，Anaconda"><a href="#方法2，Anaconda" class="headerlink" title="方法2，Anaconda"></a>方法2，Anaconda</h4><p>这种方法需要登Anaconda的官网，去上面下载Anaconda，下载完之后本地安装，如果觉得设置路径很麻烦的时候，安装的时候记得勾选：帮我设置全局变量，这样子你就可从cmd里面唤起Anaconda，优点是方便安装，并且这个软件安装的时候，他的默认库帮你集成了一系列数据分析软件，并且整个Anaconda是想建设一个Python生态的，所以你可以通过Anaconda的主界面安装其他Python辅助软件，缺点是Anaconda又重又不好弄，开一个主界面要跑三分钟多，并且很吃电脑内存。</p>
+<h4 id="方法三，miniconda"><a href="#方法三，miniconda" class="headerlink" title="方法三，miniconda"></a>方法三，miniconda</h4><p>anaconda的剪切版本，只保留了一个conda和一个Python，如果觉得配置全局路径很麻烦，并且你不想一不小心又多安装好几个miniconda，你可以选择在安装包界面的时候直接勾选帮我设置环境变量这一选项。优点是轻量化，并且具有我们平时绝大多数使用方法2的功能，缺点是安装界面为英语(其实方法二也是)并且相对对新手不友好(但其实也还行?)</p>
+<h4 id="方法4：项目管理库-python"><a href="#方法4：项目管理库-python" class="headerlink" title="方法4：项目管理库+python"></a>方法4：项目管理库+python</h4><p>如果你对包管理软件和项目管理软件已经有非常成熟的理解了，这种情况下你可以使用Python支持的一些包管理库，例如poetry等，他们会使用类似于java中maven的形式，来帮你管理Python中的库，这对于项目化和工程化是相当有帮助的。缺点是对于几乎没有接触他们的新手而言，使用这个简直就是地狱级难度。</p>
+<h4 id="等等，我为什么需要给python准备一个包管理软件？包管理软件到底是什么？"><a href="#等等，我为什么需要给python准备一个包管理软件？包管理软件到底是什么？" class="headerlink" title="等等，我为什么需要给python准备一个包管理软件？包管理软件到底是什么？"></a>等等，我为什么需要给python准备一个包管理软件？包管理软件到底是什么？</h4><p>Python包管理软件是用于管理Python软件包（也称为库或模块）的工具。这些软件包是预先编写好的Python代码，可以在你的应用程序中被导入和使用，以完成特定的任务。</p>
+<p>Python包管理软件的作用是：</p>
+<ol>
+<li>管理Python依赖项：Python应用程序通常依赖于许多软件包和库。包管理软件可以自动安装、升级和卸载这些依赖项，以确保应用程序可以正常运行。</li>
+<li>管理Python环境：在Python中，每个项目都可以使用不同的版本和依赖项。包管理软件可以帮助你管理这些版本和依赖项，以确保项目的环境是正确和一致的。</li>
+<li>管理Python发布：如果你创建了一个Python软件包，包管理软件可以帮助你发布和分发这个软件包，以便其他人可以使用它。</li>
+</ol>
+<p>常见的Python包管理软件包括pip、conda、easy_install等。这些工具都可以通过命令行使用，使得Python的包管理变得更加容易和高效。</p>
+<h4 id="如果我偏不用会怎么样？"><a href="#如果我偏不用会怎么样？" class="headerlink" title="如果我偏不用会怎么样？"></a>如果我偏不用会怎么样？</h4><p>如果你不使用Python包管理软件，可能会遇到以下问题：</p>
+<ol>
+<li>版本冲突：Python软件包通常有许多不同的版本，这些版本可能不兼容。如果你手动安装软件包，可能会遇到版本冲突的问题，导致你的应用程序无法正常运行。</li>
+<li>依赖项管理：Python应用程序通常依赖于许多软件包和库。如果你手动安装这些软件包，可能会遗漏某些依赖项，导致应用程序无法正常运行。此外，如果你需要更新依赖项，手动更新也会非常麻烦。</li>
+<li>维护困难：手动管理Python软件包和依赖项会非常困难和耗时。如果你的应用程序依赖于很多软件包，手动管理它们将会变得非常麻烦和容易出错。</li>
+<li>发布困难：如果你创建了一个Python软件包，并想要将其发布到其他人使用，手动发布和分发也会非常困难和耗时。</li>
+</ol>
+<p>因此，使用Python包管理软件可以帮助你自动化管理Python软件包和依赖项，使得Python开发更加高效和容易维护。</p>
+<h4 id="概念：依赖冲突"><a href="#概念：依赖冲突" class="headerlink" title="概念：依赖冲突"></a>概念：依赖冲突</h4><p>依赖冲突是一个很简单的概念，举个例子：现在你的Python环境下存在着两个主要的库，一个叫做A，另外一个叫做B，A跟B同时依赖着相同版本的C</p>
+<p>(注意相同版本，并且一个环境底下不可以存在两个不同版本的库)， ABC三个都是Python库。</p>
+<p>现在b发生了更新，你随之打算更新b，但是b更新之后，对c的依赖要求变高了。</p>
+<p>说白了就是现在必须需要更高级别的c来支持b的运作(如果以前是1.0版本，现在c就必须要3.0或者4.0版本，类似于这种理解)。</p>
+<p>但是a无法支持更高的c版本</p>
+<p>(举个例子，例如a最高支持到2.0这个时候b更新了更新到3.0或者4.0，a就支持不了了)</p>
+<p>这种情况对b更新就会发生依赖冲突的现象（b用得了a用不了），尤其是使用pip，pip不会进行环境检查，所以他在安装之前是不由分说直接给你安装下去的，这种情况就可能会导致环境里面的其他库用不了了。</p>
+<h4 id="概念：包冲突"><a href="#概念：包冲突" class="headerlink" title="概念：包冲突"></a>概念：包冲突</h4><p>包冲突是指在同一个Python环境中安装了两个或多个软件包</p>
+<p>这些软件包依赖于同一个软件包的不同版本或者依赖的软件包之间存在版本不兼容的问题。</p>
+<p>这种情况就像是你的朋友和你的家人在同时安排你的时间表，因为他们的时间表冲突，你无法满足所有人的需求。</p>
+<p>包冲突可能会导致Python程序无法正常运行，或者产生意想不到的结果，例如程序崩溃或者输出不正确的结果。</p>
+<p><strong>为了避免这种问题，你可以使用Python包管理工具来管理软件包和依赖项，或者使用虚拟环境来创建独立的Python环境，确保每个应用程序都有自己的软件包和依赖项，避免不同程序之间的包冲突。</strong></p>
+<p>这就像是你为每个朋友和家人分配了自己的时间表，确保每个人的需求都能得到满足，避免冲突和混乱。</p>
+<h4 id="概念：虚拟环境"><a href="#概念：虚拟环境" class="headerlink" title="概念：虚拟环境"></a>概念：虚拟环境</h4><p>虚拟环境是一种创建独立Python环境的机制，它允许你在同一台机器上同时运行多个Python环境，并且它们之间互不干扰，<strong>可以安装不同版本的Python解释器、软件包和依赖项。虚拟环境通常被用于解决不同项目之间的依赖冲突、升级Python版本、测试软件包等问题</strong>。</p>
+<p><strong>大概意思是：</strong></p>
+<p><strong>在一堆Python环境里面，有一个最大的Python，这个最大的Python平时是用来执行包管理用的，不作为开发与生产环境使用。</strong></p>
+<p><strong>我们可以通过这个最大的Python解释器，结合一些包管理库，生成一个新环境，或者是删除一个环境，又或者是激活一个环境。</strong></p>
+<p><strong>当你激活一个新环境之后，你可以在里面调用包管理的相关安装指令和修改指令，更改这个环境里面安装的库，这个库与其他环境不会相互干涉。</strong></p>
+<p>虚拟环境的创建和管理可以通过Python内置的venv模块或第三方工具如virtualenv来完成。下面是使用venv模块创建虚拟环境的步骤：</p>
+<ol>
+<li><p>打开命令行终端或控制台，进入你想要创建虚拟环境的目录。</p>
+</li>
+<li><p>运行以下命令来创建一个名为myenv的虚拟环境：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">python -m venv myenv</span><br><span class="line">​```</span><br><span class="line"></span><br><span class="line">这将在当前目录下创建一个名为myenv的新文件夹，其中包含一个新的Python环境。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>激活虚拟环境。在Windows上，可以运行以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myenv\Scripts\activate.bat</span><br></pre></td></tr></table></figure>
+
+<p>在Linux或Mac上，可以运行以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source myenv/bin/activate</span><br></pre></td></tr></table></figure>
+
+<p>这将激活虚拟环境，并将命令行提示符更改为虚拟环境名称。</p>
+</li>
+<li><p>在虚拟环境中安装软件包和依赖项。你可以使用pip命令来安装任何你需要的软件包和依赖项。</p>
+</li>
+</ol>
+<p>当你需要退出虚拟环境时，可以运行以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deactivate</span><br></pre></td></tr></table></figure>
+
+<p>这将关闭虚拟环境，并将命令行提示符更改回原来的状态。</p>
+<p>使用虚拟环境可以帮助你有效地管理Python软件包和依赖项，确保不同项目之间的依赖不会冲突。虚拟环境还可以帮助你轻松地升级Python版本并测试软件包。</p>
+<p>使用conda创建虚拟环境可以通过以下步骤完成：</p>
+<ol>
+<li><p>打开命令行终端或控制台，进入你想要创建虚拟环境的目录。</p>
+</li>
+<li><p>运行以下命令来创建一个名为myenv的虚拟环境：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">conda create --name myenv</span><br><span class="line">​```</span><br><span class="line"></span><br><span class="line">这将创建一个名为myenv的新虚拟环境。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>激活虚拟环境。在Windows上，可以运行以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">activate myenv</span><br></pre></td></tr></table></figure>
+
+<p>在Linux或Mac上，可以运行以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source activate myenv</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在虚拟环境中安装软件包和依赖项。你可以使用conda命令来安装任何你需要的软件包和依赖项。</p>
+</li>
+<li><p>当你需要退出虚拟环境时，可以运行以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deactivate</span><br></pre></td></tr></table></figure>
+
+<p>这将关闭虚拟环境，并将命令行提示符更改回原来的状态。</p>
+</li>
+</ol>
+<p>使用conda创建虚拟环境可以帮助你有效地管理Python软件包和依赖项，确保不同项目之间的依赖不会冲突。conda还可以帮助你轻松地升级Python版本并测试软件包。除此之外，conda还可以管理非Python软件包和依赖项，使得整个环境更加统一和易于管理。</p>
+<h2 id="是时候准备一个IDE了"><a href="#是时候准备一个IDE了" class="headerlink" title="是时候准备一个IDE了"></a>是时候准备一个IDE了</h2><p>IDE是集成开发环境（Integrated Development Environment）的缩写，是一种软件工具，旨在为开发者提供一整套开发工具和环境，以便于开发和调试软件应用程序。IDE通常包含一个代码编辑器、调试器、编译器、自动完成、版本控制、构建工具、图形用户界面设计工具等多个功能，使得开发者可以在同一个软件中进行代码编写、测试、调试、构建、运行和部署等多个任务。</p>
+<p>IDE的主要优点是提高了开发效率和代码质量，因为它提供了许多强大的功能，例如代码自动完成、语法检查、代码重构、调试工具等，使得开发者可以更快地编写代码并发现和修复错误。此外，IDE还提供了许多集成的工具和插件，使得开发者能够更加方便地使用版本控制系统、自动化构建工具和其他辅助工具。</p>
+<h4 id="Python有许多常见的IDE，包括："><a href="#Python有许多常见的IDE，包括：" class="headerlink" title="Python有许多常见的IDE，包括："></a>Python有许多常见的IDE，包括：</h4><h4 id="Python集成开发环境（Python-Integrated-Development-Environment）-IDE"><a href="#Python集成开发环境（Python-Integrated-Development-Environment）-IDE" class="headerlink" title="Python集成开发环境（Python Integrated Development Environment）(IDE)"></a>Python集成开发环境（Python Integrated Development Environment）(IDE)</h4><ol>
+<li>PyCharm：JetBrains开发的Python IDE，功能强大，支持代码自动补全、调试、版本控制等多种功能，适用于Python开发的各种领域。缺点是这玩意儿画图有时候经常会因为内部端崩溃而无法使用，学习它的快捷操作需要一定的操作曲线，并且专业版需要付费，得走一些特殊渠道(我指的是学生认证哦，真的不是pj手段哦)<strong>(不过不可否认的是，这玩意儿确实是业界最好用的IDE)</strong></li>
+<li>Visual Studio Code：微软开发的轻量级代码编辑器，支持Python语言扩展，支持代码自动补全、调试、版本控制等多种功能，是一个非常流行的Python开发工具。缺点是这玩意儿实在是太轻量化了，反正用起来就是不大舒服（这玩意敲前端代码不错）</li>
+<li>Spyder：基于Anaconda发行版的Python IDE，功能强大，支持代码自动补全、调试、数据可视化等多种功能，适用于科学计算和数据分析领域。缺点是这货的input存在迷之bug，至今未修，并且打开贼慢，优化也让人不舒服</li>
+<li>IDLE：Python自带的IDE，简单易用，支持代码编辑、调试等基本功能。缺点是这玩意儿实在是太简单易用了，以至于他很多方面的功能都没追加，他不会给你代码补全，但是上述三个IDE都有代码补全功能。</li>
+</ol>
+<p><strong>推荐pycharm</strong></p>
+<h5 id="Python集成开发环境（IDE）的优点："><a href="#Python集成开发环境（IDE）的优点：" class="headerlink" title="Python集成开发环境（IDE）的优点："></a>Python集成开发环境（IDE）的优点：</h5><ol>
+<li>功能强大：Python IDE通常包含代码编辑器、调试器、编译器、自动完成、版本控制、构建工具、GUI设计工具等多个功能，可以提高开发效率和代码质量。</li>
+<li>开发便捷：Python IDE可以自动完成代码、提供代码重构、语法检查等功能，使得开发者可以更快地编写代码并发现和修复错误。</li>
+<li>多功能性：Python IDE还提供了许多集成的工具和插件，可以方便地使用版本控制系统、自动化构建工具和其他辅助工具。</li>
+</ol>
+<h5 id="Python集成开发环境（IDE）的缺点："><a href="#Python集成开发环境（IDE）的缺点：" class="headerlink" title="Python集成开发环境（IDE）的缺点："></a>Python集成开发环境（IDE）的缺点：</h5><ol>
+<li>学习成本高：Python IDE通常有很多功能，因此需要一段时间来熟悉和掌握。</li>
+<li>占用资源大：Python IDE通常需要占用较多的系统资源，例如内存和CPU，因此需要较高的计算机配置。</li>
+<li>售价高：有些Python IDE需要付费使用，例如PyCharm等。</li>
+</ol>
+<p>以及：</p>
+<h4 id="交互式数据分析环境（Interactive-Data-Analysis-Environment）-IDE"><a href="#交互式数据分析环境（Interactive-Data-Analysis-Environment）-IDE" class="headerlink" title="交互式数据分析环境（Interactive Data Analysis Environment）(IDE)"></a>交互式数据分析环境（Interactive Data Analysis Environment）(IDE)</h4><ol>
+<li>Jupyter Notebook：基于Web的交互式Python环境，支持代码、Markdown文本、数据可视化等多种元素，适用于数据分析和探索性编程。</li>
+<li>各种在线平台的notebook（反正都是jupyter内核）</li>
+</ol>
+<h5 id="交互式数据分析环境（IDE）的优点："><a href="#交互式数据分析环境（IDE）的优点：" class="headerlink" title="交互式数据分析环境（IDE）的优点："></a>交互式数据分析环境（IDE）的优点：</h5><ol>
+<li>交互性好：交互式数据分析环境允许用户在一个界面中编写代码、运行代码、查看结果，非常方便进行数据分析和探索性编程。</li>
+<li>数据可视化：交互式数据分析环境通常包含数据可视化工具，方便用户快速了解和展示数据。</li>
+<li>开源免费：大多数交互式数据分析环境都是免费的，例如Jupyter Notebook等。</li>
+</ol>
+<h5 id="交互式数据分析环境（IDE）的缺点："><a href="#交互式数据分析环境（IDE）的缺点：" class="headerlink" title="交互式数据分析环境（IDE）的缺点："></a>交互式数据分析环境（IDE）的缺点：</h5><ol>
+<li>功能相对较弱：交互式数据分析环境通常只提供基本的代码编辑、调试、运行和结果查看功能，不像Python IDE那样功能丰富。</li>
+<li>适用范围有限：交互式数据分析环境主要用于数据分析和探索性编程，不适用于其他Python开发领域。</li>
+<li>难以调试：交互式数据分析环境通常不支持完整的调试功能，例如断点调试等。</li>
+</ol>
+<p><strong>推荐……就一家，没啥好推荐的（听说最近有个他的竞争对手出来了，但是目前还在发展，这玩意儿现在最大的竞争对手是携带AI的集成开发环境）</strong></p>
+<p><strong>有钱人的选择：github codespace，现已加入chatgpt代码支持套餐</strong></p>
+<h4 id="什么是Chatgpt？"><a href="#什么是Chatgpt？" class="headerlink" title="什么是Chatgpt？"></a>什么是Chatgpt？</h4><h5 id="如果你是计算机方面的从业者："><a href="#如果你是计算机方面的从业者：" class="headerlink" title="如果你是计算机方面的从业者："></a>如果你是计算机方面的从业者：</h5><p>“??????????????”，”你干嘛，嘿呦~“</p>
+<h5 id="如果你是非计算机方面的从业者："><a href="#如果你是非计算机方面的从业者：" class="headerlink" title="如果你是非计算机方面的从业者："></a>如果你是非计算机方面的从业者：</h5><p>当我们和另一个人交谈时，我们可以用自然语言表达自己的意思，对方也可以理解我们的话语并回应。ChatGPT就是一种计算机程序，它可以模拟人类的这种交谈方式，也就是你可以和ChatGPT进行对话，它会读懂你的话语并回应给你。类似于你和一个人对话时，如果你问了一个问题，他会根据问题的意思和他的知识来回答你。ChatGPT的应用范围很广泛，可以用于智能客服、聊天机器人等领域，让人们更方便地获得信息和服务。</p>
+<p>可以把ChatGPT想象成一本非常厚的百科全书，它涵盖了各种各样的知识和信息，可以回答各种类型的问题。就像我们在阅读百科全书时，可以找到关于历史、地理、科学、文化等各方面的信息一样，ChatGPT也可以处理各种自然语言任务，并提供相关的回答或生成新的文本。</p>
+<p>ChatGPT的知识范围非常广泛，因为它在训练时使用了大量的语言数据，包括新闻、百科、小说、网页等。这就好比我们在阅读百科全书时，可以获得来自各个领域的知识和信息一样。虽然ChatGPT也存在一些局限性，例如对于非常特定或专业的领域，它的回答可能不够准确或完整，但是总体来说，它的知识范围非常广泛，并且在不断地扩大和提高。</p>
+<h2 id="接下来："><a href="#接下来：" class="headerlink" title="接下来："></a>接下来：</h2><p><strong>我将在以下几个板块向你展示Python的工具包数量之多</strong></p>
+<ul>
+<li>自动化与脚本编写<ul>
+<li>excel，word自动化<ul>
+<li>openpyxl</li>
+<li>python-docx</li>
+</ul>
+</li>
+<li>文件批次处理<ul>
+<li>os</li>
+<li>shutil</li>
+</ul>
+</li>
+<li>爬虫<ul>
+<li>beautiful soup(bs4)</li>
+<li>requests（网络负责，底层素材）</li>
+<li>scrapy</li>
+<li>selenium</li>
+<li>lxml</li>
+<li>pyquery</li>
+<li>Requests-HTML</li>
+<li>……</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>数据科学与计算</strong><ul>
+<li>数据科学计算<ul>
+<li>矩阵运算：numpy</li>
+<li>各种科学计算：scipy</li>
+<li>高精度：decimal</li>
+<li>符号计算：Sympy</li>
+<li>……</li>
+</ul>
+</li>
+<li>数据分析<ul>
+<li>pandas唯一真神</li>
+<li>polar：???(更快, 但普及不广)</li>
+<li>spark：???（工业大佬）</li>
+<li>……</li>
+</ul>
+</li>
+<li>及其可视化<ul>
+<li><strong>matplotlib</strong></li>
+<li><strong>plotnine</strong></li>
+<li>pychart</li>
+<li>seaborn</li>
+<li>plotly</li>
+<li>bokeh</li>
+<li>altair</li>
+<li>……</li>
+</ul>
+</li>
+<li>机器学习<ul>
+<li><strong>scikit-learn及其衍生</strong></li>
+</ul>
+</li>
+<li>深度学习<ul>
+<li>计算机视觉<ul>
+<li>opencv，<strong>pytorch，tf-keras，paddlepaddle</strong></li>
+</ul>
+</li>
+<li>自然语言处理<ul>
+<li>各种分词软件：jieba，nltk，spacy，snownlp，stanford-corenlp</li>
+<li><strong>pytorch，tf-keras，paddlepaddle</strong></li>
+</ul>
+</li>
+<li>（当然不止这两个领域，但先就讲这两个吧）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>系统管理和运维<ul>
+<li>日志处理：logging</li>
+<li>备份管理：shutil，tarfile，paramiko</li>
+<li>监控告警：psutil，smtplib</li>
+<li>自动部署：paramiko，tarfile，shutil，os</li>
+<li>……</li>
+</ul>
+</li>
+<li>网络开发和Web应用<ul>
+<li>Django、Flask、Bottle三件套</li>
+<li>streamlit轻量级快速开发</li>
+</ul>
+</li>
+<li>游戏开发<ul>
+<li>Pygame</li>
+<li>PyOpenGL</li>
+<li>Panda3D</li>
+<li>Pyglet</li>
+<li>Arcade</li>
+<li>。。。。。。</li>
+</ul>
+</li>
+</ul>
+<h2 id="什么，不够多？"><a href="#什么，不够多？" class="headerlink" title="什么，不够多？"></a>什么，不够多？</h2><p>找个国内代理问chatgpt去。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/" rel="tag"># 计算机</a>
+              <a href="/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/06/15/%E9%AB%98%E8%BE%93%E5%87%BA%E8%AF%BE%E5%86%85%E5%A4%8D%E4%B9%A0%EF%BC%88%E5%A4%A7%E4%BA%8C%E4%B8%8B%E5%AD%A6%E6%9C%9F%EF%BC%89%EF%BC%9AJava%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" rel="prev" title="高输出课内复习（大二下学期）：Java程序设计">
+      <i class="fa fa-chevron-left"></i> 高输出课内复习（大二下学期）：Java程序设计
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">声明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python%E6%9C%89%E5%93%AA%E4%BA%9B%E7%94%A8%E9%80%94%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">python有哪些用途？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A6%96%E5%85%88%EF%BC%8C%E6%88%91%E9%9C%80%E8%A6%81%E6%9C%89%E4%B8%80%E4%B8%AApython%E7%8E%AF%E5%A2%83%E2%80%A6%E2%80%A6"><span class="nav-number">3.</span> <span class="nav-text">首先，我需要有一个python环境……</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%8C%E4%BB%8E%E5%AE%98%E7%BD%91%E5%AE%89%E8%A3%85Python%E3%80%82"><span class="nav-number">3.0.1.</span> <span class="nav-text">方法一，从官网安装Python。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%952%EF%BC%8CAnaconda"><span class="nav-number">3.0.2.</span> <span class="nav-text">方法2，Anaconda</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%B8%89%EF%BC%8Cminiconda"><span class="nav-number">3.0.3.</span> <span class="nav-text">方法三，miniconda</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%954%EF%BC%9A%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E5%BA%93-python"><span class="nav-number">3.0.4.</span> <span class="nav-text">方法4：项目管理库+python</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AD%89%E7%AD%89%EF%BC%8C%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E7%BB%99python%E5%87%86%E5%A4%87%E4%B8%80%E4%B8%AA%E5%8C%85%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6%EF%BC%9F%E5%8C%85%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">3.0.5.</span> <span class="nav-text">等等，我为什么需要给python准备一个包管理软件？包管理软件到底是什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A6%82%E6%9E%9C%E6%88%91%E5%81%8F%E4%B8%8D%E7%94%A8%E4%BC%9A%E6%80%8E%E4%B9%88%E6%A0%B7%EF%BC%9F"><span class="nav-number">3.0.6.</span> <span class="nav-text">如果我偏不用会怎么样？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5%EF%BC%9A%E4%BE%9D%E8%B5%96%E5%86%B2%E7%AA%81"><span class="nav-number">3.0.7.</span> <span class="nav-text">概念：依赖冲突</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5%EF%BC%9A%E5%8C%85%E5%86%B2%E7%AA%81"><span class="nav-number">3.0.8.</span> <span class="nav-text">概念：包冲突</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5%EF%BC%9A%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="nav-number">3.0.9.</span> <span class="nav-text">概念：虚拟环境</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%AF%E6%97%B6%E5%80%99%E5%87%86%E5%A4%87%E4%B8%80%E4%B8%AAIDE%E4%BA%86"><span class="nav-number">4.</span> <span class="nav-text">是时候准备一个IDE了</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Python%E6%9C%89%E8%AE%B8%E5%A4%9A%E5%B8%B8%E8%A7%81%E7%9A%84IDE%EF%BC%8C%E5%8C%85%E6%8B%AC%EF%BC%9A"><span class="nav-number">4.0.1.</span> <span class="nav-text">Python有许多常见的IDE，包括：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Python%E9%9B%86%E6%88%90%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Python-Integrated-Development-Environment%EF%BC%89-IDE"><span class="nav-number">4.0.2.</span> <span class="nav-text">Python集成开发环境（Python Integrated Development Environment）(IDE)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Python%E9%9B%86%E6%88%90%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88IDE%EF%BC%89%E7%9A%84%E4%BC%98%E7%82%B9%EF%BC%9A"><span class="nav-number">4.0.2.1.</span> <span class="nav-text">Python集成开发环境（IDE）的优点：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Python%E9%9B%86%E6%88%90%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88IDE%EF%BC%89%E7%9A%84%E7%BC%BA%E7%82%B9%EF%BC%9A"><span class="nav-number">4.0.2.2.</span> <span class="nav-text">Python集成开发环境（IDE）的缺点：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%8E%AF%E5%A2%83%EF%BC%88Interactive-Data-Analysis-Environment%EF%BC%89-IDE"><span class="nav-number">4.0.3.</span> <span class="nav-text">交互式数据分析环境（Interactive Data Analysis Environment）(IDE)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%8E%AF%E5%A2%83%EF%BC%88IDE%EF%BC%89%E7%9A%84%E4%BC%98%E7%82%B9%EF%BC%9A"><span class="nav-number">4.0.3.1.</span> <span class="nav-text">交互式数据分析环境（IDE）的优点：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%8E%AF%E5%A2%83%EF%BC%88IDE%EF%BC%89%E7%9A%84%E7%BC%BA%E7%82%B9%EF%BC%9A"><span class="nav-number">4.0.3.2.</span> <span class="nav-text">交互式数据分析环境（IDE）的缺点：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFChatgpt%EF%BC%9F"><span class="nav-number">4.0.4.</span> <span class="nav-text">什么是Chatgpt？</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%98%AF%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%96%B9%E9%9D%A2%E7%9A%84%E4%BB%8E%E4%B8%9A%E8%80%85%EF%BC%9A"><span class="nav-number">4.0.4.1.</span> <span class="nav-text">如果你是计算机方面的从业者：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%98%AF%E9%9D%9E%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%96%B9%E9%9D%A2%E7%9A%84%E4%BB%8E%E4%B8%9A%E8%80%85%EF%BC%9A"><span class="nav-number">4.0.4.2.</span> <span class="nav-text">如果你是非计算机方面的从业者：</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A5%E4%B8%8B%E6%9D%A5%EF%BC%9A"><span class="nav-number">5.</span> <span class="nav-text">接下来：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%EF%BC%8C%E4%B8%8D%E5%A4%9F%E5%A4%9A%EF%BC%9F"><span class="nav-number">6.</span> <span class="nav-text">什么，不够多？</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">万年学习的小伞君</p>
+  <div class="site-description" itemprop="description">个人知识分享网站！内容包含计算机，数学，物理等个人感兴趣的领域，欢迎各位大佬前来参观。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/SatoriEye" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;SatoriEye" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:lanjiayi_official@163.com" title="E-Mail → mailto:lanjiayi_official@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">万年学习的小伞君</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div> -->
+<script type="text/javascript" src="/js/click-live.js" />
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
