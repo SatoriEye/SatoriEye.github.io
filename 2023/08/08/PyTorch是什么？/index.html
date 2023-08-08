@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/satori.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/satori.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/satori.jpg">
+  <link rel="mask-icon" href="/images/satori.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"satorieye.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="在聊这个话题之前，我们首先先聊聊人工智能的相关话题。 （如AI大佬或已经知道这行在赣吗的，请直接跳到：所以，PyTorch是什么？）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PyTorch是什么？">
+<meta property="og:url" content="https://satorieye.github.io/2023/08/08/PyTorch%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/index.html">
+<meta property="og:site_name" content="搞知识的觉之瞳">
+<meta property="og:description" content="在聊这个话题之前，我们首先先聊聊人工智能的相关话题。 （如AI大佬或已经知道这行在赣吗的，请直接跳到：所以，PyTorch是什么？）">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/373551b9-9794-42e8-8e44-706300ea49bd">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/593b2959-1c62-4a7c-98a0-d0deb3c334af">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/8a8697dd-4641-40f0-9d07-542c9a5fb984">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/3fa92f06-fb23-4c64-818a-34693459a933">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/3595ce42-f6e8-46c6-bba5-24a284f353c4">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/0d08c1d8-7d4c-4c1c-bc0c-621cea61f8d3">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/f45c2095-38f8-479a-830d-56a268ae201b">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/6491b5d5-2b15-414a-b53b-be656315e8bc">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/8b2de6bf-0640-458f-8103-2102e44b0664">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/d5941e20-6443-4739-9835-7f8b7f6681be">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/946f25e6-a87e-4491-95e1-a5fafe3e70d4">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/36119053-040d-49de-b2ed-6935aa032e56">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/b7aafd10-fa33-48e2-8f99-ed3060c9e05d">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/946f25e6-a87e-4491-95e1-a5fafe3e70d4">
+<meta property="article:published_time" content="2023-08-08T03:50:28.000Z">
+<meta property="article:modified_time" content="2023-08-08T03:56:59.776Z">
+<meta property="article:author" content="万年学习的小伞君">
+<meta property="article:tag" content="费曼学习法">
+<meta property="article:tag" content="AI框架设施">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/373551b9-9794-42e8-8e44-706300ea49bd">
+
+<link rel="canonical" href="https://satorieye.github.io/2023/08/08/PyTorch%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>PyTorch是什么？ | 搞知识的觉之瞳</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">搞知识的觉之瞳</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">分类</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/SatoriEye" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://satorieye.github.io/2023/08/08/PyTorch%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="万年学习的小伞君">
+      <meta itemprop="description" content="个人知识分享网站！内容包含计算机，数学，物理等个人感兴趣的领域，欢迎各位大佬前来参观。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="搞知识的觉之瞳">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PyTorch是什么？
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-08-08 11:50:28 / 修改时间：11:56:59" itemprop="dateCreated datePublished" datetime="2023-08-08T11:50:28+08:00">2023-08-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" itemprop="url" rel="index"><span itemprop="name">人工智能</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <br>
+
+<p>在聊这个话题之前，我们首先先聊聊人工智能的相关话题。</p>
+<p>（如AI大佬或已经知道这行在赣吗的，请直接跳到：所以，PyTorch是什么？）</p>
+<span id="more"></span>
+
+<h1 id="PyTorch是什么？"><a href="#PyTorch是什么？" class="headerlink" title="PyTorch是什么？"></a>PyTorch是什么？</h1><p>[toc]</p>
+<h2 id="关于本系列文章的相关声明"><a href="#关于本系列文章的相关声明" class="headerlink" title="关于本系列文章的相关声明"></a>关于本系列文章的相关声明</h2><h3 id="创作声明"><a href="#创作声明" class="headerlink" title="创作声明"></a>创作声明</h3><p>本系列的内容创作分为如下三个部分：</p>
+<ol>
+<li><strong>个人阅读文档之后的理解</strong></li>
+<li>对原文档的<strong>部分翻译</strong></li>
+<li>无关紧要部分的AI辅助创作</li>
+<li>部分相关信息的引用及二次创作</li>
+</ol>
+<p>本系列的图片来自于：</p>
+<ol>
+<li>PPT图形制作</li>
+<li>幕布思维导图工具</li>
+<li>AI绘画辅助创作</li>
+<li>网络（如侵权，请联系作者删除）</li>
+</ol>
+<p><strong>在此向人类艺术家与一切内容创作者，AI科学家与工程师，程序员团体致以最崇高的敬意。</strong></p>
+<h3 id="费曼学习法声明"><a href="#费曼学习法声明" class="headerlink" title="费曼学习法声明"></a>费曼学习法声明</h3><p>费曼学习法（Feynman Technique）是一种通过将所学知识用简单明了的语言解释给别人听来加深自己的理解和记忆的学习方法。这种方法最初由物理学家理查德·费曼（Richard Feynman）提出。</p>
+<p>费曼学习法的基本思想是：将所学知识用自己的语言表达出来，以便理解、记忆和应用。</p>
+<p>瞳君通过边学边创作的方式，将所学知识用简单明了的语言解释给大家，以加深自己的理解和记忆。由于个人理解的局限性，创作内容可能存在错误，欢迎各位专家批评指正。</p>
+<p><strong>实验&amp;创作就是失败，失败就是学习，学习就是进步。</strong></p>
+<h3 id="原创声明"><a href="#原创声明" class="headerlink" title="原创声明"></a>原创声明</h3><p>本系列下的文章引用皆包含出处，未包含出处的皆为瞳君原创**@搞知识的觉之瞳<strong>，</strong>遵循相应平台的相关协议进行分发。如需转载，请根据相关平台的内容规定进行转载。**</p>
+<p><strong>动动手指点击关注，这是免费的，而且你也可以随时改变主意，享受你的阅读吧！</strong></p>
+<p><strong>It’s free and you can always change your mind,  enjoy your reading!</strong> </p>
+<h2 id="首先，什么是人工智能"><a href="#首先，什么是人工智能" class="headerlink" title="首先，什么是人工智能?"></a>首先，什么是人工智能?</h2><p>人工智能（Artificial Intelligence，简称 AI）是指计算机系统通过模拟和超越人类智能表现的能力。它是一门涵盖多个领域的交叉学科，包括计算机科学、数学、心理学、哲学等。</p>
+<p>人工智能旨在构建能够模拟人类智能行为的计算机程序和系统，这些行为包括感知、学习、推理、认知、创造等。人工智能的应用范围非常广泛，包括自然语言处理、计算机视觉、机器人、智能游戏、智能交通、医疗保健、金融、教育等领域。</p>
+<p>人工智能的发展历史可以追溯到上世纪50年代，但直到近年来，随着深度学习、强化学习等技术的不断进步，人工智能才得以获得广泛关注和应用。未来，人工智能将继续发挥重要作用，推动各个领域的创新和发展。</p>
+<p>说这么多可能你还是一头雾水，一言以蔽之，人工智能在做的事很简单——猜函数。</p>
+<p>什么是函数？</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/373551b9-9794-42e8-8e44-706300ea49bd" alt="image"></p>
+<p>好吧，也许你真的不懂函数的概念，现在让我们玩一个小游戏</p>
+<p>我手上有一个数字，你可以任意说10次数字，我会把我手上的这一个数字和你说出的那个数字做乘法之后返回给你，然后你需要通过这个方法猜出我手上的这个数字。</p>
+<p>什么，你觉得很简单？</p>
+<p>那我们换一换</p>
+<p>现在你同样可以任意说10次数字，我会把我手上的数字和你的数字做加减乘除4种运算中的固定的任意一个(换而言之，假设我手上的数字是三，然后将要进行的运算是乘法，那么第1次你跟我说数字的时候，我做的是乘法，第2次跟我说数字的时候，我同样也是做乘法，以此类推，运算不会改变)，然后把结果给你，然后你需要猜出我手上的这个数字是什么？</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/593b2959-1c62-4a7c-98a0-d0deb3c334af" alt="image"></p>
+<p>什么，你觉得结果可逆，所以很简单???</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/8a8697dd-4641-40f0-9d07-542c9a5fb984" alt="image"></p>
+<p>那好吧，规则跟之前一样，但是这次，我会把我手上的数字和你的数字做加减乘除4种运算中随机的任意一个。。。。。。</p>
+<p>换而言之，你不知道我每次做的到底是加减乘除中的哪一个，但如果说你通过穷举给出了4种不同的变化，那还是可以解决掉的：</p>
+<p>例如：连续给出4，实际数字为5，得到9，-1，0.8，20，通过暴力穷举所有情况（或者试错法），还是可以猜出来的</p>
+<p>（这种题目类似于：天堂地狱两扇门，两个门卫，一个说真话，一个说假话，只能对一个人提问一次，如何找出天堂之门？）</p>
+<p>那很好现在我们把这个东西扩展一下</p>
+<p>我手上有1000个数字</p>
+<p>你当然还是可以给出一个数字，并且这次不给你限制次数，你可以任意的给出数字，但是这次我会将你给出的这个数字按照一定的方法依次通过这1000个数字，例如将你给出的数字跟第1个数字做加法，然后和第2个数字做减法……这个次序是固定的，最后将你给出的这个数字和这1000个数字运算完的结果返回给你，然后要求你猜出这1000个数字。</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/3fa92f06-fb23-4c64-818a-34693459a933" alt="image"></p>
+<p><strong>（如果到这边看得很懵，请直接跳到底下的二级标题：觉得上面的太难理解）</strong></p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/3595ce42-f6e8-46c6-bba5-24a284f353c4" alt="image"></p>
+<p>别急别急，还有更难的</p>
+<p>还是跟上面的规则一样，但是每一次你给出一个数字的时候，我会固定变动运算次序中的某3个运算符，换句话来讲，如果第1次你给出的数字，在第2次运算时做的是加法，那么之后你给出另外的数字时，可能在第2次运算时我做的就是乘法了。</p>
+<p>好了，到这里是不是已经有点不好搞了？</p>
+<p>这就是人工智能，归根到底我们在干的就是这样的事，但是我们不是能力自己来猜，而是通过机器来猜。</p>
+<p>我们的任务就是构造一个函数主体，这个函数它的参数是不定的。</p>
+<p>然后呢，我们每次给出一个待判断的数据和一个结果，通过一个叫优化算法的东西，让函数对自己的参数进行调整。</p>
+<p>之后我们在送入数据的时候，函数就会返回出一个结果，这个结果跟我们给出的真实结果肯定是有差别的。</p>
+<p>我们通过一个叫损失函数的函数来衡量这个差别，差别越大，损失函数计算出来的值就越大，否则就越趋近于0。</p>
+<p>然后我们把这个差别送给优化算法，让优化算法对函数的参数进行调整，这样迭代几轮下来，如果这个函数足够厉害的话，它就已经趋近于我们想要的问题结果了。</p>
+<p>换句话来讲，要解决上面的问题，我们要构建一个模型(这个模型里面有1000个参数)，然后让这个模型遵循一定的优化算法去进行优化，再优化迭代到第某个轮次的时候，这个函数已经能做到，我们给出一个数字，他能够猜到大差不差的结果了。此时我们把它结构里面的1000个数字(参数)拎出来，就大差不差是我们想要的1000个数字了</p>
+<p>当然这边举的例子是反向传播的特例，有的算法它是不会用损失函数的，它会用别的某些依据来判断真实值与计算值的差别（隔壁的<code>sklearn.tree</code>表示很赣），但这里我们的主要任务是讨论深度学习的计算框架，所以我就不多提传统机器学习的东西。</p>
+<h2 id="一个简单扼要的流程概述"><a href="#一个简单扼要的流程概述" class="headerlink" title="一个简单扼要的流程概述"></a>一个简单扼要的流程概述</h2><p>那么作为总结，我们再捋一捋整个人工智能学习(这里先不谈传统机器学习，也不谈各种花里胡哨的传播，同样不谈脉冲神经网络，就只谈反向传播)的相关过程。</p>
+<p>首先，我们需要一堆数字，也就是人工智能里面提到的数据，同样的我们需要对应的标签，也就是这些数字再被丢到上面讲的黑盒子中运算出来的结果。</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/0d08c1d8-7d4c-4c1c-bc0c-621cea61f8d3" alt="image"></p>
+<p>其次我们需要一个模型，这个模型是一个数学函数，数据被丢到这个函数里面运算出来的结果可以和标签进行比较。</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/f45c2095-38f8-479a-830d-56a268ae201b" alt="image"></p>
+<p>然后我们需要一个损失函数，损失函数是一个数学函数，它接受一个标签和模型计算出来的结果值，返回二者之间的差别，这个差别是一个数值，如果差别越大这个数值就越大，反之则越趋近于0。</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/6491b5d5-2b15-414a-b53b-be656315e8bc" alt="image"></p>
+<p>之后我们需要一个优化方法，它是一个数学函数，或者是一个规则，它接收损失函数计算出来的差别，并根据这个差别应用优化方法里面的相关规则，或者函数对原先的模型中里面含有的数值参数(说白了就是函数里面的系数+常数项)进行调整</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/8b2de6bf-0640-458f-8103-2102e44b0664" alt="image"></p>
+<p>综上所述就是下面这个样子：</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/d5941e20-6443-4739-9835-7f8b7f6681be" alt="image"></p>
+<p>所以人工智能这一行归根到底来讲，干的就是猜数字，只要能够把参数猜对了，使得输进去的数据可以出来很不错的标签，那就不是蜘蛛侠了。</p>
+<p>那你可能想问文本和图片怎么跟数字相提并论呢？</p>
+<p>文本可以编码呀，我们可以让医院这一个词代表114514，以此类推就行了</p>
+<p>图片的话更简单了，只需要说三句话就够了：</p>
+<p>计算机上的所有东西，不是硬件就是数据(各种软件，指令也算数据的一种)</p>
+<p>计算机上的数据可以使用01表示</p>
+<p>计算机上面有图片，并且图片不是硬件</p>
+<p>所以得出结论：计算机上的图片都是数值表示的</p>
+<h2 id="觉得上面的太难理解？"><a href="#觉得上面的太难理解？" class="headerlink" title="觉得上面的太难理解？"></a>觉得上面的太难理解？</h2><p>那没关系，那你只需要知道如下几句话：</p>
+<p>人工智能干的就是猜数字的活，只要把参数猜对猜准了就OK。</p>
+<p>如果想让人工智能猜数字猜得准，<strong>最好的方法就是让他做题，他题目做的越多做的越丰富，一般来说，猜数字就猜的越准。</strong></p>
+<p>现实世界中的各种信息媒介包括但不限于图片文字，音频视频等，均可以使用数字进行表示</p>
+<p>所以学人工智能就像在高考，但这次不同的地方是<strong>你是家长，而学生是你的模型</strong>，你的任务就是去各地或者通过各种小道消息买各种各样乱七八糟的卷子给你的学生做，但毕竟你的学生智力远低于你，所以他学着学着可能就会出现一些抽象的情况(例如学着学着突然就都不会了)，然后你又要费尽心思去解决这些抽象的情况。</p>
+<h2 id="然后，我们稍微扩充亿点点……"><a href="#然后，我们稍微扩充亿点点……" class="headerlink" title="然后，我们稍微扩充亿点点……"></a>然后，我们稍微扩充亿点点……</h2><p>从这里往下，我们将不再使用猜数字的例子，而是使用高考的例子。这样方便理解，也不至于过分抽象。</p>
+<p>首先你去各个地方买卷子，这些卷子他不一定有答案呀，而且答案有的可能是错的。换句话来讲就是你给你的人工智能模型整的数据，它可能是有问题的，甚至可能一点答案都没有。</p>
+<p>所以这种情况我们就要给试卷追加答案，或者是把那些没有答案的题目删掉，再拿去给你的模型做，这个过程被我们称之为<strong>数据预处理</strong>。</p>
+<p>当然试卷到手的时候你肯定得看一遍吧，要是题目不合适还是怎么着，把学生教坏了就不好了，所以这个时候你就要通过各种手段将试卷的题型，题量，分布分数情况等等弄清楚，这个过程叫做<strong>探索性数据分析(EDA)</strong></p>
+<p>由于你现在处在的是深度学习的介绍界面，所以你想训练的学生一定是相当聪明的，他不需要做过多的试卷暗示处理，你不需要在试卷上面明示他答案到底是什么(传统机器学习表示很淦)。</p>
+<p>但是由于你的学生相对比较死板，<strong>试卷的格式如果不合学生的意，他就会拒绝写题目。</strong></p>
+<p>所以这种情况我们仍然需要对试卷的题目做一些格式化处理，让它符合学生的爱好。</p>
+<p>这个过程叫做<strong>特征工程</strong>，对于深度学习而言，特征工程一般不需要搞太多花里胡哨的，撑死了也就是一个特征增强，也就是把试卷的相似题型整理出好几份给学生做，但是对于机器学习而言，花里胡哨的东西就比较多，这部分不在这里详细介绍。</p>
+<p>特征工程弄完了，但是模型的结构我们还没定下来呢，<strong>也就是说这个时候你需要给你的孩子（模型）选择天赋加点。</strong></p>
+<p>这个过程叫做<strong>模型选择&amp;设计</strong>。对于不同的任务需要使用不同的模型，强扭的瓜不甜，设计天赋的时候要针对任务。</p>
+<p>不过有意思的一点是，历史上曾经出现强扭的瓜也很甜的情况，这一点我们不在这里过多介绍。</p>
+<p>接下来天赋加点设计完成之后，我们需要给你的孩子选择一套<strong>训练方法与优化方法</strong>，不同的<strong>训练方法与优化方法</strong>，训出来的孩子效果不一样。例如近些年在自然语言领域里广为流传的手把手教+等级分方法，就受到了广大人士的推崇(懂的都懂doge)。</p>
+<p>当然这个过程包含了损失函数的选择优化方法的选择，以及训练过程中的一些小tricks</p>
+<p>在模型进行迭代优化的时候，你也许想看看你的学生大概熟练到了什么程度，而这就需要一套评价体系与评估基准，说白了就是给你的学生进行期中考试，你的学生会做一套他之前基本上没有见过的卷子，然后通过你制定的评价体系得到一个分数，这个分数可以衡量你的学生最近一段时间学的怎么样了，这就是<strong>评价指标</strong>。</p>
+<p>好了，现在你的学生经过了大量的卷子练习，已经是一名成熟的做题专家了，但是上考场之前还有一些相关的注意事项，首先就是对于人工智能而言，考试也是有限时间的。</p>
+<p>对于一些更加注重准确度的任务来说，这部分任务可能并不是那么在乎时间。但是对于一些即时的任务来说，时效性是非常重要的，换而言之，你的学生<strong>做题速度不能太慢</strong>。</p>
+<p>所以这个时候你得给你的学生一些小方法，让它做题快一点，同时规范他的做题习惯，让他不要乱来。也可以给他一些简单题做一做，减轻他的思想压力。这个过程叫做<strong>模型压缩&amp;裁剪&amp;量化</strong>。</p>
+<p>然后就是把你的学生送上考场了送上考场之后，他就不一定能跟你再见面了，再见面的时候也是你要对他进行调教的时候了，这个过程叫做<strong>模型部署</strong>。</p>
+<p>讲了上面这么多，接下来我们把上面那个结构图稍微复杂那么亿点点……</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/946f25e6-a87e-4491-95e1-a5fafe3e70d4" alt="image"></p>
+<p><strong>觉得还是有点抽象？？？没关系。</strong></p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/36119053-040d-49de-b2ed-6935aa032e56" alt="image"></p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/b7aafd10-fa33-48e2-8f99-ed3060c9e05d" alt="image"></p>
+<h2 id="所以，PyTorch是什么？"><a href="#所以，PyTorch是什么？" class="headerlink" title="所以，PyTorch是什么？"></a>所以，PyTorch是什么？</h2><p>PyTorch是一个生态，一个适用于深度学习的生态。</p>
+<p>它可以一站式的包办几乎所有的深度学习流程，而具体的流程就像上面所说的那样（什么鸡娃工具包）</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/946f25e6-a87e-4491-95e1-a5fafe3e70d4" alt="image"></p>
+<p>既然说白了它是一种生态，那么它里面包含的任务与功能就不止一个：</p>
+<table>
+<thead>
+<tr>
+<th>任务</th>
+<th>PyTorch生态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数据源</td>
+<td>有，但不主要</td>
+</tr>
+<tr>
+<td>探索性数据分析</td>
+<td>有，但不主要</td>
+</tr>
+<tr>
+<td>数据预处理 &amp; 特征工程</td>
+<td>有，但不主要</td>
+</tr>
+<tr>
+<td>模型搭建&amp;选择</td>
+<td>有，主要</td>
+</tr>
+<tr>
+<td>损失函数</td>
+<td>有，主要</td>
+</tr>
+<tr>
+<td>模型训练</td>
+<td>有，主要</td>
+</tr>
+<tr>
+<td>评价指标</td>
+<td>有</td>
+</tr>
+<tr>
+<td>模型优化</td>
+<td>有，主要</td>
+</tr>
+<tr>
+<td>模型压缩 &amp; 剪裁 &amp; 优化</td>
+<td>有</td>
+</tr>
+<tr>
+<td>模型部署</td>
+<td>有</td>
+</tr>
+</tbody></table>
+<p>从上面的表格中可以看出pytorch专注于模型构建，训练与优化的过程，同时也附加了其他深度学习流程的组件，这些在下面的章节会一一进行讲解。</p>
+<h2 id="知识来源"><a href="#知识来源" class="headerlink" title="知识来源"></a>知识来源</h2><p>个人对于人工智能与PyTorch的理解</p>
+<p>Pytorch官方网站：<a target="_blank" rel="noopener" href="https://pytorch.org/">https://pytorch.org/</a></p>
+<p>PyTorch中文文档：<a target="_blank" rel="noopener" href="https://pytorch.apachecn.org/">https://pytorch.apachecn.org/</a></p>
+<p>chatgpt：<a target="_blank" rel="noopener" href="https://chat.openai.com/">https://chat.openai.com/</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%B4%B9%E6%9B%BC%E5%AD%A6%E4%B9%A0%E6%B3%95/" rel="tag"># 费曼学习法</a>
+              <a href="/tags/AI%E6%A1%86%E6%9E%B6%E8%AE%BE%E6%96%BD/" rel="tag"># AI框架设施</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/08/08/PyTorch%E8%AE%BA%E5%9D%9B%E6%8E%A2%E7%A7%98/" rel="prev" title="PyTorch论坛探秘">
+      <i class="fa fa-chevron-left"></i> PyTorch论坛探秘
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/08/08/PyTorch%E4%BA%8B%E4%BB%B6/" rel="next" title="觉之瞳专题：PyTorch社区事件">
+      觉之瞳专题：PyTorch社区事件 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#PyTorch%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">PyTorch是什么？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%B3%BB%E5%88%97%E6%96%87%E7%AB%A0%E7%9A%84%E7%9B%B8%E5%85%B3%E5%A3%B0%E6%98%8E"><span class="nav-number">1.1.</span> <span class="nav-text">关于本系列文章的相关声明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E4%BD%9C%E5%A3%B0%E6%98%8E"><span class="nav-number">1.1.1.</span> <span class="nav-text">创作声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B4%B9%E6%9B%BC%E5%AD%A6%E4%B9%A0%E6%B3%95%E5%A3%B0%E6%98%8E"><span class="nav-number">1.1.2.</span> <span class="nav-text">费曼学习法声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%88%9B%E5%A3%B0%E6%98%8E"><span class="nav-number">1.1.3.</span> <span class="nav-text">原创声明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A6%96%E5%85%88%EF%BC%8C%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD"><span class="nav-number">1.2.</span> <span class="nav-text">首先，什么是人工智能?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E6%89%BC%E8%A6%81%E7%9A%84%E6%B5%81%E7%A8%8B%E6%A6%82%E8%BF%B0"><span class="nav-number">1.3.</span> <span class="nav-text">一个简单扼要的流程概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%89%E5%BE%97%E4%B8%8A%E9%9D%A2%E7%9A%84%E5%A4%AA%E9%9A%BE%E7%90%86%E8%A7%A3%EF%BC%9F"><span class="nav-number">1.4.</span> <span class="nav-text">觉得上面的太难理解？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%84%B6%E5%90%8E%EF%BC%8C%E6%88%91%E4%BB%AC%E7%A8%8D%E5%BE%AE%E6%89%A9%E5%85%85%E4%BA%BF%E7%82%B9%E7%82%B9%E2%80%A6%E2%80%A6"><span class="nav-number">1.5.</span> <span class="nav-text">然后，我们稍微扩充亿点点……</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%80%E4%BB%A5%EF%BC%8CPyTorch%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.6.</span> <span class="nav-text">所以，PyTorch是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9F%A5%E8%AF%86%E6%9D%A5%E6%BA%90"><span class="nav-number">1.7.</span> <span class="nav-text">知识来源</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">万年学习的小伞君</p>
+  <div class="site-description" itemprop="description">个人知识分享网站！内容包含计算机，数学，物理等个人感兴趣的领域，欢迎各位大佬前来参观。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/SatoriEye" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;SatoriEye" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:lanjiayi_official@163.com" title="E-Mail → mailto:lanjiayi_official@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">万年学习的小伞君</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div> -->
+<script type="text/javascript" src="/js/click-live.js" />
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/satori.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/satori.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/satori.jpg">
+  <link rel="mask-icon" href="/images/satori.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"satorieye.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="PyTorch社区探秘">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PyTorch社区探秘">
+<meta property="og:url" content="https://satorieye.github.io/2023/08/08/PyTorch%E7%A4%BE%E5%8C%BA/index.html">
+<meta property="og:site_name" content="搞知识的觉之瞳">
+<meta property="og:description" content="PyTorch社区探秘">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/5acfeb34-3469-4510-9b28-ea30e272b0fc">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/980b8720-79d9-46ce-8825-30864c2335a9">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/f9439aac-ddf4-4a43-a670-0249c43d17b2">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/de0d56ce-0723-4990-8aaa-f5c184b4c42a">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/6e3e776a-f7c5-47cc-9119-de404d2fb738">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/3efdfe57-a64a-47f4-9b9f-bf2e520b4b5b">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/5e3b7c39-de40-4b7a-814c-8bd586dea878">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/91891e41-e1f5-4774-b8a3-f6afa26194e9">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/b9d45c27-d54c-43e8-a7c5-501b3d3d85e0">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/47041d34-44b0-45d4-9f74-988826f85b0f">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/cefd51e0-7a58-44ac-bb3e-d155b3819242">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/b10d4ecc-0e26-40c3-b1e7-f8c1f8c30fdf">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/3502e4c7-45db-4158-b6e7-fdc0e2d607d5">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/c0d7fe39-3e9b-46cf-97ef-bbf6f7726f7d">
+<meta property="article:published_time" content="2023-08-08T03:50:28.000Z">
+<meta property="article:modified_time" content="2023-08-08T04:01:35.358Z">
+<meta property="article:author" content="万年学习的小伞君">
+<meta property="article:tag" content="费曼学习法">
+<meta property="article:tag" content="AI框架设施">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/5acfeb34-3469-4510-9b28-ea30e272b0fc">
+
+<link rel="canonical" href="https://satorieye.github.io/2023/08/08/PyTorch%E7%A4%BE%E5%8C%BA/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>PyTorch社区探秘 | 搞知识的觉之瞳</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">搞知识的觉之瞳</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">分类</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/SatoriEye" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://satorieye.github.io/2023/08/08/PyTorch%E7%A4%BE%E5%8C%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="万年学习的小伞君">
+      <meta itemprop="description" content="个人知识分享网站！内容包含计算机，数学，物理等个人感兴趣的领域，欢迎各位大佬前来参观。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="搞知识的觉之瞳">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PyTorch社区探秘
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-08-08 11:50:28 / 修改时间：12:01:35" itemprop="dateCreated datePublished" datetime="2023-08-08T11:50:28+08:00">2023-08-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" itemprop="url" rel="index"><span itemprop="name">人工智能</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <br>
+
+<p>PyTorch社区探秘</p>
+<span id="more"></span>
+
+<h1 id="觉之瞳专题：PyTorch社区探秘"><a href="#觉之瞳专题：PyTorch社区探秘" class="headerlink" title="觉之瞳专题：PyTorch社区探秘"></a>觉之瞳专题：PyTorch社区探秘</h1><p>[toc]</p>
+<p>本期瞳君带大家看一看pytorch的社区到底是什么样的？ </p>
+<h2 id="关于本系列文章的相关声明"><a href="#关于本系列文章的相关声明" class="headerlink" title="关于本系列文章的相关声明"></a>关于本系列文章的相关声明</h2><h3 id="创作声明"><a href="#创作声明" class="headerlink" title="创作声明"></a>创作声明</h3><p>本系列的内容创作分为如下三个部分：</p>
+<ol>
+<li><strong>个人阅读文档之后的理解</strong></li>
+<li>对原文档的<strong>部分翻译</strong></li>
+<li>无关紧要部分的AI辅助创作</li>
+<li>部分相关信息的引用及二次创作</li>
+</ol>
+<p>本系列的图片来自于：</p>
+<ol>
+<li>PPT图形制作</li>
+<li>幕布思维导图工具</li>
+<li>AI绘画辅助创作</li>
+<li>网络（如侵权，请联系作者删除）</li>
+</ol>
+<p><strong>在此向人类艺术家与一切内容创作者，AI科学家与工程师，程序员团体致以最崇高的敬意。</strong></p>
+<h3 id="费曼学习法声明"><a href="#费曼学习法声明" class="headerlink" title="费曼学习法声明"></a>费曼学习法声明</h3><p>费曼学习法（Feynman Technique）是一种通过将所学知识用简单明了的语言解释给别人听来加深自己的理解和记忆的学习方法。这种方法最初由物理学家理查德·费曼（Richard Feynman）提出。</p>
+<p>费曼学习法的基本思想是：将所学知识用自己的语言表达出来，以便理解、记忆和应用。</p>
+<p>瞳君通过边学边创作的方式，将所学知识用简单明了的语言解释给大家，以加深自己的理解和记忆。由于个人理解的局限性，创作内容可能存在错误，欢迎各位专家批评指正。</p>
+<p><strong>实验&amp;创作就是失败，失败就是学习，学习就是进步。</strong></p>
+<h3 id="原创声明"><a href="#原创声明" class="headerlink" title="原创声明"></a>原创声明</h3><p>本系列下的文章引用皆包含出处，未包含出处的皆为瞳君原创**@搞知识的觉之瞳<strong>，</strong>遵循相应平台的相关协议进行分发。如需转载，请根据相关平台的内容规定进行转载。**</p>
+<p><strong>动动手指点击关注，这是免费的，而且你也可以随时改变主意，享受你的阅读吧！</strong></p>
+<p><strong>It’s free and you can always change your mind,  enjoy your reading!</strong> </p>
+<h2 id="社区简述"><a href="#社区简述" class="headerlink" title="社区简述"></a>社区简述</h2><p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/5acfeb34-3469-4510-9b28-ea30e272b0fc" alt="image"></p>
+<p>如图，PyTorch社区长这个亚子，这里我们大概翻译一下，可以看出主要就这几样功能：</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/980b8720-79d9-46ce-8825-30864c2335a9" alt="image"></p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/f9439aac-ddf4-4a43-a670-0249c43d17b2" alt="image"></p>
+<h2 id="让我们先从讨论开始看："><a href="#让我们先从讨论开始看：" class="headerlink" title="让我们先从讨论开始看："></a>让我们先从讨论开始看：</h2><p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/de0d56ce-0723-4990-8aaa-f5c184b4c42a" alt="image"></p>
+<p>讨论包含了discuss与slack，其中discuss模块直接跳转到了Forum模块，于是这个模块的讲解我们可以光明正大的摸到后面再提了:dog:</p>
+<p><strong>同时slack是一个“更高级的圈子”，需要通过邮件申请才可以进入，而discuss适用于初学者。</strong></p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/6e3e776a-f7c5-47cc-9119-de404d2fb738" alt="image"></p>
+<p>于是乎这个板块就…摸完了？</p>
+<h2 id="然后是文档及其翻译："><a href="#然后是文档及其翻译：" class="headerlink" title="然后是文档及其翻译："></a>然后是文档及其翻译：</h2><p>官方提供了中文，日语与韩语的文档翻译，由地方性的组织进行维护，在这里向维护中文文档的大佬们点赞！</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/3efdfe57-a64a-47f4-9b9f-bf2e520b4b5b" alt="......"><br><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/5e3b7c39-de40-4b7a-814c-8bd586dea878" alt="image"><br><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/91891e41-e1f5-4774-b8a3-f6afa26194e9" alt="image"></p>
+<p>于是乎这个板块就…又摸完了？</p>
+<h2 id="贡献者及其管理板块："><a href="#贡献者及其管理板块：" class="headerlink" title="贡献者及其管理板块："></a>贡献者及其管理板块：</h2><p>终于到了剩下两个有得讲的界面之一了！</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/b9d45c27-d54c-43e8-a7c5-501b3d3d85e0" alt="image"></p>
+<p>这里一共有四个板块</p>
+<p>Maintainers介绍了目前维护整个PyTorch项目的大爹们，把每个板块的Leader写得清清楚楚（方便你提PR的时候摇人）</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/47041d34-44b0-45d4-9f74-988826f85b0f" alt="image"></p>
+<p>ContributionGuide提到了整体的PR（做贡献流程）</p>
+<p>Governance提到了PyTorch的治理体系，也就是人员分工</p>
+<p>Contributors则是将贡献者引导至<strong>开发者论坛</strong>，然后在这里“紧跟新版本”。</p>
+<p><del>那这样就又又又水完了</del>（你打算就这样应付了事吗？？？）</p>
+<h3 id="细节部分的解析——Maintainers"><a href="#细节部分的解析——Maintainers" class="headerlink" title="细节部分的解析——Maintainers"></a>细节部分的解析——Maintainers</h3><p>从Maintainers我们可以知道什么呢？这里不是一堆人名吗？</p>
+<p>不不不，可以知道的东西太多了</p>
+<p>首先，PyTorch现在分为几个模块在维护？<br>其次，维护者的原则是什么？</p>
+<p>这样就足够我们整一个分划了。具体的人名？你需要提PR再去看就行了~</p>
+<h4 id="Maintainers的任务"><a href="#Maintainers的任务" class="headerlink" title="Maintainers的任务"></a>Maintainers的任务</h4><ol>
+<li>处理分配给该模块或库的高优先级问题，并进行修复。（PR大爹）</li>
+<li>审查和处理分配给该模块或库的<strong>高优先级拉取请求</strong>。（PR解决问题高级一点容易先合并）</li>
+<li>在 discuss.pytorch.org 和 dev-discuss.pytorch.org 上回答与<strong>该模块或库相关</strong>的问题。（别拉错人）</li>
+<li>维护公共用户和开发文档。（Docs大爹）</li>
+<li>定期举行会议，并分享会议纪要以及半年或季度性的路线图。（日常开会）</li>
+</ol>
+<h3 id="PyTorch的模块维护情况"><a href="#PyTorch的模块维护情况" class="headerlink" title="PyTorch的模块维护情况"></a>PyTorch的模块维护情况</h3><p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/cefd51e0-7a58-44ac-bb3e-d155b3819242" alt="image"></p>
+<p>可以看到里外分三层，每层都有专业团队维护，从核心（红框）到模块（蓝框）再到插件（紫框）一应俱全。</p>
+<h3 id="细节部分的解析——ContributionGuide"><a href="#细节部分的解析——ContributionGuide" class="headerlink" title="细节部分的解析——ContributionGuide"></a>细节部分的解析——ContributionGuide</h3><p>ContributionGuide讲明了PyTorch的开源贡献流程，我想更加具体的东西咱可以直接查看中文文档的链接，我先放一个传送门（注意最新的版本官方没翻译好，这是1.4版本的）在这里：</p>
+<p><a target="_blank" rel="noopener" href="https://pytorch.apachecn.org/1.4/111/">https://pytorch.apachecn.org/1.4/111/</a></p>
+<p>首先，想提PR，建议先拥有Slack的入场券。然后先别急着提，观察一段时间，分析什么是<strong>Bugs</strong>，什么只是单纯的<strong>问题</strong></p>
+<p>然后，找到更改的模块位点，建议新功能&amp;Bugs定位的精细点，如果你认为全都重改（tnnd，重构是吧），先社区上聊聊（蟹升牌の人格修正拳）</p>
+<p><strong>别傻乎乎的有新东西就往里面提PR</strong>（除非是第二个“变形金刚”（什么擎天柱））</p>
+<p>根据CONTRIBUTING.md敲代码！</p>
+<p>准备PR</p>
+<p>摇人检查PR</p>
+<p>过CI（可持续开发检查）</p>
+<p>PR合并。</p>
+<p>过程中多讨论，别单干，现代程序员通常打团。</p>
+<h5 id="需要注意的点："><a href="#需要注意的点：" class="headerlink" title="需要注意的点："></a>需要注意的点：</h5><p>测试？</p>
+<p>PR别太大，会累死</p>
+<p>赶工出来的玩意想合并？（有时间再修是吧？（wxngg））咱们先过来社区聊聊（蟹升牌の人格修正拳）</p>
+<p>核心组件修改要二审</p>
+<p>新功能添加，先社区聊，没被（蟹升牌の人格修正拳）打击且大多数都认同，那合并概率会大大提高。</p>
+<p><strong>请仅在拉取请求中包含与您的更改直接相关的文件。</strong>（秦心.jpg）</p>
+<p><strong>任何涉及构建配置的内容都是危险区域。请避免更改这些内容</strong></p>
+<h3 id="细节部分的解析——Governance"><a href="#细节部分的解析——Governance" class="headerlink" title="细节部分的解析——Governance"></a>细节部分的解析——Governance</h3><p>Governance讲明了PyTorch的治理体系，我想更加具体的东西咱可以直接查看中文文档的链接，我先放一个传送门在这里（注意最新的版本官方没翻译好，这是1.4版本的）：</p>
+<p><a target="_blank" rel="noopener" href="https://pytorch.apachecn.org/1.4/112/">https://pytorch.apachecn.org/1.4/112/</a></p>
+<p>PyTorch 采用分层的技术治理结构。</p>
+<ul>
+<li>一个由提交问题、提出拉取请求并为项目做出贡献的<strong>贡献者</strong>社区。</li>
+<li>一小组<strong>模块维护人员</strong>负责驱动 PyTorch 项目的每个模块。</li>
+<li><strong>他们由核心维护人员</strong>监督，核心维护人员推动整个项目的方向。</li>
+<li>核心维护者有一位<strong>首席核心维护者</strong> ，他是包罗万象的决策者。</li>
+</ul>
+<p><strong>所有维护者都应当对 PyTorch 的设计哲学持有强烈的偏好。</strong></p>
+<p><strong>不懂开发艺术</strong>就来开发？？？（搞:poop:山是吧）（蟹升牌の人格修正拳）</p>
+<p>Module Maintainer（模块维护者）</p>
+<ul>
+<li>对模块的高优先级问题进行分类</li>
+<li>分类、审查和着陆模块的高优先级拉取请求</li>
+<li>与模块相关的支持公共文档</li>
+<li>召开公共开发者会议</li>
+</ul>
+<p>Core Maintainer（核心维护者）</p>
+<ul>
+<li>阐明项目的有凝聚力的长期愿景</li>
+<li>以所有相关方都能接受的方式谈判并解决有争议的问题</li>
+<li>接收来自 PyTorch 利益相关者的广泛变更请求并评估&#x2F;接受它们（小型模块级请求由模块维护人员处理）</li>
+</ul>
+<p>首席核心维护者 (BDFL)</p>
+<p>可能有些决定核心维护者无法达成共识。为了做出如此困难的决定，核心维护者需要指定一名并公开宣布的首席核心维护者，在开源治理模型中通常也称为 BDFL。</p>
+<p>首席核心维护者应公开阐明他们的决策，并给出其决策的明确理由。首席核心维护者还负责确认或删除核心维护者。</p>
+<h4 id="一个Maintainer的诞生"><a href="#一个Maintainer的诞生" class="headerlink" title="一个Maintainer的诞生"></a>一个Maintainer的诞生</h4><ul>
+<li><p>在通过贡献、审查和讨论<strong>展示了该组件的强大专业知识并与该组件如何适应 PyTorch 整体方向保持一致后</strong>，模块维护者小组的成员资格将根据<strong>绩效</strong>授予<strong>个人</strong>。</p>
+</li>
+<li><p>对于维护者小组的成员资格，个人必须表现出与 PyTorch 整体原则的强烈且持续的一致性。</p>
+</li>
+<li><p>模块维护者或核心维护者没有任期限制</p>
+</li>
+<li><p>如果他们<strong>长期不积极参与，则将模块维护移至“退休”状态的简单标准</strong>。每个模块维护者组可以定义适合该模块的非活动期。</p>
+</li>
+<li><p>会员资格<strong>适用于个人，而非公司</strong>。</p>
+</li>
+<li><p>如果您向核心维护者提交请求，请求中的信息必须包含以下项目：</p>
+<ul>
+<li>被提名者对模块的代码、审查和设计贡献的深度和广度</li>
+<li>被提名者与维护者、用户和社区互动的评价（正面和负面）</li>
+<li>维护者对支持的一般评价</li>
+</ul>
+</li>
+<li><p>然后核心维护者评估所有信息并做出确认或拒绝提名的最终决定。核心维护者的决定必须得到很好的阐述并且是公开的。</p>
+</li>
+</ul>
+<h4 id="提名核心维护者"><a href="#提名核心维护者" class="headerlink" title="提名核心维护者"></a>提名核心维护者</h4><ul>
+<li>任何核心或模块维护者都可以提名某人成为核心维护者</li>
+<li>首席维护者 (BDFL) 负责评估提名。</li>
+<li>首席维护者请求或汇总有关候选人成为核心维护者的实力的更多信息：<ul>
+<li>其他核心和模块维护者的支持信</li>
+<li>PyTorch 社区内利益相关者的一般支持信</li>
+<li>任何适合候选资格的新相关信息</li>
+</ul>
+</li>
+<li>首席维护者评估所有信息并做出确认或拒绝提名的最终决定，并明确公开阐述其决定背后的理由。</li>
+</ul>
+<h4 id="删除主要核心维护者并提名新的主要核心维护者"><a href="#删除主要核心维护者并提名新的主要核心维护者" class="headerlink" title="删除主要核心维护者并提名新的主要核心维护者"></a>删除主要核心维护者并提名新的主要核心维护者</h4><p>超过75%的core maintainer同意就行</p>
+<ul>
+<li>在首席核心维护者被罢免后或在不可预见的情况下（例如首席核心维护者永久无法使用），核心维护者将按照<strong>排名选择投票方式</strong>选举新的首席核心维护者。</li>
+</ul>
+<h3 id="细节部分的解析——Contributors与开发者论坛"><a href="#细节部分的解析——Contributors与开发者论坛" class="headerlink" title="细节部分的解析——Contributors与开发者论坛"></a>细节部分的解析——Contributors与开发者论坛</h3><p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/b10d4ecc-0e26-40c3-b1e7-f8c1f8c30fdf" alt="image"></p>
+<p><strong>相关的功能板块，可以通过这个快速了解当前某个模块的具体情况。</strong></p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/3502e4c7-45db-4158-b6e7-fdc0e2d607d5" alt="image"></p>
+<h2 id="最后的板块：PyTorch设计艺术："><a href="#最后的板块：PyTorch设计艺术：" class="headerlink" title="最后的板块：PyTorch设计艺术："></a>最后的板块：PyTorch设计艺术：</h2><p><strong>不懂开发艺术</strong>就来开发？？？（搞:poop:山是吧）（蟹升牌の人格修正拳）</p>
+<p><strong>代码开发本就是一种艺术创作，但是你不能保证你每次的艺术视野是一样的。更别提你还要与其他人打配合。</strong></p>
+<p>就和画师画两张图不会完全一致一样，代码也是这样的。</p>
+<p>但是，代码之间是<strong>存在依赖的</strong>，不像画师画的图之间是相互独立的。</p>
+<p><strong>不同的艺术视野各玩各的，艺术就变成抽象了！</strong></p>
+<p>所以才需要一类规范，规范所有PyTorch开发者的艺术视野，使大家在开发PyTorch上具有一致认知，<strong>这是CI CD的重要前提。</strong></p>
+<p>这里将从个人的视角谈谈PyTorch的设计艺术：</p>
+<p>基本原则可以概括为如下几条：</p>
+<ul>
+<li>可用性大于性能。</li>
+<li>简洁大于简单。</li>
+<li>Python优先.</li>
+</ul>
+<h3 id="可用性大于性能"><a href="#可用性大于性能" class="headerlink" title="可用性大于性能"></a>可用性大于性能</h3><ul>
+<li>PyTorch 的主要目标是可用性</li>
+<li>第二个目标是具有<em>合理的</em>性能</li>
+</ul>
+<p>这是一个很简单的理解，如果无止境的追求性能，那么可用性的灵活程度就会被大大的限制，使得它和其他生态会不具有良好的兼容性。同样的，如果无止境的追求可用性，那么性能就不一定很好了。深度学习是一个非常广大的领域，因此如果这个框架刻意的去追求性能的话，它就不可避免地往狭隘的方向做深度的优化，一方面会让整体的表现更加抽象，学习的门槛更高。另一方面它和其他框架的兼容性就更差，生态就会更小。就很难继续发展广大。</p>
+<p>我们可以举一个高考生和数学老师的例子，高考生在他考试的六门科目都具有一定程度的泛化性，我们这里可以不那么恰当的把它比较为好的可用性，而数学老师是针对数学一个领域方向的特化，因此其在数学领域的性能肯定比高考生要好，可能30分钟就能写完一张卷子，并且拿到很高的分数。但是让这位数学老师去做其他五科的卷子，就会显得捉襟见肘。这就是可用性跟性能的一个辩证关系。</p>
+<h3 id="简洁大于简单"><a href="#简洁大于简单" class="headerlink" title="简洁大于简单"></a>简洁大于简单</h3><ul>
+<li><em>显式优于隐式</em></li>
+<li><em>简单胜于复杂</em></li>
+<li><strong>简单&#x2F;显式（便于理解、调试）：</strong>每个张量都与一个设备关联。用户明确指定张量设备移动。需要跨设备移动的操作会导致错误。</li>
+<li><strong>简单&#x2F;隐式（易于使用）：</strong>用户不必担心设备；系统计算出全局最佳的设备放置位置。</li>
+</ul>
+<p>（代码搭建上的）简洁是什么意思？很简单，就是这个东西后面没有什么遮遮掩掩的，它是什么就是什么，底层的依赖非常明确和清晰。<br>（代码使用上的）简单是什么意思？同样很好理解，就是这个东西非常容易用，敲三行就可以跑出来了。</p>
+<p>简洁相对简单<br>简单不一定简洁<br>道理也很简单，台上一分钟台下10年功，非常好看的表演背后往往是付出了大量的磨练和细节。简单的东西背后往往有着深刻且复杂的原理，所以你用起来很简单，但是设计者花了很多心思。<br>简洁的东西是相对简单的，因为它比较好弄懂(没有很多深刻且复杂的原理)，使用起来虽然不一定非常简单，但是发点功夫还是很好理解的。<br>另外简洁和简单相比，还有一个很重要的优点，就是简洁的东西一定很好拆解，简单(代码使用上)的东西不一定很好拆解</p>
+<p>换句话来说就是简洁的东西深入学习门槛一定相对较低，简单的东西深入学习门槛不一定很低(表面简单，背后可能敲了几万行if逻辑)</p>
+<p><strong>因此选择了简洁而不是简单</strong></p>
+<h3 id="Python-优先"><a href="#Python-优先" class="headerlink" title="Python 优先"></a>Python 优先</h3><p>这个原则始于<strong>Python First</strong>：</p>
+<blockquote>
+<p>PyTorch <strong>不是绑定到整体 C++ 框架的 Python</strong>。它旨在深度集成到 Python 中。您可以像使用<a target="_blank" rel="noopener" href="https://www.numpy.org/">NumPy</a>、 <a target="_blank" rel="noopener" href="https://www.scipy.org/">SciPy</a>、<a target="_blank" rel="noopener" href="https://pytorch.org/docs/master/community/(https://scikit-learn.org/">scikit-learn</a>或其他 Python 库一样自然地使用它。您可以使用您最喜欢的库并使用<a target="_blank" rel="noopener" href="https://cython.org/">Cython</a>和 <a target="_blank" rel="noopener" href="http://numba.pydata.org/">Numba</a>等软件包，用 Python 本身编写新的神经网络层。我们的目标是在适当的情况下不重新发明轮子。</p>
+</blockquote>
+<p>简单来说就是，在这么多前端中，我们更注意Python，而不是其他玩意儿。</p>
+<p>因此你可以在背地里用c对各个模块进行优化，但是在用户使用这个模块的时候，他们必须看到的是 Python的操作方式。</p>
+<p>似乎是一些方便加深理解的链接：</p>
+<p><a target="_blank" rel="noopener" href="https://soumith.ch/posts/2021/02/growing-opensource/?fbclid=IwAR1bvN_xZ8avGvu14ODJzS8Zp7jX1BOyfuGUf-zoRawpyL-s95Vjxf88W7s">https://soumith.ch/posts/2021/02/growing-opensource/?fbclid=IwAR1bvN_xZ8avGvu14ODJzS8Zp7jX1BOyfuGUf-zoRawpyL-s95Vjxf88W7s</a></p>
+<p><a target="_blank" rel="noopener" href="https://pytorch.org/docs/master/community/design.html">https://pytorch.org/docs/master/community/design.html</a></p>
+<p>那总的社区就介绍到这里了，我是瞳君@搞知识的觉之瞳，我们下期再见~</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/c0d7fe39-3e9b-46cf-97ef-bbf6f7726f7d" alt="image"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%B4%B9%E6%9B%BC%E5%AD%A6%E4%B9%A0%E6%B3%95/" rel="tag"># 费曼学习法</a>
+              <a href="/tags/AI%E6%A1%86%E6%9E%B6%E8%AE%BE%E6%96%BD/" rel="tag"># AI框架设施</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/08/08/PyTorch%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/" rel="prev" title="觉之瞳专题：PyTorch安装指南">
+      <i class="fa fa-chevron-left"></i> 觉之瞳专题：PyTorch安装指南
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/08/08/PyTorch%E8%AE%BA%E5%9D%9B%E6%8E%A2%E7%A7%98/" rel="next" title="PyTorch论坛探秘">
+      PyTorch论坛探秘 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%89%E4%B9%8B%E7%9E%B3%E4%B8%93%E9%A2%98%EF%BC%9APyTorch%E7%A4%BE%E5%8C%BA%E6%8E%A2%E7%A7%98"><span class="nav-number">1.</span> <span class="nav-text">觉之瞳专题：PyTorch社区探秘</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%B3%BB%E5%88%97%E6%96%87%E7%AB%A0%E7%9A%84%E7%9B%B8%E5%85%B3%E5%A3%B0%E6%98%8E"><span class="nav-number">1.1.</span> <span class="nav-text">关于本系列文章的相关声明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E4%BD%9C%E5%A3%B0%E6%98%8E"><span class="nav-number">1.1.1.</span> <span class="nav-text">创作声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B4%B9%E6%9B%BC%E5%AD%A6%E4%B9%A0%E6%B3%95%E5%A3%B0%E6%98%8E"><span class="nav-number">1.1.2.</span> <span class="nav-text">费曼学习法声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%88%9B%E5%A3%B0%E6%98%8E"><span class="nav-number">1.1.3.</span> <span class="nav-text">原创声明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BE%E5%8C%BA%E7%AE%80%E8%BF%B0"><span class="nav-number">1.2.</span> <span class="nav-text">社区简述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A9%E6%88%91%E4%BB%AC%E5%85%88%E4%BB%8E%E8%AE%A8%E8%AE%BA%E5%BC%80%E5%A7%8B%E7%9C%8B%EF%BC%9A"><span class="nav-number">1.3.</span> <span class="nav-text">让我们先从讨论开始看：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%84%B6%E5%90%8E%E6%98%AF%E6%96%87%E6%A1%A3%E5%8F%8A%E5%85%B6%E7%BF%BB%E8%AF%91%EF%BC%9A"><span class="nav-number">1.4.</span> <span class="nav-text">然后是文档及其翻译：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%A1%E7%8C%AE%E8%80%85%E5%8F%8A%E5%85%B6%E7%AE%A1%E7%90%86%E6%9D%BF%E5%9D%97%EF%BC%9A"><span class="nav-number">1.5.</span> <span class="nav-text">贡献者及其管理板块：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%86%E8%8A%82%E9%83%A8%E5%88%86%E7%9A%84%E8%A7%A3%E6%9E%90%E2%80%94%E2%80%94Maintainers"><span class="nav-number">1.5.1.</span> <span class="nav-text">细节部分的解析——Maintainers</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Maintainers%E7%9A%84%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">Maintainers的任务</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PyTorch%E7%9A%84%E6%A8%A1%E5%9D%97%E7%BB%B4%E6%8A%A4%E6%83%85%E5%86%B5"><span class="nav-number">1.5.2.</span> <span class="nav-text">PyTorch的模块维护情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%86%E8%8A%82%E9%83%A8%E5%88%86%E7%9A%84%E8%A7%A3%E6%9E%90%E2%80%94%E2%80%94ContributionGuide"><span class="nav-number">1.5.3.</span> <span class="nav-text">细节部分的解析——ContributionGuide</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E7%82%B9%EF%BC%9A"><span class="nav-number">1.5.3.0.1.</span> <span class="nav-text">需要注意的点：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%86%E8%8A%82%E9%83%A8%E5%88%86%E7%9A%84%E8%A7%A3%E6%9E%90%E2%80%94%E2%80%94Governance"><span class="nav-number">1.5.4.</span> <span class="nav-text">细节部分的解析——Governance</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E4%B8%AAMaintainer%E7%9A%84%E8%AF%9E%E7%94%9F"><span class="nav-number">1.5.4.1.</span> <span class="nav-text">一个Maintainer的诞生</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%90%E5%90%8D%E6%A0%B8%E5%BF%83%E7%BB%B4%E6%8A%A4%E8%80%85"><span class="nav-number">1.5.4.2.</span> <span class="nav-text">提名核心维护者</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E4%B8%BB%E8%A6%81%E6%A0%B8%E5%BF%83%E7%BB%B4%E6%8A%A4%E8%80%85%E5%B9%B6%E6%8F%90%E5%90%8D%E6%96%B0%E7%9A%84%E4%B8%BB%E8%A6%81%E6%A0%B8%E5%BF%83%E7%BB%B4%E6%8A%A4%E8%80%85"><span class="nav-number">1.5.4.3.</span> <span class="nav-text">删除主要核心维护者并提名新的主要核心维护者</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%86%E8%8A%82%E9%83%A8%E5%88%86%E7%9A%84%E8%A7%A3%E6%9E%90%E2%80%94%E2%80%94Contributors%E4%B8%8E%E5%BC%80%E5%8F%91%E8%80%85%E8%AE%BA%E5%9D%9B"><span class="nav-number">1.5.5.</span> <span class="nav-text">细节部分的解析——Contributors与开发者论坛</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E5%90%8E%E7%9A%84%E6%9D%BF%E5%9D%97%EF%BC%9APyTorch%E8%AE%BE%E8%AE%A1%E8%89%BA%E6%9C%AF%EF%BC%9A"><span class="nav-number">1.6.</span> <span class="nav-text">最后的板块：PyTorch设计艺术：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E7%94%A8%E6%80%A7%E5%A4%A7%E4%BA%8E%E6%80%A7%E8%83%BD"><span class="nav-number">1.6.1.</span> <span class="nav-text">可用性大于性能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E6%B4%81%E5%A4%A7%E4%BA%8E%E7%AE%80%E5%8D%95"><span class="nav-number">1.6.2.</span> <span class="nav-text">简洁大于简单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-%E4%BC%98%E5%85%88"><span class="nav-number">1.6.3.</span> <span class="nav-text">Python 优先</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">万年学习的小伞君</p>
+  <div class="site-description" itemprop="description">个人知识分享网站！内容包含计算机，数学，物理等个人感兴趣的领域，欢迎各位大佬前来参观。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/SatoriEye" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;SatoriEye" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:lanjiayi_official@163.com" title="E-Mail → mailto:lanjiayi_official@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">万年学习的小伞君</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div> -->
+<script type="text/javascript" src="/js/click-live.js" />
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

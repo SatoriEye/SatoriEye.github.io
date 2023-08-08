@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/satori.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/satori.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/satori.jpg">
+  <link rel="mask-icon" href="/images/satori.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"satorieye.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="上一章我们简要谈了PyTorch到底是什么？这一章我们将简要谈谈PyTorch的安装指南。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="觉之瞳专题：PyTorch安装指南">
+<meta property="og:url" content="https://satorieye.github.io/2023/08/08/PyTorch%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="搞知识的觉之瞳">
+<meta property="og:description" content="上一章我们简要谈了PyTorch到底是什么？这一章我们将简要谈谈PyTorch的安装指南。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/0331e242-4799-49d2-878a-5e38c09d603f">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/576fea4b-f559-4f65-8833-09db89722f6e">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/62e36d16-aef5-432b-acfe-18d1f89726e4">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/e1a73683-e71e-458f-8c3a-b5037821bde3">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/efd586d7-a08b-4df6-aa50-5e2f91e431a6">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/77c728d9-53df-49e3-b644-65a60913fd79">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/48093a61-1406-4a69-a7a8-8ddd4db201ff">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/18f60981-1927-491c-9730-a8ed13414a3d">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/3a4e10b9-efea-4de9-85f9-a7d65e327ee6">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/482d3468-8ae3-476e-916b-602fb3068a49">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/859d80b6-b60c-4da9-bb17-c03431401e72">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/2a0fcfe2-7788-4d41-90f3-403416e7507b">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/87361f61-4d33-454d-8963-31b37282fcda">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/51bdf62f-52d7-4363-b283-f9d00a791095">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/18b51d53-3cde-459c-a3dc-7aa7cee0dafc">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/585471da-9c4b-4eab-a800-394e756837b3">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/e851ec75-0772-4824-857f-ce5ccd292e4e">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/f038fc75-f9f8-45b7-898e-072e56a5e056">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/4fb6d4f6-1a05-41e3-afdf-90ecff589afd">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/ea04d1d5-b4d6-4e6e-b501-d797e00aebdf">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/2a8fb552-8801-46ed-8773-be38835555ee">
+<meta property="og:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/2feba489-c937-4728-b76a-640e3984d8c5">
+<meta property="article:published_time" content="2023-08-08T03:50:28.000Z">
+<meta property="article:modified_time" content="2023-08-08T03:55:35.597Z">
+<meta property="article:author" content="万年学习的小伞君">
+<meta property="article:tag" content="费曼学习法">
+<meta property="article:tag" content="AI框架设施">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/0331e242-4799-49d2-878a-5e38c09d603f">
+
+<link rel="canonical" href="https://satorieye.github.io/2023/08/08/PyTorch%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>觉之瞳专题：PyTorch安装指南 | 搞知识的觉之瞳</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">搞知识的觉之瞳</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">分类</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/SatoriEye" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://satorieye.github.io/2023/08/08/PyTorch%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="万年学习的小伞君">
+      <meta itemprop="description" content="个人知识分享网站！内容包含计算机，数学，物理等个人感兴趣的领域，欢迎各位大佬前来参观。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="搞知识的觉之瞳">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          觉之瞳专题：PyTorch安装指南
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-08-08 11:50:28 / 修改时间：11:55:35" itemprop="dateCreated datePublished" datetime="2023-08-08T11:50:28+08:00">2023-08-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" itemprop="url" rel="index"><span itemprop="name">人工智能</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <br>
+
+<p>上一章我们简要谈了PyTorch到底是什么？这一章我们将简要谈谈PyTorch的安装指南。</p>
+<span id="more"></span>
+
+<h1 id="觉之瞳专题：PyTorch安装指南"><a href="#觉之瞳专题：PyTorch安装指南" class="headerlink" title="觉之瞳专题：PyTorch安装指南"></a>觉之瞳专题：PyTorch安装指南</h1><p>[toc]</p>
+<h2 id="关于本系列文章的相关声明"><a href="#关于本系列文章的相关声明" class="headerlink" title="关于本系列文章的相关声明"></a>关于本系列文章的相关声明</h2><h3 id="创作声明"><a href="#创作声明" class="headerlink" title="创作声明"></a>创作声明</h3><p>本系列的内容创作分为如下三个部分：</p>
+<ol>
+<li><strong>个人阅读文档之后的理解</strong></li>
+<li>对原文档的<strong>部分翻译</strong></li>
+<li>无关紧要部分的AI辅助创作</li>
+<li>部分相关信息的引用及二次创作</li>
+</ol>
+<p>本系列的图片来自于：</p>
+<ol>
+<li>PPT图形制作</li>
+<li>幕布思维导图工具</li>
+<li>AI绘画辅助创作</li>
+<li>网络（如侵权，请联系作者删除）</li>
+</ol>
+<p><strong>在此向人类艺术家与一切内容创作者，AI科学家与工程师，程序员团体致以最崇高的敬意。</strong></p>
+<h3 id="费曼学习法声明"><a href="#费曼学习法声明" class="headerlink" title="费曼学习法声明"></a>费曼学习法声明</h3><p>费曼学习法（Feynman Technique）是一种通过将所学知识用简单明了的语言解释给别人听来加深自己的理解和记忆的学习方法。这种方法最初由物理学家理查德·费曼（Richard Feynman）提出。</p>
+<p>费曼学习法的基本思想是：将所学知识用自己的语言表达出来，以便理解、记忆和应用。</p>
+<p>瞳君通过边学边创作的方式，将所学知识用简单明了的语言解释给大家，以加深自己的理解和记忆。由于个人理解的局限性，创作内容可能存在错误，欢迎各位专家批评指正。</p>
+<p><strong>实验&amp;创作就是失败，失败就是学习，学习就是进步。</strong></p>
+<h3 id="原创声明"><a href="#原创声明" class="headerlink" title="原创声明"></a>原创声明</h3><p>本系列下的文章引用皆包含出处，未包含出处的皆为瞳君原创**@搞知识的觉之瞳<strong>，</strong>遵循相应平台的相关协议进行分发。如需转载，请根据相关平台的内容规定进行转载。**</p>
+<p><strong>动动手指点击关注，这是免费的，而且你也可以随时改变主意，享受你的阅读吧！</strong></p>
+<p><strong>It’s free and you can always change your mind,  enjoy your reading!</strong> </p>
+<h2 id="首先，我们需要缕一缕PyTorch的依赖情况："><a href="#首先，我们需要缕一缕PyTorch的依赖情况：" class="headerlink" title="首先，我们需要缕一缕PyTorch的依赖情况："></a>首先，我们需要缕一缕PyTorch的依赖情况：</h2><p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/0331e242-4799-49d2-878a-5e38c09d603f" alt="image"></p>
+<p><strong>声明：其实这样的定义并不算很严谨，因为该模块拥有自己的c++前端，归根到底，在没有进行源码分析之前，瞳君认为绿色部分的编程语言应该是该模块的一个前端，而该模块作为后端。相当于PyTorch在后面都帮你把事情做好了，然后呈现的工作交给了编程语言</strong></p>
+<p>就像分组讨论，课堂上你们小组讨论的人肯定不止一个，但是站起来发言的人一定只有一个。这就是后端和前端的区别了，后端是那些讨论的人，他们负责讨论并总结出重要信息，前端是站起来发言的那一个，负责把信息呈现出来。</p>
+<p>如图，PyTorch依赖于Python，C++，Java，同时由于PyTorch似乎使用了C进行加速（存疑，待源码解析验证），并且其GPU搭建依赖于底层的显卡硬件，因此同时又受到底层操作系统平台与显卡体系的影响。换而言之，底层操作系统平台与显卡体系的不同会影响到该模块的安装情况。同时包管理软件的不同也会影响到该模块的安装。</p>
+<p>目前PyTorch对于平台，显卡体系，编程语言的支持情况如下：</p>
+<table>
+<thead>
+<tr>
+<th>目标</th>
+<th>支持情况</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>操作系统平台</td>
+<td>Linux，Mac，Windows</td>
+</tr>
+<tr>
+<td>运算体系</td>
+<td>CUDA，ROCm，CPU</td>
+</tr>
+<tr>
+<td>编程语言</td>
+<td>Python，C++，Java</td>
+</tr>
+<tr>
+<td>构建形式（对于Python）</td>
+<td>Conda，Pip</td>
+</tr>
+<tr>
+<td>构建形式（对于C与Java）</td>
+<td>LibTorch，Source（从源代码构建）</td>
+</tr>
+</tbody></table>
+<h3 id="关于LibTorch，Pip，CUDA，ROCm与Conda"><a href="#关于LibTorch，Pip，CUDA，ROCm与Conda" class="headerlink" title="关于LibTorch，Pip，CUDA，ROCm与Conda"></a>关于LibTorch，Pip，CUDA，ROCm与Conda</h3><h4 id="LibTorch"><a href="#LibTorch" class="headerlink" title="LibTorch"></a>LibTorch</h4><p>LibTorch是PyTorch的C++前端，它是一个用于C++编程的机器学习库。PyTorch是一个流行的深度学习框架，LibTorch提供了一个在C++中构建和运行PyTorch模型的方法。</p>
+<p>LibTorch可以作为一个独立的库使用，也可以与其他C++库和框架集成。它提供了一个高效的C++接口，使得在C++中使用PyTorch变得更加容易。使用LibTorch，你可以在C++中加载和运行PyTorch模型，以及进行前向推理和反向梯度计算等操作。</p>
+<p>LibTorch支持多种硬件架构和操作系统，包括CPU、GPU、Linux、Windows和macOS等。它还提供了一些工具和API，如Tensor API、Autograd API和Dataloader API等，以帮助C++开发人员更好地构建和训练深度学习模型。</p>
+<p><strong>说白了，这货是C++版PyTorch库。</strong></p>
+<h4 id="Pip"><a href="#Pip" class="headerlink" title="Pip"></a>Pip</h4><p>Pip是Python语言的一个包管理工具，用于安装、管理和卸载Python软件包。它可以从Python Package Index（PyPI）等不同来源获取Python软件包，并自动解决依赖关系。</p>
+<p>Pip是Python标准库之外的一个第三方工具，可以通过命令行界面使用。使用Pip，你可以轻松地安装、更新和卸载Python软件包，也可以查看已安装的软件包列表、版本和依赖关系等信息。</p>
+<p>Pip支持各种操作系统，包括Windows、Linux和macOS等。它是Python社区中最流行的包管理工具之一，被广泛应用于Python开发和数据科学领域。</p>
+<p><strong>说白了，还记得我们之前举的管家和采购商的例子吗？这货是采购商的一种，它采购的范围仅限于Python模块，换句话来讲，如果你的管家想使用C语言编写出来的工具箱，用这位管家去采购是不一定可行的(这句话并不严谨，仅供理解)</strong></p>
+<h4 id="Conda"><a href="#Conda" class="headerlink" title="Conda"></a>Conda</h4><p>Conda是一个流行的开源软件包管理系统和环境管理系统，用于在多种操作系统上安装、管理和升级软件包。它是Anaconda发行版的核心组件之一，也可以独立使用。</p>
+<p>Conda可以用于安装和管理Python包、R软件包和其他各种软件包。它可以在不同环境之间切换，以便在同一系统上运行不同版本的软件包。这种能力使得Conda成为一个流行的数据科学工具，因为它可以帮助数据科学家在不同项目和环境下管理和使用不同的软件包，而不会发生版本冲突或其他问题。</p>
+<p>Conda还提供了一些其他有用的功能，如自动解决软件包依赖关系、创建和共享环境、安装和管理虚拟环境、备份和恢复环境等。这些功能可以帮助用户更好地管理和维护他们的软件包和环境。</p>
+<p><strong>说白了，还记得我们之前举的管家和采购商的例子吗？这货就是采购商的一种，他采购的范围比楼上那位大的多，楼上那位只能采购python模块，他能采购的似乎并不止。</strong></p>
+<h4 id="CUDA"><a href="#CUDA" class="headerlink" title="CUDA"></a>CUDA</h4><p>CUDA是英伟达公司开发的一个并行计算平台和编程模型，用于在NVIDIA GPU上进行高性能计算和深度学习训练。CUDA使得程序员可以通过使用C语言、C++或Python等编程语言来利用GPU进行并行计算，以加速计算任务的处理速度。</p>
+<p>CUDA平台包括一个CUDA编译器、CUDA运行时库和一个CUDA工具包。使用CUDA编程模型，程序员可以将计算任务划分为多个线程，同时利用GPU的并行性来加速计算，从而获得更快的计算速度。</p>
+<p>CUDA广泛应用于科学计算、图像处理、计算机视觉、自然语言处理、深度学习等领域。它被视为一个领先的高性能计算和深度学习平台，因为它可以通过利用GPU的高并行性来加速大规模计算任务的处理。</p>
+<p><strong>同样还是以管家和采购商的例子来讲，这次采购商采购给管家的并不是工具箱，而是一位代理商，你跟管家下发的命令，管家分类之后将代理商专精的命令交给代理商做，代理商做完之后再把结果返回给管家，管家把结果返回给你。在这里：管家是PyTorch，代理商是CUDA，如果使用了依赖于CUDA的方法构建了PyTorch，那么在遇到需要显卡加速计算的情况时，如果指定了显卡加速计算，管家（Python with PyTorch）就会把任务丢给代理商（CUDA）进行计算，计算完之后管家会收到任务完成的结果，并进一步进行处理。</strong></p>
+<p><strong>这货是英伟达的代理商，电脑是英伟达显卡的情况下才能大展身手</strong></p>
+<h4 id="ROCm"><a href="#ROCm" class="headerlink" title="ROCm"></a>ROCm</h4><p>ROCm是AMD公司开发的一个并行计算平台和编程模型，用于在AMD GPU上进行高性能计算和深度学习训练。ROCm提供了一种开放的、可移植的编程模型，使得程序员可以在多种AMD GPU架构上进行高效的并行计算。</p>
+<p>ROCm平台包括一个ROCm编译器、ROCm运行时库和一个ROCm工具包。使用ROCm编程模型，程序员可以将计算任务划分为多个线程，同时利用GPU的并行性来加速计算，从而获得更快的计算速度。</p>
+<p>ROCm广泛应用于科学计算、图像处理、计算机视觉、自然语言处理、深度学习等领域。它被视为一个领先的高性能计算和深度学习平台，因为它可以通过利用AMD GPU的高性能和灵活性来加速大规模计算任务的处理。</p>
+<p><strong>说白了，跟上面那位的地位是一样的，他也是代理商，只不过是AMD的代理商，电脑是AMD显卡且必须携带Linux系统的情况下才能大展身手</strong></p>
+<p>其他的专业术语就不用提了吧~</p>
+<p>Linux是什么？。。。。。。好吧，最后提一嘴（AI时代建议简单问题问GPT去）</p>
+<h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><p>Linux是一种自由和开放源代码的操作系统，它以GPL（通用公共许可证）作为许可证发布。它是一个多用户、多任务、支持多种处理器架构的操作系统，可以运行在各种设备上，包括个人电脑、服务器、移动设备等。</p>
+<p>Linux最初是由芬兰学生Linus Torvalds于1991年开发的，它是基于Unix操作系统的设计理念和思想，但是与Unix不同的是，Linux是一个自由和开放源代码的操作系统，任何人都可以查看、修改和分发它的源代码。</p>
+<p>Linux有许多不同的发行版，如Ubuntu、Debian、Fedora、Red Hat等，每个发行版都有自己的特点和优势。Linux发行版通常包含一个Linux内核、一组GNU工具和其他应用程序，如文本编辑器、图形界面、网络应用程序等。</p>
+<p>Linux具有许多特点，包括强大的网络支持、高度可定制性、良好的安全性、良好的兼容性等。它也被广泛应用于各种领域，如服务器、超级计算机、网络设备、移动设备、嵌入式设备、桌面计算机等。</p>
+<p><strong>说白了，跟windows一个地位的东西，但是可以不用图形化界面。所谓没有图形化界面，你可以点击你电脑左下角的搜索找一找cmd，打开这个程序后，全屏这个程序，Linux没有图形化界面就大概是这个样子的</strong></p>
+<h2 id="前置准备"><a href="#前置准备" class="headerlink" title="前置准备"></a>前置准备</h2><p>在安装PyTorch时，你需要有一些前置准备：</p>
+<ol>
+<li>检查操作系统的情况</li>
+<li>检查显卡配置情况</li>
+<li>安装一类Torch前端</li>
+<li>安装其他官网说明的相关配置</li>
+</ol>
+<h3 id="检查操作系统的情况"><a href="#检查操作系统的情况" class="headerlink" title="检查操作系统的情况"></a>检查操作系统的情况</h3><p>首先最简单也是最重要的就是要确定你的操作系统到底是什么，照道理来讲，你买电脑的时候就应该知道电脑里预装的是什么操作系统了，绝大多数都是windows，部分苹果电脑可能是MacOS</p>
+<p>(当然也有可能是你自己的组装机这种情况可能开局是Linux，但是这种情况你就应该是个熟知电脑的大佬了，也不需要我多说什么了)</p>
+<h4 id="一些小方法"><a href="#一些小方法" class="headerlink" title="一些小方法"></a>一些小方法</h4><ol>
+<li>Windows操作系统：在桌面上，右键单击“此电脑”或“我的电脑”图标，然后选择“属性”选项。在打开的窗口中，你可以看到你的Windows版本和其他详细信息。</li>
+<li>macOS操作系统：在菜单栏上，点击“”图标，然后选择“关于本机”选项。在打开的窗口中，你可以看到你的macOS版本和其他详细信息。</li>
+<li>Linux操作系统：打开终端，输入“lsb_release -a”命令并按回车键。在命令输出中，你可以看到你的Linux版本和其他详细信息。</li>
+<li>Android操作系统：在应用程序菜单中，找到“设置”应用程序，然后选择“关于手机”或“关于设备”选项。在打开的窗口中，你可以看到你的Android版本和其他详细信息。</li>
+<li>iOS操作系统：在主屏幕上，打开“设置”应用程序，然后选择“通用”选项。在打开的窗口中，你可以看到你的iOS版本和其他详细信息。</li>
+</ol>
+<p>同时你也要确定一下官网上显示的配置支持情况，如果要是你的电脑系统配置实在是太低了，以至于运行不了这个模块，那就没办法装了</p>
+<p>以下配置内容引用自<a target="_blank" rel="noopener" href="https://pytorch.org/get-started/locally">https://pytorch.org/get-started/locally</a></p>
+<p>对于Windows：</p>
+<p><strong>支持windows7以上的，最好是windows10</strong><br><strong>对于Windows Server而言，支持2008 R2及更高的情况</strong></p>
+<p>PyTorch is supported on the following Windows distributions:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/windows">Windows</a> 7 and greater; <a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/software-download/windows10ISO">Windows 10</a> or greater recommended.</li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows-server/windows-server">Windows Server 2008</a> r2 and greater</li>
+</ul>
+<p>对于Linux：</p>
+<p><strong>支持使用 glibc&gt;&#x3D;2.17版本以上构建的Linux系统，包含了下面所述的发行版本，这里不一一翻译了</strong></p>
+<p>PyTorch is supported on Linux distributions that use <a target="_blank" rel="noopener" href="https://www.gnu.org/software/libc/">glibc</a> &gt;&#x3D; v2.17, which include the following:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.archlinux.org/download/">Arch Linux</a>, minimum version 2012-07-15</li>
+<li><a target="_blank" rel="noopener" href="https://www.centos.org/download/">CentOS</a>, minimum version 7.3-1611</li>
+<li><a target="_blank" rel="noopener" href="https://www.debian.org/distrib/">Debian</a>, minimum version 8.0</li>
+<li><a target="_blank" rel="noopener" href="https://getfedora.org/">Fedora</a>, minimum version 24</li>
+<li><a target="_blank" rel="noopener" href="https://linuxmint.com/download.php">Mint</a>, minimum version 14</li>
+<li><a target="_blank" rel="noopener" href="https://software.opensuse.org/">OpenSUSE</a>, minimum version 42.1</li>
+<li><a target="_blank" rel="noopener" href="https://www.pclinuxos.com/get-pclinuxos/">PCLinuxOS</a>, minimum version 2014.7</li>
+<li><a target="_blank" rel="noopener" href="http://www.slackware.com/getslack/">Slackware</a>, minimum version 14.2</li>
+<li><a target="_blank" rel="noopener" href="https://www.ubuntu.com/download/desktop">Ubuntu</a>, minimum version 13.04</li>
+</ul>
+<p>对于Mac：</p>
+<p><strong>PyTorch 在 macOS 10.15 (Catalina) 或更高版本上受支持。</strong></p>
+<p>PyTorch is supported on macOS 10.15 (Catalina) or above.</p>
+<p><strong>引用结束</strong></p>
+<h3 id="检查显卡配置情况"><a href="#检查显卡配置情况" class="headerlink" title="检查显卡配置情况"></a>检查显卡配置情况</h3><p>检查完了操作系统的支持情况，你还需要检查显卡配置的相关情况，显卡在国内分为两大类，一类是AMD显卡，还有一类是英伟达显卡(英特尔显卡没有存在感)，刚刚我们引用了管家，采购商，代理商的例子，目前pytorch支持的显卡体系，只有AMD和英伟达。因此你首先要做的就是确定你的电脑上安装的到底是哪一类显卡。</p>
+<p>下面提供了两类方式用于确定电脑的显卡类型：</p>
+<h4 id="点击式"><a href="#点击式" class="headerlink" title="点击式"></a>点击式</h4><p>在Windows操作系统中，可以按照以下步骤进行：</p>
+<ol>
+<li>右键单击桌面上空白处，选择“显示设置”或“屏幕分辨率”选项。</li>
+<li>在打开的窗口中，选择“高级显示设置”或“高级显示选项”选项。</li>
+<li>在高级显示设置或高级显示选项窗口中，选择“显示适配器属性”或“显卡属性”选项。</li>
+<li>在显示适配器属性或显卡属性窗口中，你可以看到你的显卡类型和其他详细信息，例如制造商、型号、驱动程序版本等。</li>
+</ol>
+<p>在macOS操作系统中，你可以按照以下步骤进行：</p>
+<ol>
+<li>选择“关于本机”选项。</li>
+<li>在打开的窗口中，选择“系统报告”选项。</li>
+<li>在系统报告窗口中，选择“图形&#x2F;显示”选项。</li>
+<li>在图形&#x2F;显示选项下，你可以看到你的显卡类型和其他详细信息，例如制造商、型号、驱动程序版本等。</li>
+</ol>
+<p>在Linux操作系统中，你可以打开终端，输入“lspci | grep VGA”命令并按回车键。在命令输出中，你可以看到你的显卡类型和其他详细信息，例如制造商、型号、驱动程序版本等。</p>
+<h4 id="命令式"><a href="#命令式" class="headerlink" title="命令式"></a>命令式</h4><p>通过使用”nvidia-smi”命令来查看NVIDIA显卡的详细信息，例如显存使用情况、功耗、温度等。</p>
+<p> AMD显卡目前找不到相关的命令可以判断</p>
+<p><strong>(但其实没有英伟达显卡，基本上深度学习可以判半个死刑了，一般通用的都是英伟达显卡)</strong></p>
+<h3 id="安装一类PyTorch前端"><a href="#安装一类PyTorch前端" class="headerlink" title="安装一类PyTorch前端"></a>安装一类PyTorch前端</h3><p>接下来你要做的就是安装一类PyTorch前端，这里我们回顾一下刚刚我在图片底下写的碎碎念：</p>
+<p><strong>声明：其实这样的定义并不算很严谨，因为该模块拥有自己的c++前端，归根到底，在没有进行源码分析之前，瞳君认为绿色部分的编程语言应该是该模块的一个前端，而该模块作为后端。相当于PyTorch在后面都帮你把事情做好了，然后呈现的工作交给了编程语言</strong></p>
+<p>这里我们要再套一层，同样以管家和采购商的例子来说，管家现在找采购商要求说采购一套能够用于深度学习的工具箱，采购商说没问题，但是采购来的不是个工具箱，而是个代理商A(pytorch)，这个代理商说要我做事情没问题，但是呢，关于深度学习加速的部分，我需要委托给另外一个代理商B(CUDA or ROCm)来做，<strong>于是乎，你的命令下发给管家(python)，管家将涉及到pytorch的相关操作交给了代理商A，代理商A将涉及到深度学习加速运算的部分交给了代理商B，于是乎，代理商B把活做完，然后回传给A， A回传给管家，管家回传给你，就完成了深度学习的一个基本流程。</strong></p>
+<p>（但其实这里还是不够严谨，因为代理商B在收到任务的时候<strong>也不是自己做的</strong>，他实际上是转交给了更底层的家伙来干活，所以说这里的部分应该还要再嵌套一层，但是这里就不详细展开了，等到了之后解析英伟达的部分再说）</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/576fea4b-f559-4f65-8833-09db89722f6e" alt="image"></p>
+<p>好了，回到前端的话题上来，所以这个地方就有一个前后端的关系，我们从管家的视角来看，代理商a是管家角度的前端，因为管家和代理商a是直接交流的，他并不管代理商a在接到任务之后在后面干了些什么。而代理商b于管家而言则是后端，因为管家不知道代理商b的存在，他也不知道代理商b干了些什么。</p>
+<p>然后现在我们从用户的视角来看，对于用户来说管家就是前端，因为用户直接与管家进行交流，而不知道背后有代理商，而从用户的视角来看代理商a和b均是后端，因为用户不知道二者的存在，也不知道他俩到底干了些什么。</p>
+<p>那这么一说，其实编程语言归根到底来讲就是一个前端，所以我们这边写的并不是要找一个编程语言，而是去找一类前端的原因就是这样。<br>话说回来，PyTorch的前端有C++，Python，Java三类，因此我们在安装时，电脑上首先得有这三类软件的其中一个。至于这仨怎么安装嘛，无非大体上就遵循以下这几个流程：</p>
+<ol>
+<li>官网或者二次分发商处（Anaconda，Miniconda，Oracle Java）下载安装包</li>
+<li>根据安装包上的指示进行安装到指定的目录或者是直接解压到某个目录(对于c来讲可能是直接解压)</li>
+<li>完成安装之后将执行程序的路径放到一个叫环境变量的位置里**(环境变量可以理解成昵称，通过叫昵称可以直接摇人，不需要叫全名(具体的路径，长长的一串))(如果没有这个过程，说明安装包自己帮你干了，anaconda就是这样)**</li>
+<li>完成配置，电脑重启</li>
+</ol>
+<h3 id="安装其他官网说明的相关配置"><a href="#安装其他官网说明的相关配置" class="headerlink" title="安装其他官网说明的相关配置"></a>安装其他官网说明的相关配置</h3><p>由于内容撰写具有时效性，因此看到本文的你，不知道是已经猴年马月还是什么时候了，这种情况建议直接去官网一看查看一下，还有没有什么更新的配置。</p>
+<p>传送门（不排除10年后失效可能性）：<a target="_blank" rel="noopener" href="https://pytorch.org/get-started/locally">https://pytorch.org/get-started/locally</a></p>
+<h2 id="现在是，安装时间！"><a href="#现在是，安装时间！" class="headerlink" title="现在是，安装时间！"></a>现在是，安装时间！</h2><p>这边我们以Python为例进行讲解，首先你需要下载一个anaconda(对于新手而言)，对于已经熟悉conda的老手而言，直接下miniconda。按照网络上的讲解安装完毕之后，你的电脑里就有了一个默认Python环境，接下来你要创建一个虚拟环境，用来放置PyTorch</p>
+<p><strong>创建环境的命令：conda create -n 环境的名字</strong></p>
+<p>安装界面大概长下面这个亚子：</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/62e36d16-aef5-432b-acfe-18d1f89726e4" alt="image"></p>
+<p>第1行选择要安装的版本，一般有稳定版和前瞻版两种选择，前者稳定，后者不稳定，但有新特性，自行选择。可以再往上划一划，找到之前的版本进行安装。</p>
+<p>第2行选择你的操作系统operate system，这个之前提过了。</p>
+<p>第3行选择你的包管理软件</p>
+<ol>
+<li>对于使用C++进行搭建的，可选项只有LibTorch与Source</li>
+<li>对于使用原版Python进行构建的，只能选择pip</li>
+<li><strong>对于使用了anaconda与miniconda进行搭建的，可以选择conda或pip，建议创建一个虚拟环境(conda create -n 环境的名字)，然后通过conda进行安装。</strong></li>
+</ol>
+<p>第4行选择你的安装语言，有Python和Java&#x2F;C两种选择，一般选python</p>
+<p>第5行选择计算平台，计算平台的前三类是显卡，后一类是CPU，其中显卡的前两类是英伟达的显卡工具库版本，后一类是AMD的显卡工具库版本。注意AMD的显卡工具库支持仅在Linux系统下可用。</p>
+<p>等你把上面的选项都选好之后，底下的run this command就会有一行命令，<strong>直接把这行命令复制到你的命令行运行就可以了，当然在命令运行之前，你还需要激活你的环境。</strong>激活环境的命令如下：</p>
+<p>首先，打开cmd，然后输入：</p>
+<p><strong>conda activate 你的环境名字</strong></p>
+<p>如果这串命令显示conda找不到，检查一下环境变量配置了没有，conda其实是你安装的路径下conda.exe的昵称，<strong>如果配置的环境变量，那么这个昵称就是可用的，你喊一声他就来了，如果你没有配置环境变量，那么系统就找不到这个东西</strong>。所以自然而然也就没有反应。</p>
+<p><strong>当然你也可以指定完整的路径，例如D:&#x2F;xxxx&#x2F;xxxx&#x2F;….&#x2F;conda.exe，但想必这样是非常麻烦的，不建议。</strong></p>
+<p>之后只要等待安装完成就可以了。</p>
+<h2 id="关于安装过程中的一些细节"><a href="#关于安装过程中的一些细节" class="headerlink" title="关于安装过程中的一些细节"></a>关于安装过程中的一些细节</h2><p>接下来我们需要探讨一些安装过程中的细节，也就是关于不同包管理软件，他到底是如何进行安装的？<br>用大白话讲，也就是接下来我们要探讨一下各位代理商们的能力了。<br>这里我们要用到一个东西来做实验，他就是大名鼎鼎的docker。</p>
+<h3 id="什么是docker？"><a href="#什么是docker？" class="headerlink" title="什么是docker？"></a>什么是docker？</h3><p>这个话题说不定以后会详细介绍的，所以这边我就简单介绍一下：</p>
+<p>当你在安装一个软件时，这个软件也许需要要求非常多的环境，众所周知，一个软件的运行是有非常多的依赖的，毕竟程序员不可能通过01来完成一整个windows系统的编程(除非是大佬)，也就是说一个软件的运行，它可能依赖着另外一些软件，当我们在使用主要的那一个软件时，我们需要配置这个软件所拥有的一系列其他支持，也就是这个软件运行所必要的其他软件。</p>
+<p>用大白话来讲，我们同样以管家和采购商的例子来说，采购商买来的工具包肯定不是一个箱子而已，箱子里面肯定还有其他的一系列套件，而这些套件又被装在一系列的小盒子里分门别类的摆放着，这些小盒子，就是这整个工具箱的依赖，没有这些小盒子，整个工具箱就没法顺利的运转起来，因此采购商在采购工具箱的时候，或多或少都会把工具箱的依赖采购全，以防造成不必要的麻烦。</p>
+<p>但是对于不同的包管理软件，也就是对于不同的采购商而言，他的采购方式和买回来的东西可能是不一样的，甚至对于不同的电脑和平台而言，采购回来的东西也会有所不同。那既然出现了这样麻烦的情况，一个程序在你的电脑上跑得通，在我的电脑上或许他就歇菜了。为了解决这种麻烦的问题，程序员们搞出了一个叫容器化的思想。</p>
+<p>这边我们讲的通俗一点，容器话其实可以理解成把一个工具箱放在一个专门的工具房间，然后这个工具房间专门用于服务于管家执行的某一功能，这样不同的事物就可以放在不同的房间里面进行工作，不同的房间里面有着分门别类的工具箱，管家在使用工具箱进行业务的时候，只要进入到不同的房间，其他房间的工具箱，就不会对管家的工作造成影响，也就不会出现工具乱放乱摆的情况。</p>
+<p>形象一点嘛……类似于下图：</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/e1a73683-e71e-458f-8c3a-b5037821bde3" alt="image"></p>
+<p>不好意思放错了，应该是这图（不过领域的概念和容器的概念也差不多，只要处在自己的领域里面，就不会被其他的领域干涉）</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/efd586d7-a08b-4df6-aa50-5e2f91e431a6" alt="image"></p>
+<p>(每个工作区域是互不干涉的)</p>
+<p>所以我们通过这玩意可以非常快速的部署一个环境，并直接对这个环境里面的一些特性进行测试，测试完之后不要的环境可以直接扔了，也不用担心卸载之后存在安装残留等等的问题。</p>
+<p>接下来我们开始测试安装情况，值得注意的是，docker里面的任何软件的安装均是基于Linux系统的，因为docker的软件设计是依赖于Linux虚拟机的，因此安装上去的都是Linux版本，windows版本这里就不多做测试了，因为对于跨平台的语言来说（python），二者应该是差不多的。</p>
+<p>下面我们仅对conda与pip这两个包管理软件进行测试，因为大部分安装的时候是通过这两个包管理命令进行安装的。<br>(你想从源码构建也可以，那说明你是个大佬doge)</p>
+<h3 id="计划的方法"><a href="#计划的方法" class="headerlink" title="计划的方法"></a>计划的方法</h3><p>第一步，整一个docker容器：</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/77c728d9-53df-49e3-b644-65a60913fd79" alt="image"></p>
+<p>第二步，docker容器内部装着conda：</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/48093a61-1406-4a69-a7a8-8ddd4db201ff" alt="image"></p>
+<p>第三步，conda内部整两个个虚拟环境，一个用来测试，另一个安装virtualenv（python虚拟环境包）</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/18f60981-1927-491c-9730-a8ed13414a3d" alt="image"></p>
+<p>第四步，通过virtualenv再整一个环境用于测试pip安装：</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/3a4e10b9-efea-4de9-85f9-a7d65e327ee6" alt="image"></p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/482d3468-8ae3-476e-916b-602fb3068a49" alt="image"></p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/859d80b6-b60c-4da9-bb17-c03431401e72" alt="image"></p>
+<p>环境准备就绪，开工！</p>
+<h3 id="针对Linux-conda-方法安装的PyTorch"><a href="#针对Linux-conda-方法安装的PyTorch" class="headerlink" title="针对Linux conda 方法安装的PyTorch"></a>针对Linux conda 方法安装的PyTorch</h3><p>Python版本：3.10</p>
+<p>Conda版本：conda 4.10.3</p>
+<p>首先是CUDA版本，安装的包情况如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">blas               pkgs/main/linux-64::blas-1.0-mkl</span><br><span class="line">brotlipy           pkgs/main/linux-64::brotlipy-0.7.0-py310h7f8727e_1002</span><br><span class="line">certifi            pkgs/main/linux-64::certifi-2023.7.22-py310h06a4308_0</span><br><span class="line">cffi               pkgs/main/linux-64::cffi-1.15.1-py310h74dc2b5_0</span><br><span class="line">charset-normalizer pkgs/main/noarch::charset-normalizer-2.0.4-pyhd3eb1b0_0</span><br><span class="line">cryptography       pkgs/main/linux-64::cryptography-41.0.2-py310h774aba0_0</span><br><span class="line">cuda-cudart        nvidia/linux-64::cuda-cudart-11.8.89-0</span><br><span class="line">cuda-cupti         nvidia/linux-64::cuda-cupti-11.8.87-0</span><br><span class="line">cuda-libraries     nvidia/linux-64::cuda-libraries-11.8.0-0</span><br><span class="line">cuda-nvrtc         nvidia/linux-64::cuda-nvrtc-11.8.89-0</span><br><span class="line">cuda-nvtx          nvidia/linux-64::cuda-nvtx-11.8.86-0</span><br><span class="line">cuda-runtime       nvidia/linux-64::cuda-runtime-11.8.0-0</span><br><span class="line">ffmpeg             pytorch/linux-64::ffmpeg-4.3-hf484d3e_0</span><br><span class="line">filelock           pkgs/main/linux-64::filelock-3.9.0-py310h06a4308_0</span><br><span class="line">freetype           pkgs/main/linux-64::freetype-2.12.1-h4a9f257_0</span><br><span class="line">giflib             pkgs/main/linux-64::giflib-5.2.1-h5eee18b_3</span><br><span class="line">gmp                pkgs/main/linux-64::gmp-6.2.1-h295c915_3</span><br><span class="line">gmpy2              pkgs/main/linux-64::gmpy2-2.1.2-py310heeb90bb_0</span><br><span class="line">gnutls             pkgs/main/linux-64::gnutls-3.6.15-he1e5248_0</span><br><span class="line">idna               pkgs/main/linux-64::idna-3.4-py310h06a4308_0</span><br><span class="line">intel-openmp       pkgs/main/linux-64::intel-openmp-2021.4.0-h06a4308_3561</span><br><span class="line">jinja2             pkgs/main/linux-64::jinja2-3.1.2-py310h06a4308_0</span><br><span class="line">jpeg               pkgs/main/linux-64::jpeg-9e-h5eee18b_1</span><br><span class="line">lame               pkgs/main/linux-64::lame-3.100-h7b6447c_0</span><br><span class="line">lcms2              pkgs/main/linux-64::lcms2-2.12-h3be6417_0</span><br><span class="line">lerc               pkgs/main/linux-64::lerc-3.0-h295c915_0</span><br><span class="line">libcublas          nvidia/linux-64::libcublas-11.11.3.6-0</span><br><span class="line">libcufft           nvidia/linux-64::libcufft-10.9.0.58-0</span><br><span class="line">libcufile          nvidia/linux-64::libcufile-1.7.1.12-0</span><br><span class="line">libcurand          nvidia/linux-64::libcurand-10.3.3.129-0</span><br><span class="line">libcusolver        nvidia/linux-64::libcusolver-11.4.1.48-0</span><br><span class="line">libcusparse        nvidia/linux-64::libcusparse-11.7.5.86-0</span><br><span class="line">libdeflate         pkgs/main/linux-64::libdeflate-1.17-h5eee18b_0</span><br><span class="line">libiconv           pkgs/main/linux-64::libiconv-1.16-h7f8727e_2</span><br><span class="line">libidn2            pkgs/main/linux-64::libidn2-2.3.4-h5eee18b_0</span><br><span class="line">libnpp             nvidia/linux-64::libnpp-11.8.0.86-0</span><br><span class="line">libnvjpeg          nvidia/linux-64::libnvjpeg-11.9.0.86-0</span><br><span class="line">libpng             pkgs/main/linux-64::libpng-1.6.39-h5eee18b_0</span><br><span class="line">libtasn1           pkgs/main/linux-64::libtasn1-4.19.0-h5eee18b_0</span><br><span class="line">libtiff            pkgs/main/linux-64::libtiff-4.5.0-h6a678d5_2</span><br><span class="line">libunistring       pkgs/main/linux-64::libunistring-0.9.10-h27cfd23_0</span><br><span class="line">libwebp            pkgs/main/linux-64::libwebp-1.2.4-h11a3e52_1</span><br><span class="line">libwebp-base       pkgs/main/linux-64::libwebp-base-1.2.4-h5eee18b_1</span><br><span class="line">lz4-c              pkgs/main/linux-64::lz4-c-1.9.4-h6a678d5_0</span><br><span class="line">markupsafe         pkgs/main/linux-64::markupsafe-2.1.1-py310h7f8727e_0</span><br><span class="line">mkl                pkgs/main/linux-64::mkl-2021.4.0-h06a4308_640</span><br><span class="line">mkl-service        pkgs/main/linux-64::mkl-service-2.4.0-py310h7f8727e_0</span><br><span class="line">mkl_fft            pkgs/main/linux-64::mkl_fft-1.3.1-py310hd6ae3a3_0</span><br><span class="line">mkl_random         pkgs/main/linux-64::mkl_random-1.2.2-py310h00e6091_0</span><br><span class="line">mpc                pkgs/main/linux-64::mpc-1.1.0-h10f8cd9_1</span><br><span class="line">mpfr               pkgs/main/linux-64::mpfr-4.0.2-hb69a4c5_1</span><br><span class="line">mpmath             pkgs/main/linux-64::mpmath-1.3.0-py310h06a4308_0</span><br><span class="line">nettle             pkgs/main/linux-64::nettle-3.7.3-hbbd107a_1</span><br><span class="line">networkx           pkgs/main/linux-64::networkx-3.1-py310h06a4308_0</span><br><span class="line">numpy              pkgs/main/linux-64::numpy-1.24.3-py310hd5efca6_0</span><br><span class="line">numpy-base         pkgs/main/linux-64::numpy-base-1.24.3-py310h8e6c178_0</span><br><span class="line">openh264           pkgs/main/linux-64::openh264-2.1.1-h4ff587b_0</span><br><span class="line">pillow             pkgs/main/linux-64::pillow-9.4.0-py310h6a678d5_0</span><br><span class="line">pycparser          pkgs/main/noarch::pycparser-2.21-pyhd3eb1b0_0</span><br><span class="line">pyopenssl          pkgs/main/linux-64::pyopenssl-23.2.0-py310h06a4308_0</span><br><span class="line">pysocks            pkgs/main/linux-64::pysocks-1.7.1-py310h06a4308_0</span><br><span class="line">pytorch            pytorch/linux-64::pytorch-2.0.1-py3.10_cuda11.8_cudnn8.7.0_0</span><br><span class="line">pytorch-cuda       pytorch/linux-64::pytorch-cuda-11.8-h7e8668a_5</span><br><span class="line">pytorch-mutex      pytorch/noarch::pytorch-mutex-1.0-cuda</span><br><span class="line">requests           pkgs/main/linux-64::requests-2.31.0-py310h06a4308_0</span><br><span class="line">six                pkgs/main/noarch::six-1.16.0-pyhd3eb1b0_1</span><br><span class="line">sympy              pkgs/main/linux-64::sympy-1.11.1-py310h06a4308_0</span><br><span class="line">torchaudio         pytorch/linux-64::torchaudio-2.0.2-py310_cu118</span><br><span class="line">torchtriton        pytorch/linux-64::torchtriton-2.0.0-py310</span><br><span class="line">torchvision        pytorch/linux-64::torchvision-0.15.2-py310_cu118</span><br><span class="line">typing_extensions  pkgs/main/linux-64::typing_extensions-4.7.1-py310h06a4308_0</span><br><span class="line">urllib3            pkgs/main/linux-64::urllib3-1.26.16-py310h06a4308_0</span><br><span class="line">zstd               pkgs/main/linux-64::zstd-1.5.5-hc292b87_0</span><br></pre></td></tr></table></figure>
+
+<p>CPU版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">blas               pkgs/main/linux-64::blas-1.0-openblas</span><br><span class="line">brotlipy           pkgs/main/linux-64::brotlipy-0.7.0-py310h7f8727e_1002</span><br><span class="line">certifi            pkgs/main/linux-64::certifi-2023.7.22-py310h06a4308_0</span><br><span class="line">cffi               pkgs/main/linux-64::cffi-1.15.1-py310h74dc2b5_0</span><br><span class="line">charset-normalizer pkgs/main/noarch::charset-normalizer-2.0.4-pyhd3eb1b0_0</span><br><span class="line">cpuonly            pytorch/noarch::cpuonly-2.0-0</span><br><span class="line">cryptography       pkgs/main/linux-64::cryptography-41.0.2-py310h774aba0_0</span><br><span class="line">ffmpeg             pytorch/linux-64::ffmpeg-4.3-hf484d3e_0</span><br><span class="line">filelock           pkgs/main/linux-64::filelock-3.9.0-py310h06a4308_0</span><br><span class="line">freetype           pkgs/main/linux-64::freetype-2.12.1-h4a9f257_0</span><br><span class="line">giflib             pkgs/main/linux-64::giflib-5.2.1-h5eee18b_3</span><br><span class="line">gmp                pkgs/main/linux-64::gmp-6.2.1-h295c915_3</span><br><span class="line">gmpy2              pkgs/main/linux-64::gmpy2-2.1.2-py310heeb90bb_0</span><br><span class="line">gnutls             pkgs/main/linux-64::gnutls-3.6.15-he1e5248_0</span><br><span class="line">idna               pkgs/main/linux-64::idna-3.4-py310h06a4308_0</span><br><span class="line">jinja2             pkgs/main/linux-64::jinja2-3.1.2-py310h06a4308_0</span><br><span class="line">jpeg               pkgs/main/linux-64::jpeg-9e-h5eee18b_1</span><br><span class="line">lame               pkgs/main/linux-64::lame-3.100-h7b6447c_0</span><br><span class="line">lcms2              pkgs/main/linux-64::lcms2-2.12-h3be6417_0</span><br><span class="line">lerc               pkgs/main/linux-64::lerc-3.0-h295c915_0</span><br><span class="line">libdeflate         pkgs/main/linux-64::libdeflate-1.17-h5eee18b_0</span><br><span class="line">libgfortran-ng     pkgs/main/linux-64::libgfortran-ng-11.2.0-h00389a5_1</span><br><span class="line">libgfortran5       pkgs/main/linux-64::libgfortran5-11.2.0-h1234567_1</span><br><span class="line">libiconv           pkgs/main/linux-64::libiconv-1.16-h7f8727e_2</span><br><span class="line">libidn2            pkgs/main/linux-64::libidn2-2.3.4-h5eee18b_0</span><br><span class="line">libopenblas        pkgs/main/linux-64::libopenblas-0.3.21-h043d6bf_0</span><br><span class="line">libpng             pkgs/main/linux-64::libpng-1.6.39-h5eee18b_0</span><br><span class="line">libprotobuf        pkgs/main/linux-64::libprotobuf-3.20.3-he621ea3_0</span><br><span class="line">libtasn1           pkgs/main/linux-64::libtasn1-4.19.0-h5eee18b_0</span><br><span class="line">libtiff            pkgs/main/linux-64::libtiff-4.5.0-h6a678d5_2</span><br><span class="line">libunistring       pkgs/main/linux-64::libunistring-0.9.10-h27cfd23_0</span><br><span class="line">libwebp            pkgs/main/linux-64::libwebp-1.2.4-h11a3e52_1</span><br><span class="line">libwebp-base       pkgs/main/linux-64::libwebp-base-1.2.4-h5eee18b_1</span><br><span class="line">lz4-c              pkgs/main/linux-64::lz4-c-1.9.4-h6a678d5_0</span><br><span class="line">markupsafe         pkgs/main/linux-64::markupsafe-2.1.1-py310h7f8727e_0</span><br><span class="line">mpc                pkgs/main/linux-64::mpc-1.1.0-h10f8cd9_1</span><br><span class="line">mpfr               pkgs/main/linux-64::mpfr-4.0.2-hb69a4c5_1</span><br><span class="line">mpmath             pkgs/main/linux-64::mpmath-1.3.0-py310h06a4308_0</span><br><span class="line">nettle             pkgs/main/linux-64::nettle-3.7.3-hbbd107a_1</span><br><span class="line">networkx           pkgs/main/linux-64::networkx-3.1-py310h06a4308_0</span><br><span class="line">ninja              pkgs/main/linux-64::ninja-1.10.2-h06a4308_5</span><br><span class="line">ninja-base         pkgs/main/linux-64::ninja-base-1.10.2-hd09550d_5</span><br><span class="line">numpy              pkgs/main/linux-64::numpy-1.25.0-py310heeff2f4_0</span><br><span class="line">numpy-base         pkgs/main/linux-64::numpy-base-1.25.0-py310h8a23956_0</span><br><span class="line">openh264           pkgs/main/linux-64::openh264-2.1.1-h4ff587b_0</span><br><span class="line">pillow             pkgs/main/linux-64::pillow-9.4.0-py310h6a678d5_0</span><br><span class="line">pycparser          pkgs/main/noarch::pycparser-2.21-pyhd3eb1b0_0</span><br><span class="line">pyopenssl          pkgs/main/linux-64::pyopenssl-23.2.0-py310h06a4308_0</span><br><span class="line">pysocks            pkgs/main/linux-64::pysocks-1.7.1-py310h06a4308_0</span><br><span class="line">pytorch            pkgs/main/linux-64::pytorch-2.0.1-cpu_py310hab5cca8_0</span><br><span class="line">pytorch-mutex      pytorch/noarch::pytorch-mutex-1.0-cpu</span><br><span class="line">requests           pkgs/main/linux-64::requests-2.31.0-py310h06a4308_0</span><br><span class="line">sympy              pkgs/main/linux-64::sympy-1.11.1-py310h06a4308_0</span><br><span class="line">torchaudio         pytorch/linux-64::torchaudio-2.0.2-py310_cpu</span><br><span class="line">torchvision        pytorch/linux-64::torchvision-0.15.2-py310_cpu</span><br><span class="line">typing-extensions  pkgs/main/linux-64::typing-extensions-4.7.1-py310h06a4308_0</span><br><span class="line">typing_extensions  pkgs/main/linux-64::typing_extensions-4.7.1-py310h06a4308_0</span><br><span class="line">urllib3            pkgs/main/linux-64::urllib3-1.26.16-py310h06a4308_0</span><br><span class="line">zstd               pkgs/main/linux-64::zstd-1.5.5-hc292b87_0</span><br></pre></td></tr></table></figure>
+
+<p>ROCm？很遗憾其不支持Conda安装。</p>
+<h3 id="针对Linux-pip方法安装的PyTorch"><a href="#针对Linux-pip方法安装的PyTorch" class="headerlink" title="针对Linux pip方法安装的PyTorch"></a>针对Linux pip方法安装的PyTorch</h3><p>Python版本：3.10</p>
+<p>CUDA版本情况如下：</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/2a0fcfe2-7788-4d41-90f3-403416e7507b" alt="image"></p>
+<p>CPU版本情况如下：</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/87361f61-4d33-454d-8963-31b37282fcda" alt="image"></p>
+<p>ROCm版本情况如下：</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/51bdf62f-52d7-4363-b283-f9d00a791095" alt="image"></p>
+<p>看完了上面5种不同的方法进行的安装，其中通过pip方法安装的PyTorch在不同计算平台上似乎没什么差别？</p>
+<p>但是在安装过程中有明显的差别：对于支持显卡加速计算的情况，pytorch模块的大小比CPU版本大的多</p>
+<p><strong>接下来我们要借助一下搜索工具，对这楼上这n个库的作用进行分析。</strong></p>
+<p>当然，如果能绘制出依赖图就好了……</p>
+<p>当然可以！</p>
+<p>但是在我们可视化之前，我们首先要理清一些东西，这样能够帮助我们减少很多的工作量：<br>首先：pip安装的模块似乎conda一定会有，conda安装的pip不一定有</p>
+<p>cpu版本安装的模块显卡版本安装的一定有，显卡版本安装的cpu版本不一定有。</p>
+<p>pip不能安装某些非python模块（cmake：请好好地看着我）</p>
+<p>但conda可以</p>
+<p><strong>推论：pip与conda安装的pytorch使用上没什么不同，但是pip很可能缺失了一些关键的显卡工具组件</strong></p>
+<p>基于这些假设，我们接下来仅需判断<strong>conda额外安装的究竟是什么玩意</strong>，起到什么作用。同时对其他的库做依赖可视化。</p>
+<h3 id="依赖可视化-人工去掉了pipdeptree"><a href="#依赖可视化-人工去掉了pipdeptree" class="headerlink" title="依赖可视化(人工去掉了pipdeptree)"></a>依赖可视化(人工去掉了pipdeptree)</h3><p>那么我们现在通过pipdeptree进行相关库的依赖可视化：</p>
+<h4 id="CUDA版本（pip）"><a href="#CUDA版本（pip）" class="headerlink" title="CUDA版本（pip）"></a>CUDA版本（pip）</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">pip==23.2.1</span><br><span class="line">setuptools==68.0.0</span><br><span class="line">torchaudio==2.0.2+cu118</span><br><span class="line">└── torch [required: ==2.0.1, installed: 2.0.1+cu118]</span><br><span class="line">    ├── filelock [required: Any, installed: 3.9.0]</span><br><span class="line">    ├── Jinja2 [required: Any, installed: 3.1.2]</span><br><span class="line">    │   └── MarkupSafe [required: &gt;=2.0, installed: 2.1.2]</span><br><span class="line">    ├── networkx [required: Any, installed: 3.0]</span><br><span class="line">    ├── sympy [required: Any, installed: 1.11.1]</span><br><span class="line">    │   └── mpmath [required: &gt;=0.19, installed: 1.2.1]</span><br><span class="line">    ├── triton [required: ==2.0.0, installed: 2.0.0]</span><br><span class="line">    │   ├── cmake [required: Any, installed: 3.25.0]</span><br><span class="line">    │   ├── filelock [required: Any, installed: 3.9.0]</span><br><span class="line">    │   ├── lit [required: Any, installed: 15.0.7]</span><br><span class="line">    └── typing-extensions [required: Any, installed: 4.4.0]</span><br><span class="line">torchvision==0.15.2+cu118</span><br><span class="line">├── numpy [required: Any, installed: 1.24.1]</span><br><span class="line">├── Pillow [required: &gt;=5.3.0,!=8.3.*, installed: 9.3.0]</span><br><span class="line">├── requests [required: Any, installed: 2.28.1]</span><br><span class="line">│   ├── certifi [required: &gt;=2017.4.17, installed: 2022.12.7]</span><br><span class="line">│   ├── charset-normalizer [required: &gt;=2,&lt;3, installed: 2.1.1]</span><br><span class="line">│   ├── idna [required: &gt;=2.5,&lt;4, installed: 3.4]</span><br><span class="line">│   └── urllib3 [required: &gt;=1.21.1,&lt;1.27, installed: 1.26.13]</span><br><span class="line">└── torch [required: ==2.0.1, installed: 2.0.1+cu118]</span><br><span class="line">    ├── filelock [required: Any, installed: 3.9.0]</span><br><span class="line">    ├── Jinja2 [required: Any, installed: 3.1.2]</span><br><span class="line">    │   └── MarkupSafe [required: &gt;=2.0, installed: 2.1.2]</span><br><span class="line">    ├── networkx [required: Any, installed: 3.0]</span><br><span class="line">    ├── sympy [required: Any, installed: 1.11.1]</span><br><span class="line">    │   └── mpmath [required: &gt;=0.19, installed: 1.2.1]</span><br><span class="line">    ├── triton [required: ==2.0.0, installed: 2.0.0]</span><br><span class="line">    │   ├── cmake [required: Any, installed: 3.25.0]</span><br><span class="line">    │   ├── filelock [required: Any, installed: 3.9.0]</span><br><span class="line">    │   ├── lit [required: Any, installed: 15.0.7]</span><br><span class="line">    └── typing-extensions [required: Any, installed: 4.4.0]</span><br><span class="line">wheel==0.38.4</span><br></pre></td></tr></table></figure>
+
+<h4 id="CUDA版本（conda）"><a href="#CUDA版本（conda）" class="headerlink" title="CUDA版本（conda）"></a>CUDA版本（conda）</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">brotlipy==0.7.0</span><br><span class="line">└── cffi [required: &gt;=1.0.0, installed: 1.15.1]</span><br><span class="line">    └── pycparser [required: Any, installed: 2.21]</span><br><span class="line">gmpy2==2.1.2</span><br><span class="line">mkl-fft==1.3.1</span><br><span class="line">└── numpy [required: &gt;=1.16, installed: 1.24.3]</span><br><span class="line">mkl-random==1.2.2</span><br><span class="line">└── numpy [required: Any, installed: 1.24.3]</span><br><span class="line">mkl-service==2.4.0</span><br><span class="line">pip==23.2.1</span><br><span class="line">pyOpenSSL==23.2.0</span><br><span class="line">└── cryptography [required: &gt;=38.0.0,&lt;42,!=40.0.1,!=40.0.0, installed: 41.0.2]</span><br><span class="line">    └── cffi [required: &gt;=1.12, installed: 1.15.1]</span><br><span class="line">        └── pycparser [required: Any, installed: 2.21]</span><br><span class="line">PySocks==1.7.1</span><br><span class="line">setuptools==68.0.0</span><br><span class="line">six==1.16.0</span><br><span class="line">torchaudio==2.0.2</span><br><span class="line">└── torch [required: Any, installed: 2.0.1]</span><br><span class="line">    ├── filelock [required: Any, installed: 3.9.0]</span><br><span class="line">    ├── Jinja2 [required: Any, installed: 3.1.2]</span><br><span class="line">    │   └── MarkupSafe [required: &gt;=2.0, installed: 2.1.1]</span><br><span class="line">    ├── networkx [required: Any, installed: 3.1]</span><br><span class="line">    ├── sympy [required: Any, installed: 1.11.1]</span><br><span class="line">    │   └── mpmath [required: &gt;=0.19, installed: 1.3.0]</span><br><span class="line">    └── typing-extensions [required: Any, installed: 4.7.1]</span><br><span class="line">torchvision==0.15.2</span><br><span class="line">├── numpy [required: Any, installed: 1.24.3]</span><br><span class="line">├── Pillow [required: &gt;=5.3.0,!=8.3.*, installed: 9.4.0]</span><br><span class="line">├── requests [required: Any, installed: 2.31.0]</span><br><span class="line">│   ├── certifi [required: &gt;=2017.4.17, installed: 2023.7.22]</span><br><span class="line">│   ├── charset-normalizer [required: &gt;=2,&lt;4, installed: 2.0.4]</span><br><span class="line">│   ├── idna [required: &gt;=2.5,&lt;4, installed: 3.4]</span><br><span class="line">│   └── urllib3 [required: &gt;=1.21.1,&lt;3, installed: 1.26.16]</span><br><span class="line">└── torch [required: Any, installed: 2.0.1]</span><br><span class="line">    ├── filelock [required: Any, installed: 3.9.0]</span><br><span class="line">    ├── Jinja2 [required: Any, installed: 3.1.2]</span><br><span class="line">    │   └── MarkupSafe [required: &gt;=2.0, installed: 2.1.1]</span><br><span class="line">    ├── networkx [required: Any, installed: 3.1]</span><br><span class="line">    ├── sympy [required: Any, installed: 1.11.1]</span><br><span class="line">    │   └── mpmath [required: &gt;=0.19, installed: 1.3.0]</span><br><span class="line">    └── typing-extensions [required: Any, installed: 4.7.1]</span><br><span class="line">triton==2.0.0</span><br><span class="line">├── cmake [required: Any, installed: ?]</span><br><span class="line">├── filelock [required: Any, installed: 3.9.0]</span><br><span class="line">├── lit [required: Any, installed: ?]</span><br><span class="line">└── torch [required: Any, installed: 2.0.1]</span><br><span class="line">    ├── filelock [required: Any, installed: 3.9.0]</span><br><span class="line">    ├── Jinja2 [required: Any, installed: 3.1.2]</span><br><span class="line">    │   └── MarkupSafe [required: &gt;=2.0, installed: 2.1.1]</span><br><span class="line">    ├── networkx [required: Any, installed: 3.1]</span><br><span class="line">    ├── sympy [required: Any, installed: 1.11.1]</span><br><span class="line">    │   └── mpmath [required: &gt;=0.19, installed: 1.3.0]</span><br><span class="line">    └── typing-extensions [required: Any, installed: 4.7.1]</span><br><span class="line">wheel==0.38.4</span><br></pre></td></tr></table></figure>
+
+<h4 id="ROCm版本（仅pip）"><a href="#ROCm版本（仅pip）" class="headerlink" title="ROCm版本（仅pip）"></a>ROCm版本（仅pip）</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">pip==23.2.1</span><br><span class="line">setuptools==68.0.0</span><br><span class="line">torchaudio==2.0.2+rocm5.4.2</span><br><span class="line">└── torch [required: ==2.0.1, installed: 2.0.1+rocm5.4.2]</span><br><span class="line">    ├── filelock [required: Any, installed: 3.9.0]</span><br><span class="line">    ├── Jinja2 [required: Any, installed: 3.1.2]</span><br><span class="line">    │   └── MarkupSafe [required: &gt;=2.0, installed: 2.1.2]</span><br><span class="line">    ├── networkx [required: Any, installed: 3.0]</span><br><span class="line">    ├── pytorch-triton-rocm [required: &gt;=2.0.0,&lt;2.1, installed: 2.0.1]</span><br><span class="line">    │   ├── cmake [required: Any, installed: 3.25.0]</span><br><span class="line">    │   ├── filelock [required: Any, installed: 3.9.0]</span><br><span class="line">    │   ├── lit [required: Any, installed: 15.0.7]</span><br><span class="line">    ├── sympy [required: Any, installed: 1.11.1]</span><br><span class="line">    │   └── mpmath [required: &gt;=0.19, installed: 1.2.1]</span><br><span class="line">    └── typing-extensions [required: Any, installed: 4.4.0]</span><br><span class="line">torchvision==0.15.2+rocm5.4.2</span><br><span class="line">├── numpy [required: Any, installed: 1.24.1]</span><br><span class="line">├── Pillow [required: &gt;=5.3.0,!=8.3.*, installed: 9.3.0]</span><br><span class="line">├── requests [required: Any, installed: 2.28.1]</span><br><span class="line">│   ├── certifi [required: &gt;=2017.4.17, installed: 2022.12.7]</span><br><span class="line">│   ├── charset-normalizer [required: &gt;=2,&lt;3, installed: 2.1.1]</span><br><span class="line">│   ├── idna [required: &gt;=2.5,&lt;4, installed: 3.4]</span><br><span class="line">│   └── urllib3 [required: &gt;=1.21.1,&lt;1.27, installed: 1.26.13]</span><br><span class="line">└── torch [required: ==2.0.1, installed: 2.0.1+rocm5.4.2]</span><br><span class="line">    ├── filelock [required: Any, installed: 3.9.0]</span><br><span class="line">    ├── Jinja2 [required: Any, installed: 3.1.2]</span><br><span class="line">    │   └── MarkupSafe [required: &gt;=2.0, installed: 2.1.2]</span><br><span class="line">    ├── networkx [required: Any, installed: 3.0]</span><br><span class="line">    ├── pytorch-triton-rocm [required: &gt;=2.0.0,&lt;2.1, installed: 2.0.1]</span><br><span class="line">    │   ├── cmake [required: Any, installed: 3.25.0]</span><br><span class="line">    │   ├── filelock [required: Any, installed: 3.9.0]</span><br><span class="line">    │   ├── lit [required: Any, installed: 15.0.7]</span><br><span class="line">    ├── sympy [required: Any, installed: 1.11.1]</span><br><span class="line">    │   └── mpmath [required: &gt;=0.19, installed: 1.2.1]</span><br><span class="line">    └── typing-extensions [required: Any, installed: 4.4.0]</span><br><span class="line">wheel==0.38.4</span><br></pre></td></tr></table></figure>
+
+<h4 id="CPU版本（pip）"><a href="#CPU版本（pip）" class="headerlink" title="CPU版本（pip）"></a>CPU版本（pip）</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">pip==23.2.1</span><br><span class="line">setuptools==68.0.0</span><br><span class="line">torchaudio==2.0.2+cpu</span><br><span class="line">└── torch [required: ==2.0.1, installed: 2.0.1+cpu]</span><br><span class="line">    ├── filelock [required: Any, installed: 3.9.0]</span><br><span class="line">    ├── Jinja2 [required: Any, installed: 3.1.2]</span><br><span class="line">    │   └── MarkupSafe [required: &gt;=2.0, installed: 2.1.2]</span><br><span class="line">    ├── networkx [required: Any, installed: 3.0]</span><br><span class="line">    ├── sympy [required: Any, installed: 1.11.1]</span><br><span class="line">    │   └── mpmath [required: &gt;=0.19, installed: 1.2.1]</span><br><span class="line">    └── typing-extensions [required: Any, installed: 4.4.0]</span><br><span class="line">torchvision==0.15.2+cpu</span><br><span class="line">├── numpy [required: Any, installed: 1.24.1]</span><br><span class="line">├── Pillow [required: &gt;=5.3.0,!=8.3.*, installed: 9.3.0]</span><br><span class="line">├── requests [required: Any, installed: 2.28.1]</span><br><span class="line">│   ├── certifi [required: &gt;=2017.4.17, installed: 2022.12.7]</span><br><span class="line">│   ├── charset-normalizer [required: &gt;=2,&lt;3, installed: 2.1.1]</span><br><span class="line">│   ├── idna [required: &gt;=2.5,&lt;4, installed: 3.4]</span><br><span class="line">│   └── urllib3 [required: &gt;=1.21.1,&lt;1.27, installed: 1.26.13]</span><br><span class="line">└── torch [required: ==2.0.1, installed: 2.0.1+cpu]</span><br><span class="line">    ├── filelock [required: Any, installed: 3.9.0]</span><br><span class="line">    ├── Jinja2 [required: Any, installed: 3.1.2]</span><br><span class="line">    │   └── MarkupSafe [required: &gt;=2.0, installed: 2.1.2]</span><br><span class="line">    ├── networkx [required: Any, installed: 3.0]</span><br><span class="line">    ├── sympy [required: Any, installed: 1.11.1]</span><br><span class="line">    │   └── mpmath [required: &gt;=0.19, installed: 1.2.1]</span><br><span class="line">    └── typing-extensions [required: Any, installed: 4.4.0]</span><br><span class="line">wheel==0.38.4</span><br></pre></td></tr></table></figure>
+
+<h4 id="CPU版本（Conda）"><a href="#CPU版本（Conda）" class="headerlink" title="CPU版本（Conda）"></a>CPU版本（Conda）</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">brotlipy==0.7.0</span><br><span class="line">└── cffi [required: &gt;=1.0.0, installed: 1.15.1]</span><br><span class="line">    └── pycparser [required: Any, installed: 2.21]</span><br><span class="line">gmpy2==2.1.2</span><br><span class="line">mkl-fft==1.3.6</span><br><span class="line">├── mkl-service [required: Any, installed: 2.4.0]</span><br><span class="line">└── numpy [required: &gt;=1.16, installed: 1.25.0]</span><br><span class="line">mkl-random==1.2.2</span><br><span class="line">└── numpy [required: Any, installed: 1.25.0]</span><br><span class="line">pip==23.2.1</span><br><span class="line">pipdeptree==2.12.0</span><br><span class="line">pyOpenSSL==23.2.0</span><br><span class="line">└── cryptography [required: &gt;=38.0.0,&lt;42,!=40.0.1,!=40.0.0, installed: 41.0.2]</span><br><span class="line">    └── cffi [required: &gt;=1.12, installed: 1.15.1]</span><br><span class="line">        └── pycparser [required: Any, installed: 2.21]</span><br><span class="line">PySocks==1.7.1</span><br><span class="line">setuptools==68.0.0</span><br><span class="line">torchaudio==2.0.2</span><br><span class="line">└── torch [required: Any, installed: 2.0.1]</span><br><span class="line">    ├── filelock [required: Any, installed: 3.9.0]</span><br><span class="line">    ├── Jinja2 [required: Any, installed: 3.1.2]</span><br><span class="line">    │   └── MarkupSafe [required: &gt;=2.0, installed: 2.1.1]</span><br><span class="line">    ├── networkx [required: Any, installed: 3.1]</span><br><span class="line">    ├── sympy [required: Any, installed: 1.11.1]</span><br><span class="line">    │   └── mpmath [required: &gt;=0.19, installed: 1.3.0]</span><br><span class="line">    └── typing-extensions [required: Any, installed: 4.7.1]</span><br><span class="line">torchvision==0.15.2</span><br><span class="line">├── numpy [required: Any, installed: 1.25.0]</span><br><span class="line">├── Pillow [required: &gt;=5.3.0,!=8.3.*, installed: 9.4.0]</span><br><span class="line">├── requests [required: Any, installed: 2.31.0]</span><br><span class="line">│   ├── certifi [required: &gt;=2017.4.17, installed: 2023.7.22]</span><br><span class="line">│   ├── charset-normalizer [required: &gt;=2,&lt;4, installed: 2.0.4]</span><br><span class="line">│   ├── idna [required: &gt;=2.5,&lt;4, installed: 3.4]</span><br><span class="line">│   └── urllib3 [required: &gt;=1.21.1,&lt;3, installed: 1.26.16]</span><br><span class="line">└── torch [required: Any, installed: 2.0.1]</span><br><span class="line">    ├── filelock [required: Any, installed: 3.9.0]</span><br><span class="line">    ├── Jinja2 [required: Any, installed: 3.1.2]</span><br><span class="line">    │   └── MarkupSafe [required: &gt;=2.0, installed: 2.1.1]</span><br><span class="line">    ├── networkx [required: Any, installed: 3.1]</span><br><span class="line">    ├── sympy [required: Any, installed: 1.11.1]</span><br><span class="line">    │   └── mpmath [required: &gt;=0.19, installed: 1.3.0]</span><br><span class="line">    └── typing-extensions [required: Any, installed: 4.7.1]</span><br><span class="line">wheel==0.38.4</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="依赖分析时间到！"><a href="#依赖分析时间到！" class="headerlink" title="依赖分析时间到！"></a>依赖分析时间到！</h3><p>是时候将上面的玩意搞简单力！</p>
+<p>瞳君接下来将带大家把这些模块理清楚，还记得我们之前设计的一些假设吗？</p>
+<p>第一，CPU版本是显卡平台版本的简化，所以我们首先要抓的就是CPU版本，看看CPU版本的依赖到底是什么情况</p>
+<p>然后再去抓显卡版本的额外组件，这样就能够从简到繁，比较轻松的拆掉上面这一些依赖</p>
+<p>同时CPU版本里面，pip安装的方法最为简约，所以我们要先拆这个分支，然后再去拆解conda的分支</p>
+<h4 id="pip-CPU分支拆解"><a href="#pip-CPU分支拆解" class="headerlink" title="pip CPU分支拆解"></a>pip CPU分支拆解</h4><p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/18b51d53-3cde-459c-a3dc-7aa7cee0dafc" alt="pip CPU@搞知识的觉之瞳"></p>
+<p>这样看起来就还算清楚了</p>
+<p>其实归根到底来讲，抛弃那些无关紧要的依赖模块，主要的模块就只有2类：</p>
+<ul>
+<li><p>torch及其扩展组件：包括音频，图像的深度学习组件</p>
+</li>
+<li><p>系统依赖模块</p>
+</li>
+</ul>
+<p>然后仔细观察就会发现：<br>torch组件均依赖于torch</p>
+<p>接下来我们再把它整简单一点点，然后再用做个美化：</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/585471da-9c4b-4eab-a800-394e756837b3" alt="image"></p>
+<p><strong>依赖关系一目了然</strong></p>
+<p>或许瞳君需要对这些包做一点阐述：</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/e851ec75-0772-4824-857f-ce5ccd292e4e" alt="image"></p>
+<p>或许我们需要管家与采购商的关系，来进一步梳理：</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/f038fc75-f9f8-45b7-898e-072e56a5e056" alt="image"></p>
+<h4 id="conda-CPU分支拆解"><a href="#conda-CPU分支拆解" class="headerlink" title="conda CPU分支拆解"></a>conda CPU分支拆解</h4><p>接下来让我们看看conda CPU的依赖情况。</p>
+<p>但是咱们要先对上面的依赖做一个简化，不然等到时候解析显卡平台的时候就会乱成一团糟。</p>
+<p>现在我们要做的首先是把没啥用的插件(安装上面没什么用)去掉，然后我们要把与torch无关的库全部去掉，同时简化库依赖，只保留核心的库。</p>
+<p>变成了下面这个亚子：</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/4fb6d4f6-1a05-41e3-afdf-90ecff589afd" alt="image"></p>
+<p>接下来是添加conda CPU版本的东西：（不过要去除网络，解压缩相关的东西，保留“可能相关的依赖”）</p>
+<p>那么值得在意的地方就只有：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">gmpy2==2.1.2</span><br><span class="line">mkl-fft==1.3.6</span><br><span class="line">├── mkl-service [required: Any, installed: 2.4.0]</span><br><span class="line">└── numpy [required: &gt;=1.16, installed: 1.25.0]</span><br><span class="line">mkl-random==1.2.2</span><br><span class="line">└── numpy [required: Any, installed: 1.25.0]</span><br></pre></td></tr></table></figure>
+
+<p>这三个包的作用，第1个用于提供高精度的数学计算，第2个用于提供快速傅里叶变换，第3个用来提供高随机性的随机数生成</p>
+<p>那既然没有直接的依赖关系，会在哪里用到他们仨呢？刚刚我又检查了一下默认的安装，环境情况是不会有这三个库的，因此可以确定的是这三个库一定是有由pytorch安装上去的。</p>
+<p>如果代码中运用不到，那就只有一处地方：编译</p>
+<p>（没有依赖，不代表编译时这些包不可以提供支持呀）</p>
+<p>拿管家和代理商的例子来说，如果说代码编写是你在给管家下达任务清单，那么编译就是将这些清单转换成一个一个具体的实际任务。例如你叫管家做一道梅菜扣肉，那么管家就会去找梅菜扣肉的菜谱，然后按照菜谱上面的一道一道做下来，在管家将你给出的抽象，没有具体执行步骤的任务实例，化成具体的，可执行的任务就是编译的过程。</p>
+<p>所以没有人规定说，管家在将这些任务落实到具体的时候，不能用工具箱或代理商解决呀！</p>
+<p><strong>因此可以大胆的直接推断，这三个库在编译时提供计算支持。一个用于提供高精度的数学计算，第2个用于提供硬件层面的快速傅里叶变换，第3个用于提供硬件层面的随机数生成</strong></p>
+<p><strong>(刚刚查了后两个软件的老底，是依赖于英特尔的，那就简单了)</strong></p>
+<p>我们将编译时提供计算支持的包放在另外一个框里面，那现在就变成这个样子了：</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/ea04d1d5-b4d6-4e6e-b501-d797e00aebdf" alt="image"></p>
+<h4 id="CUDA-ROCm版本联合拆解"><a href="#CUDA-ROCm版本联合拆解" class="headerlink" title="CUDA ROCm版本联合拆解"></a>CUDA ROCm版本联合拆解</h4><p>接下来我们查查ROCm与CUDA版本的共同点是什么？</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ROCm</span></span><br><span class="line">pytorch-triton-rocm [required: &gt;=2.0.0,&lt;2.1, installed: 2.0.1]</span><br><span class="line">    │   ├── cmake [required: Any, installed: 3.25.0]</span><br><span class="line">    │   ├── filelock [required: Any, installed: 3.9.0]</span><br><span class="line">    │   ├── lit [required: Any, installed: 15.0.7]</span><br><span class="line"><span class="comment"># CUDA</span></span><br><span class="line">triton==2.0.0</span><br><span class="line">├── cmake [required: Any, installed: ?]</span><br><span class="line">├── filelock [required: Any, installed: 3.9.0]</span><br><span class="line">├── lit [required: Any, installed: ?]</span><br><span class="line">└── torch [required: Any, installed: 2.0.1]</span><br><span class="line">    ├── filelock [required: Any, installed: 3.9.0]</span><br><span class="line">    ├── Jinja2 [required: Any, installed: 3.1.2]</span><br><span class="line">    │   └── MarkupSafe [required: &gt;=2.0, installed: 2.1.1]</span><br><span class="line">    ├── networkx [required: Any, installed: 3.1]</span><br><span class="line">    ├── sympy [required: Any, installed: 1.11.1]</span><br><span class="line">    │   └── mpmath [required: &gt;=0.19, installed: 1.3.0]</span><br><span class="line">    └── typing-extensions [required: Any, installed: 4.7.1]</span><br></pre></td></tr></table></figure>
+
+<p>二者的python模块依赖不约而同的出现了triton模块：</p>
+<p>Triton Inference Server（简称Triton）是由NVIDIA开发和维护的开源推理服务器。它旨在简化和加速深度学习模型的部署和推理过程。</p>
+<p>Triton Inference Server 提供了一个统一的接口和服务，使得多个客户端可以通过网络请求将输入数据发送给服务器，并接收模型推理的输出结果。它支持多种深度学习框架（包括PyTorch、TensorFlow、ONNX等）和硬件平台（包括CPU和GPU），并提供高性能的并发推理能力。</p>
+<p>说白了，这货是一个统一的深度学习模型部署平台，可以通过其灵活的集成各种平台进行<strong>深度学习推理</strong>（注意不是训练！）</p>
+<p><strong>但需要注意的是，这货依赖于Pytorch</strong></p>
+<p><strong>那这货的定义就清楚了，它一定是对Pytorch的功能做出的扩展。</strong></p>
+<p>结合上面的定义，可以推断这货是针对于推理功能做出的扩展，换而言之，能够让pytorch自由的在CUDA与ROCm平台上进行推理。</p>
+<p>扩展的东西等到最后总结的时候再加上，下面我们来分析“模块依赖里面找不到的部分”</p>
+<p>一般来说，pip安装的模块，pipdeptree一定找得到，例如cmake</p>
+<p>但是，conda安装的模块，pipdeptree不一定找得到，也无法发觉其依赖</p>
+<p>而对于需要注意的这类情况，在上面的五种情况中仅有一类：conda分支的cuda平台</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># packages in environment at /root/miniconda3/envs/test_conda:</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Name                    Version                   Build  Channel</span></span><br><span class="line">_libgcc_mutex             0.1                        main</span><br><span class="line">_openmp_mutex             5.1                       1_gnu</span><br><span class="line">blas                      1.0                         mkl</span><br><span class="line">brotlipy                  0.7.0           py310h7f8727e_1002</span><br><span class="line">bzip2                     1.0.8                h7b6447c_0</span><br><span class="line">ca-certificates           2023.05.30           h06a4308_0</span><br><span class="line">certifi                   2023.7.22       py310h06a4308_0</span><br><span class="line">cffi                      1.15.1          py310h74dc2b5_0</span><br><span class="line">charset-normalizer        2.0.4              pyhd3eb1b0_0</span><br><span class="line">cryptography              41.0.2          py310h774aba0_0</span><br><span class="line">cuda-cudart               11.8.89                       0    nvidia</span><br><span class="line">cuda-cupti                11.8.87                       0    nvidia</span><br><span class="line">cuda-libraries            11.8.0                        0    nvidia</span><br><span class="line">cuda-nvrtc                11.8.89                       0    nvidia</span><br><span class="line">cuda-nvtx                 11.8.86                       0    nvidia</span><br><span class="line">cuda-runtime              11.8.0                        0    nvidia</span><br><span class="line">ffmpeg                    4.3                  hf484d3e_0    pytorch</span><br><span class="line">filelock                  3.9.0           py310h06a4308_0</span><br><span class="line">freetype                  2.12.1               h4a9f257_0</span><br><span class="line">giflib                    5.2.1                h5eee18b_3</span><br><span class="line">gmp                       6.2.1                h295c915_3</span><br><span class="line">gmpy2                     2.1.2           py310heeb90bb_0</span><br><span class="line">gnutls                    3.6.15               he1e5248_0</span><br><span class="line">idna                      3.4             py310h06a4308_0</span><br><span class="line">intel-openmp              2021.4.0          h06a4308_3561</span><br><span class="line">jinja2                    3.1.2           py310h06a4308_0</span><br><span class="line">jpeg                      9e                   h5eee18b_1</span><br><span class="line">lame                      3.100                h7b6447c_0</span><br><span class="line">lcms2                     2.12                 h3be6417_0</span><br><span class="line">ld_impl_linux-64          2.38                 h1181459_1</span><br><span class="line">lerc                      3.0                  h295c915_0</span><br><span class="line">libcublas                 11.11.3.6                     0    nvidia</span><br><span class="line">libcufft                  10.9.0.58                     0    nvidia</span><br><span class="line">libcufile                 1.7.1.12                      0    nvidia</span><br><span class="line">libcurand                 10.3.3.129                    0    nvidia</span><br><span class="line">libcusolver               11.4.1.48                     0    nvidia</span><br><span class="line">libcusparse               11.7.5.86                     0    nvidia</span><br><span class="line">libdeflate                1.17                 h5eee18b_0</span><br><span class="line">libffi                    3.3                  he6710b0_2</span><br><span class="line">libgcc-ng                 11.2.0               h1234567_1</span><br><span class="line">libgomp                   11.2.0               h1234567_1</span><br><span class="line">libiconv                  1.16                 h7f8727e_2</span><br><span class="line">libidn2                   2.3.4                h5eee18b_0</span><br><span class="line">libnpp                    11.8.0.86                     0    nvidia</span><br><span class="line">libnvjpeg                 11.9.0.86                     0    nvidia</span><br><span class="line">libpng                    1.6.39               h5eee18b_0</span><br><span class="line">libstdcxx-ng              11.2.0               h1234567_1</span><br><span class="line">libtasn1                  4.19.0               h5eee18b_0</span><br><span class="line">libtiff                   4.5.0                h6a678d5_2</span><br><span class="line">libunistring              0.9.10               h27cfd23_0</span><br><span class="line">libuuid                   1.41.5               h5eee18b_0</span><br><span class="line">libwebp                   1.2.4                h11a3e52_1</span><br><span class="line">libwebp-base              1.2.4                h5eee18b_1</span><br><span class="line">lz4-c                     1.9.4                h6a678d5_0</span><br><span class="line">markupsafe                2.1.1           py310h7f8727e_0</span><br><span class="line">mkl                       2021.4.0           h06a4308_640</span><br><span class="line">mkl-service               2.4.0           py310h7f8727e_0</span><br><span class="line">mkl_fft                   1.3.1           py310hd6ae3a3_0</span><br><span class="line">mkl_random                1.2.2           py310h00e6091_0</span><br><span class="line">mpc                       1.1.0                h10f8cd9_1</span><br><span class="line">mpfr                      4.0.2                hb69a4c5_1</span><br><span class="line">mpmath                    1.3.0           py310h06a4308_0</span><br><span class="line">ncurses                   6.4                  h6a678d5_0</span><br><span class="line">nettle                    3.7.3                hbbd107a_1</span><br><span class="line">networkx                  3.1             py310h06a4308_0</span><br><span class="line">numpy                     1.24.3          py310hd5efca6_0</span><br><span class="line">numpy-base                1.24.3          py310h8e6c178_0</span><br><span class="line">openh264                  2.1.1                h4ff587b_0</span><br><span class="line">openssl                   1.1.1v               h7f8727e_0</span><br><span class="line">pillow                    9.4.0           py310h6a678d5_0</span><br><span class="line">pip                       23.2.1          py310h06a4308_0</span><br><span class="line">pipdeptree                2.12.0                   pypi_0    pypi</span><br><span class="line">pycparser                 2.21               pyhd3eb1b0_0</span><br><span class="line">pyopenssl                 23.2.0          py310h06a4308_0</span><br><span class="line">pysocks                   1.7.1           py310h06a4308_0</span><br><span class="line">python                    3.10.0               h12debd9_5</span><br><span class="line">pytorch                   2.0.1           py3.10_cuda11.8_cudnn8.7.0_0    pytorch</span><br><span class="line">pytorch-cuda              11.8                 h7e8668a_5    pytorch</span><br><span class="line">pytorch-mutex             1.0                        cuda    pytorch</span><br><span class="line">readline                  8.2                  h5eee18b_0</span><br><span class="line">requests                  2.31.0          py310h06a4308_0</span><br><span class="line">setuptools                68.0.0          py310h06a4308_0</span><br><span class="line">six                       1.16.0             pyhd3eb1b0_1</span><br><span class="line">sqlite                    3.41.2               h5eee18b_0</span><br><span class="line">sympy                     1.11.1          py310h06a4308_0</span><br><span class="line">tk                        8.6.12               h1ccaba5_0</span><br><span class="line">torchaudio                2.0.2               py310_cu118    pytorch</span><br><span class="line">torchtriton               2.0.0                     py310    pytorch</span><br><span class="line">torchvision               0.15.2              py310_cu118    pytorch</span><br><span class="line">typing_extensions         4.7.1           py310h06a4308_0</span><br><span class="line">tzdata                    2023c                h04d1e81_0</span><br><span class="line">urllib3                   1.26.16         py310h06a4308_0</span><br><span class="line">wheel                     0.38.4          py310h06a4308_0</span><br><span class="line">xz                        5.4.2                h5eee18b_0</span><br><span class="line">zlib                      1.2.13               h5eee18b_0</span><br><span class="line">zstd                      1.5.5                hc292b87_0</span><br></pre></td></tr></table></figure>
+
+<p>让我们对上面的一坨做一点删减：首先删去已经被pipdeptree detect到的模块，并删去conda虚拟环境自带的模块（如tk）</p>
+<p>如下为conda环境自带的模块：</p>
+<ul>
+<li><code>_libgcc_mutex</code>: 用于处理多线程应用程序中的 GCC（GNU Compiler Collection）相关的互斥操作。</li>
+<li><code>_openmp_mutex</code>: 用于处理多线程应用程序中的 OpenMP（Open Multi-Processing）相关的互斥操作。</li>
+<li><code>bzip2</code>: 提供数据压缩和解压缩功能的开源库。</li>
+<li><code>ca-certificates</code>: 包含根证书的集合，用于验证 SSL&#x2F;TLS 连接的安全性。</li>
+<li><code>ld_impl_linux-64</code>: Linux 64 位系统上的动态链接器实现，用于在运行时加载和链接共享库。</li>
+<li><code>libffi</code>: 用于调用不同编程语言间的函数接口的开源库。</li>
+<li><code>libgcc-ng</code>: GNU C Compiler Runtime 库，提供用于支持 GCC 编译器生成的代码的运行时支持。</li>
+<li><code>libgomp</code>: GNU OpenMP 库，用于支持使用 OpenMP 并行编程模型的应用程序。</li>
+<li><code>libstdcxx-ng</code>: GNU Standard C++ Library，提供用于支持 C++ 编程语言的运行时支持。</li>
+<li><code>libuuid</code>: 用于生成和操作 UUID（Universally Unique Identifier）的库。</li>
+<li><code>ncurses</code>: 提供文本终端用户界面的库，用于终端操作和显示文本界面。</li>
+<li><code>openssl</code>: 提供 SSL&#x2F;TLS 加密和安全通信功能的开源密码库。</li>
+<li><code>pip</code>: Python 包管理工具，用于安装和管理 Python 包。</li>
+<li><code>python</code>: Python 解释器，用于执行 Python 语言编写的程序。</li>
+<li><code>readline</code>: 提供在命令行界面中读取和编辑行的功能库。</li>
+<li><code>setuptools</code>: 用于构建和分发 Python 包的工具集。</li>
+<li><code>sqlite</code>: 嵌入式关系型数据库引擎，用于处理轻量级数据库操作。</li>
+<li><code>tk</code>: 提供构建图形用户界面（GUI）的工具包，常用于 Python 的 Tkinter 模块。</li>
+<li><code>tzdata</code>: 时区数据库，提供有关不同时区的信息和规则。</li>
+<li><code>wheel</code>: 一种 Python 打包格式，用于快速安装和分发 Python 包。</li>
+<li><code>xz</code>: 用于数据压缩和解压缩的开源工具和库。</li>
+<li><code>zlib</code>: 提供数据压缩和解压缩功能的开源库。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Name                    Version                   Build  Channel</span></span><br><span class="line">blas                      1.0                         mkl</span><br><span class="line">cffi                      1.15.1          py310h74dc2b5_0</span><br><span class="line">charset-normalizer        2.0.4              pyhd3eb1b0_0</span><br><span class="line">cryptography              41.0.2          py310h774aba0_0</span><br><span class="line">cuda-cudart               11.8.89                       0    nvidia</span><br><span class="line">cuda-cupti                11.8.87                       0    nvidia</span><br><span class="line">cuda-libraries            11.8.0                        0    nvidia</span><br><span class="line">cuda-nvrtc                11.8.89                       0    nvidia</span><br><span class="line">cuda-nvtx                 11.8.86                       0    nvidia</span><br><span class="line">cuda-runtime              11.8.0                        0    nvidia</span><br><span class="line">ffmpeg                    4.3                  hf484d3e_0    pytorch</span><br><span class="line">freetype                  2.12.1               h4a9f257_0</span><br><span class="line">giflib                    5.2.1                h5eee18b_3</span><br><span class="line">gmp                       6.2.1                h295c915_3</span><br><span class="line">gnutls                    3.6.15               he1e5248_0</span><br><span class="line">idna                      3.4             py310h06a4308_0</span><br><span class="line">intel-openmp              2021.4.0          h06a4308_3561</span><br><span class="line">jpeg                      9e                   h5eee18b_1</span><br><span class="line">lame                      3.100                h7b6447c_0</span><br><span class="line">lcms2                     2.12                 h3be6417_0</span><br><span class="line">lerc                      3.0                  h295c915_0</span><br><span class="line">libcublas                 11.11.3.6                     0    nvidia</span><br><span class="line">libcufft                  10.9.0.58                     0    nvidia</span><br><span class="line">libcufile                 1.7.1.12                      0    nvidia</span><br><span class="line">libcurand                 10.3.3.129                    0    nvidia</span><br><span class="line">libcusolver               11.4.1.48                     0    nvidia</span><br><span class="line">libcusparse               11.7.5.86                     0    nvidia</span><br><span class="line">libdeflate                1.17                 h5eee18b_0</span><br><span class="line">libiconv                  1.16                 h7f8727e_2</span><br><span class="line">libidn2                   2.3.4                h5eee18b_0</span><br><span class="line">libnpp                    11.8.0.86                     0    nvidia</span><br><span class="line">libnvjpeg                 11.9.0.86                     0    nvidia</span><br><span class="line">libpng                    1.6.39               h5eee18b_0</span><br><span class="line">libtasn1                  4.19.0               h5eee18b_0</span><br><span class="line">libtiff                   4.5.0                h6a678d5_2</span><br><span class="line">libunistring              0.9.10               h27cfd23_0</span><br><span class="line">libwebp                   1.2.4                h11a3e52_1</span><br><span class="line">libwebp-base              1.2.4                h5eee18b_1</span><br><span class="line">lz4-c                     1.9.4                h6a678d5_0</span><br><span class="line">mpc                       1.1.0                h10f8cd9_1</span><br><span class="line">mpfr                      4.0.2                hb69a4c5_1</span><br><span class="line">nettle                    3.7.3                hbbd107a_1</span><br><span class="line">openh264                  2.1.1                h4ff587b_0</span><br><span class="line">pytorch-cuda              11.8                 h7e8668a_5    pytorch</span><br><span class="line">pytorch-mutex             1.0                        cuda    pytorch</span><br><span class="line">six                       1.16.0             pyhd3eb1b0_1</span><br><span class="line">tzdata                    2023c                h04d1e81_0</span><br><span class="line">urllib3                   1.26.16         py310h06a4308_0</span><br><span class="line">zstd                      1.5.5                hc292b87_0</span><br></pre></td></tr></table></figure>
+
+<p>还是很多？于是乎去掉网络（urllib3，各种证书），压缩（zstd），密码（cryptography）相关的，去掉pipdeptree没显示的某些系统依赖（包括但不限于兼容性（six），时区与时间（tz），python调用C，字符串规整）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Name                    Version                   Build  Channel</span></span><br><span class="line">blas                      1.0                         mkl</span><br><span class="line">cuda-cudart               11.8.89                       0    nvidia</span><br><span class="line">cuda-cupti                11.8.87                       0    nvidia</span><br><span class="line">cuda-libraries            11.8.0                        0    nvidia</span><br><span class="line">cuda-nvrtc                11.8.89                       0    nvidia</span><br><span class="line">cuda-nvtx                 11.8.86                       0    nvidia</span><br><span class="line">cuda-runtime              11.8.0                        0    nvidia</span><br><span class="line">ffmpeg                    4.3                  hf484d3e_0    pytorch</span><br><span class="line">freetype                  2.12.1               h4a9f257_0</span><br><span class="line">giflib                    5.2.1                h5eee18b_3</span><br><span class="line">gmp                       6.2.1                h295c915_3</span><br><span class="line">gnutls                    3.6.15               he1e5248_0</span><br><span class="line">idna                      3.4             py310h06a4308_0</span><br><span class="line">intel-openmp              2021.4.0          h06a4308_3561</span><br><span class="line">jpeg                      9e                   h5eee18b_1</span><br><span class="line">lame                      3.100                h7b6447c_0</span><br><span class="line">lcms2                     2.12                 h3be6417_0</span><br><span class="line">lerc                      3.0                  h295c915_0</span><br><span class="line">libcublas                 11.11.3.6                     0    nvidia</span><br><span class="line">libcufft                  10.9.0.58                     0    nvidia</span><br><span class="line">libcufile                 1.7.1.12                      0    nvidia</span><br><span class="line">libcurand                 10.3.3.129                    0    nvidia</span><br><span class="line">libcusolver               11.4.1.48                     0    nvidia</span><br><span class="line">libcusparse               11.7.5.86                     0    nvidia</span><br><span class="line">libdeflate                1.17                 h5eee18b_0</span><br><span class="line">libiconv                  1.16                 h7f8727e_2</span><br><span class="line">libidn2                   2.3.4                h5eee18b_0</span><br><span class="line">libnpp                    11.8.0.86                     0    nvidia</span><br><span class="line">libnvjpeg                 11.9.0.86                     0    nvidia</span><br><span class="line">libpng                    1.6.39               h5eee18b_0</span><br><span class="line">libtasn1                  4.19.0               h5eee18b_0</span><br><span class="line">libtiff                   4.5.0                h6a678d5_2</span><br><span class="line">libunistring              0.9.10               h27cfd23_0</span><br><span class="line">libwebp                   1.2.4                h11a3e52_1</span><br><span class="line">libwebp-base              1.2.4                h5eee18b_1</span><br><span class="line">lz4-c                     1.9.4                h6a678d5_0</span><br><span class="line">mpc                       1.1.0                h10f8cd9_1</span><br><span class="line">mpfr                      4.0.2                hb69a4c5_1</span><br><span class="line">nettle                    3.7.3                hbbd107a_1</span><br><span class="line">openh264                  2.1.1                h4ff587b_0</span><br><span class="line">pytorch-cuda              11.8                 h7e8668a_5    pytorch</span><br><span class="line">pytorch-mutex             1.0                        cuda    pytorch</span><br></pre></td></tr></table></figure>
+
+<p>好像还是太多了，那就只能：</p>
+<ol>
+<li>freetype: FreeType 是一个用于字体渲染和处理的库。它提供了字体轮廓的处理、字体渲染和字体文件格式解析等功能，用于在应用程序中呈现和处理文本。</li>
+<li>giflib: giflib 是一个用于处理 GIF 图像格式的库。它提供了读取、写入和操作 GIF 图像的功能，包括解码和编码 GIF 图像数据，提取和修改图像帧等。</li>
+<li>gmp: GMP（GNU Multiple Precision Arithmetic Library）是一个用于高精度数值计算的库。它提供了高效的大整数和大浮点数运算功能，用于处理需要更高精度的数学计算和密码学操作。</li>
+<li>gnutls: GnuTLS 是一个用于网络通信中的安全传输层（TLS）和安全套接字层（SSL）的库。它实现了加密和身份验证协议，用于保护网络通信和数据的安全性。</li>
+<li>idna: IDNA 是一个用于国际化域名（Internationalized Domain Names in Applications）的库。它提供了将国际化域名转换为 ASCII 表示形式的功能，以便在网络协议中进行处理和传输。</li>
+<li>intel-openmp: Intel OpenMP 是 Intel 公司提供的 OpenMP 并行编程接口的实现。它用于支持在多核处理器上进行并行计算，以提高程序的性能和效率。</li>
+<li>jpeg: JPEG 是一种常见的图像压缩格式，该库提供了对 JPEG 图像文件进行读取、写入和处理的功能。</li>
+<li>lame: LAME 是一个开源的 MP3 音频编码库。它提供了将音频数据编码为 MP3 格式的功能，用于在音频处理和流媒体应用中进行音频压缩和编码。</li>
+<li>lcms2: LCMS（Little CMS）是一个用于颜色管理的库。它提供了颜色空间转换、颜色配置文件解析和颜色处理等功能，用于在图像处理和打印应用中实现准确的颜色管理。</li>
+<li>lerc: LERC 是一种用于无损压缩和编码栅格数据的库。它提供了对栅格数据进行压缩和解压缩的功能，以减小数据存储空间并加快数据传输速度。</li>
+<li>libpng: libpng 是一个用于处理 PNG（Portable Network Graphics）图像格式的库。它提供了读取、写入和操作 PNG 图像的功能，包括解码和编码 PNG 图像数据，以及处理图像的元数据。</li>
+<li>libtasn1: libtasn1 是一个用于解析和验证 ASN.1（Abstract Syntax Notation One）数据结构的库。它提供了对 ASN.1 编码的数据进行解析、验证和生成的功能，用于在网络通信和安全协议中处理和解析 ASN.1 数据。</li>
+<li>libtiff: libtiff 是一个用于处理 TIFF（Tagged Image File Format）图像格式的库。它提供了读取、写入和操作 TIFF 图像的功能，包括解码和编码 TIFF 图像数据，以及处理图像的元数据和标签。</li>
+<li>libunistring: libunistring 是一个用于 Unicode 字符串处理的库。它提供了对 Unicode 字符串的各种操作和转换功能，包括字符编码转换、正则表达式处理、字符串比较和转换等。</li>
+<li>libwebp: libwebp 是一个用于处理 WebP 图像格式的库。WebP 是一种现代的图像格式，提供了高压缩率和良好的图像质量。libwebp 提供了读取、写入和操作 WebP 图像的功能，包括解码和编码 WebP 图像数据。</li>
+<li>lz4-c: lz4-c 是一个用于数据压缩和解压缩的库。它实现了 LZ4 压缩算法，提供了高速压缩和解压缩的能力，适用于需要高效数据传输和存储的应用程序。</li>
+<li>mpc: mpc 是一个用于高精度复数计算的库。它提供了高效的复数运算功能，包括复数加减乘除、幂运算和三角函数等，用于处理复数计算和科学计算。</li>
+<li>mpfr: mpfr 是一个用于高精度浮点数计算的库。它提供了高效的浮点数运算功能，支持任意精度的浮点数计算，用于处理需要更高精度的数学计算。</li>
+<li>nettle: nettle 是一个密码学库，提供了各种加密算法的实现。它支持对称加密、非对称加密、哈希函数和消息认证码等密码学操作，用于构建安全的加密和身份验证应用程序。</li>
+<li>openh264: openh264 是一个开源的 H.264 视频编解码器库。它提供了对 H.264 视频编码和解码的功能，用于处理和传输 H.264 视频流。</li>
+<li>libdeflate: libdeflate 是一个用于数据压缩和解压缩的库。它实现了多种压缩算法，包括 Deflate 算法，提供了高效的数据压缩和解压缩的功能，适用于需要高性能压缩和解压缩的应用程序。</li>
+<li>libiconv: libiconv 是一个用于字符编码转换的库。它提供了各种字符编码之间的转换功能，包括常见的字符集如 ASCII、UTF-8、UTF-16 等之间的转换，用于在不同字符编码之间进行数据转换和处理。</li>
+<li>libidn2: libidn2 是一个用于国际化域名（IDN）处理的库。它提供了对国际化域名的解析、转换和验证的功能，用于处理包含非 ASCII 字符的域名，在网络协议和应用程序中进行国际化域名的处理。</li>
+</ol>
+<p><strong>上面的库，与Pytorch插件无关的，同时非编译加速也非依赖的，全部删除！</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Name                    Version                   Build  Channel</span></span><br><span class="line">blas                      1.0                         mkl</span><br><span class="line">cuda-cudart               11.8.89                       0    nvidia</span><br><span class="line">cuda-cupti                11.8.87                       0    nvidia</span><br><span class="line">cuda-libraries            11.8.0                        0    nvidia</span><br><span class="line">cuda-nvrtc                11.8.89                       0    nvidia</span><br><span class="line">cuda-nvtx                 11.8.86                       0    nvidia</span><br><span class="line">cuda-runtime              11.8.0                        0    nvidia</span><br><span class="line">ffmpeg                    4.3                  hf484d3e_0    pytorch</span><br><span class="line">intel-openmp              2021.4.0          h06a4308_3561</span><br><span class="line">libcublas                 11.11.3.6                     0    nvidia</span><br><span class="line">libcufft                  10.9.0.58                     0    nvidia</span><br><span class="line">libcufile                 1.7.1.12                      0    nvidia</span><br><span class="line">libcurand                 10.3.3.129                    0    nvidia</span><br><span class="line">libcusolver               11.4.1.48                     0    nvidia</span><br><span class="line">libcusparse               11.7.5.86                     0    nvidia</span><br><span class="line">libnpp                    11.8.0.86                     0    nvidia</span><br><span class="line">libnvjpeg                 11.9.0.86                     0    nvidia</span><br><span class="line">pytorch-cuda              11.8                 h7e8668a_5    pytorch</span><br><span class="line">pytorch-mutex             1.0                        cuda    pytorch</span><br></pre></td></tr></table></figure>
+
+<p>现在就干净多了。</p>
+<p>接下来可以大概排一排这些库的作用了：</p>
+<ol>
+<li>blas: BLAS（Basic Linear Algebra Subprograms）是一组用于执行基本线性代数运算的库函数。它提供了矩阵乘法、向量加法、向量内积等常用的线性代数运算，为科学计算和数值计算提供了高效的基础操作。</li>
+<li><strong>cuda-cudart: cuda-cudart 是 CUDA（Compute Unified Device Architecture）的运行时库。它提供了在 NVIDIA GPU 上执行并行计算的运行时支持，包括设备管理、内存管理和并行执行等功能。</strong></li>
+<li><strong>cuda-cupti: cuda-cupti 是 CUDA 的性能分析工具接口库。它提供了对 CUDA 程序在 GPU 上的性能分析和跟踪的功能，用于优化和调试 CUDA 程序的性能。</strong></li>
+<li><strong>cuda-libraries: cuda-libraries 是包含了多个 CUDA 库的集合。这些库提供了各种在 GPU 上执行并行计算所需的功能，包括线性代数运算、图像处理、计算机视觉等领域的操作。</strong></li>
+<li><strong>cuda-nvrtc: cuda-nvrtc 是 CUDA 的运行时编译库。它提供了在运行时将 CUDA C&#x2F;C++ 代码编译为 GPU 代码的功能，允许动态生成和执行 CUDA 代码。</strong></li>
+<li><strong>cuda-nvtx: cuda-nvtx 是 CUDA 的工具扩展库，用于在 CUDA 程序中插入时间和事件跟踪的标记。它提供了在程序中插入时间标记和事件跟踪的功能，用于性能分析和调试。</strong></li>
+<li><strong>cuda-runtime: cuda-runtime 是 CUDA 的运行时库。它提供了在运行时执行 GPU 计算和管理 GPU 资源的功能，包括内存分配、任务调度和并行执行等。</strong></li>
+<li>ffmpeg: ffmpeg 是一个开源的多媒体处理工具库。它提供了音视频编解码、转码、过滤和流媒体处理等功能，用于处理和编辑各种音视频文件和流媒体数据。（边缘库，不知道在干什么系列）</li>
+<li>intel-openmp: intel-openmp 是 Intel 的 OpenMP（Open Multi-Processing）库。它提供了在多核处理器上并行执行的功能，用于加速并行计算和优化应用程序性能。</li>
+<li><strong>libcublas: libcublas 是 NVIDIA CUDA 的基本线性代数库。它提供了在 GPU 上执行高性能的矩阵乘法和其他线性代数运算的功能。</strong></li>
+<li><strong>libcufft: libcufft 是 NVIDIA CUDA 的快速傅里叶变换库。它提供了在 GPU 上执行高性能的傅里叶变换操作的功能，用于信号处理和频域分析。</strong></li>
+<li><strong>libcufile: libcufile 是 NVIDIA CUDA 的文件 I&#x2F;O 库。它提供了在 GPU 上进行高性能文件读写操作的功能，允许直接在 GPU 内存和存储之间进行数据传输。</strong></li>
+<li><strong>libcurand: libcurand 是 NVIDIA CUDA 的随机数生成库。它提供了在 GPU 上生成高质量随机数的功能，包括均匀分布、正态分布和其他常见分布的随机数生成。</strong></li>
+<li><strong>libcusolver: libcusolver 是 NVIDIA CUDA 的线性求解器库。它提供了在 GPU 上执行高性能的线性方程组求解和特征值求解的功能，用于科学计算和数值分析。</strong></li>
+<li><strong>libcusparse: libcusparse 是 NVIDIA CUDA 的稀疏矩阵库。它提供了在 GPU 上执行高性能的稀疏矩阵运算的功能，包括矩阵乘法、矩阵求解和矩阵格式转换等。</strong></li>
+<li><strong>libnpp: libnpplibnpp: libnpp 是 NVIDIA Performance Primitives（NPP）库。它提供了在 GPU 上执行图像和信号处理的高性能函数库。libnpp 包含了各种图像和信号处理算法，例如图像滤波、图像编解码、图像变换等，用于加速图像和信号处理应用程序。</strong></li>
+<li><strong>libnvjpeg: libnvjpeg 是 NVIDIA CUDA 的 JPEG 图像解码和编码库。它提供了在 GPU 上执行高性能的 JPEG 图像解码和编码的功能，用于图像处理和压缩应用。</strong></li>
+<li>pytorch-cuda: pytorch-cuda 是 PyTorch 深度学习框架的 CUDA 版本。它提供了在 GPU 上执行深度学习计算的功能，利用 CUDA 加速深度神经网络的训练和推断。</li>
+<li>pytorch-mutex: pytorch-mutex 是 PyTorch 深度学习框架的互斥锁库。它提供了在多线程环境下对 PyTorch 张量进行互斥操作的功能，用于确保线程安全和数据一致性。</li>
+</ol>
+<p><strong>加粗部分为nvidia的cuda toolkit，由于nvidia cuda不开源且本人技术有限，因此仅通过AI描述判断加粗部分为CUDA toolkit的一部分。</strong></p>
+<p>同时也有intel的加速库：blas，intel-openmpi</p>
+<p>以及pytorch主体：pytorch-cuda，pytorch-mutex</p>
+<p>综上，pytorch依赖版图如下：</p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/2a8fb552-8801-46ed-8773-be38835555ee" alt="image"></p>
+<p><img src="https://github.com/SatoriEye/satoriEyes-picturebed/assets/119779780/2feba489-c937-4728-b76a-640e3984d8c5" alt="image"></p>
+<h2 id="从安装与依赖能够知道的东西"><a href="#从安装与依赖能够知道的东西" class="headerlink" title="从安装与依赖能够知道的东西"></a>从安装与依赖能够知道的东西</h2><ol>
+<li>通过Conda安装的PyTorch CUDA 版本无需额外安装CUDA</li>
+<li>通过pip安装的PyTorch 不论为ROCm还是CUDA平台均需要额外安装对应的加速toolkit</li>
+<li><strong>pytorch cpu ver. 不等于 pytorch cuda ver. 不等于 pytorch rocm ver. 三者的依赖甚至不完全相同</strong></li>
+<li><strong>通过Conda安装的PyTorch似乎能够通过intel加速？（待验证）</strong></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%B4%B9%E6%9B%BC%E5%AD%A6%E4%B9%A0%E6%B3%95/" rel="tag"># 费曼学习法</a>
+              <a href="/tags/AI%E6%A1%86%E6%9E%B6%E8%AE%BE%E6%96%BD/" rel="tag"># AI框架设施</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/08/08/%E5%9C%A8%E5%AD%A6%E4%B9%A0PyTorch%E5%89%8D%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E4%B8%80%E4%BA%9B%E4%B8%9C%E8%A5%BF/" rel="prev" title="在学习PyTorch前你需要知道的一些东西">
+      <i class="fa fa-chevron-left"></i> 在学习PyTorch前你需要知道的一些东西
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/08/08/PyTorch%E7%A4%BE%E5%8C%BA/" rel="next" title="PyTorch社区探秘">
+      PyTorch社区探秘 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%89%E4%B9%8B%E7%9E%B3%E4%B8%93%E9%A2%98%EF%BC%9APyTorch%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97"><span class="nav-number">1.</span> <span class="nav-text">觉之瞳专题：PyTorch安装指南</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%B3%BB%E5%88%97%E6%96%87%E7%AB%A0%E7%9A%84%E7%9B%B8%E5%85%B3%E5%A3%B0%E6%98%8E"><span class="nav-number">1.1.</span> <span class="nav-text">关于本系列文章的相关声明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E4%BD%9C%E5%A3%B0%E6%98%8E"><span class="nav-number">1.1.1.</span> <span class="nav-text">创作声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B4%B9%E6%9B%BC%E5%AD%A6%E4%B9%A0%E6%B3%95%E5%A3%B0%E6%98%8E"><span class="nav-number">1.1.2.</span> <span class="nav-text">费曼学习法声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%88%9B%E5%A3%B0%E6%98%8E"><span class="nav-number">1.1.3.</span> <span class="nav-text">原创声明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A6%96%E5%85%88%EF%BC%8C%E6%88%91%E4%BB%AC%E9%9C%80%E8%A6%81%E7%BC%95%E4%B8%80%E7%BC%95PyTorch%E7%9A%84%E4%BE%9D%E8%B5%96%E6%83%85%E5%86%B5%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">首先，我们需要缕一缕PyTorch的依赖情况：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8ELibTorch%EF%BC%8CPip%EF%BC%8CCUDA%EF%BC%8CROCm%E4%B8%8EConda"><span class="nav-number">1.2.1.</span> <span class="nav-text">关于LibTorch，Pip，CUDA，ROCm与Conda</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#LibTorch"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">LibTorch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Pip"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">Pip</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Conda"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">Conda</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CUDA"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">CUDA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ROCm"><span class="nav-number">1.2.1.5.</span> <span class="nav-text">ROCm</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux"><span class="nav-number">1.2.2.</span> <span class="nav-text">Linux</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E5%87%86%E5%A4%87"><span class="nav-number">1.3.</span> <span class="nav-text">前置准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%83%85%E5%86%B5"><span class="nav-number">1.3.1.</span> <span class="nav-text">检查操作系统的情况</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%96%B9%E6%B3%95"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">一些小方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE%E6%83%85%E5%86%B5"><span class="nav-number">1.3.2.</span> <span class="nav-text">检查显卡配置情况</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%82%B9%E5%87%BB%E5%BC%8F"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">点击式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E5%BC%8F"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">命令式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%B8%80%E7%B1%BBPyTorch%E5%89%8D%E7%AB%AF"><span class="nav-number">1.3.3.</span> <span class="nav-text">安装一类PyTorch前端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%85%B6%E4%BB%96%E5%AE%98%E7%BD%91%E8%AF%B4%E6%98%8E%E7%9A%84%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.4.</span> <span class="nav-text">安装其他官网说明的相关配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%B0%E5%9C%A8%E6%98%AF%EF%BC%8C%E5%AE%89%E8%A3%85%E6%97%B6%E9%97%B4%EF%BC%81"><span class="nav-number">1.4.</span> <span class="nav-text">现在是，安装时间！</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E7%BB%86%E8%8A%82"><span class="nav-number">1.5.</span> <span class="nav-text">关于安装过程中的一些细节</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFdocker%EF%BC%9F"><span class="nav-number">1.5.1.</span> <span class="nav-text">什么是docker？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E5%88%92%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">1.5.2.</span> <span class="nav-text">计划的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%92%88%E5%AF%B9Linux-conda-%E6%96%B9%E6%B3%95%E5%AE%89%E8%A3%85%E7%9A%84PyTorch"><span class="nav-number">1.5.3.</span> <span class="nav-text">针对Linux conda 方法安装的PyTorch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%92%88%E5%AF%B9Linux-pip%E6%96%B9%E6%B3%95%E5%AE%89%E8%A3%85%E7%9A%84PyTorch"><span class="nav-number">1.5.4.</span> <span class="nav-text">针对Linux pip方法安装的PyTorch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E5%8F%AF%E8%A7%86%E5%8C%96-%E4%BA%BA%E5%B7%A5%E5%8E%BB%E6%8E%89%E4%BA%86pipdeptree"><span class="nav-number">1.5.5.</span> <span class="nav-text">依赖可视化(人工去掉了pipdeptree)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CUDA%E7%89%88%E6%9C%AC%EF%BC%88pip%EF%BC%89"><span class="nav-number">1.5.5.1.</span> <span class="nav-text">CUDA版本（pip）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CUDA%E7%89%88%E6%9C%AC%EF%BC%88conda%EF%BC%89"><span class="nav-number">1.5.5.2.</span> <span class="nav-text">CUDA版本（conda）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ROCm%E7%89%88%E6%9C%AC%EF%BC%88%E4%BB%85pip%EF%BC%89"><span class="nav-number">1.5.5.3.</span> <span class="nav-text">ROCm版本（仅pip）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CPU%E7%89%88%E6%9C%AC%EF%BC%88pip%EF%BC%89"><span class="nav-number">1.5.5.4.</span> <span class="nav-text">CPU版本（pip）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CPU%E7%89%88%E6%9C%AC%EF%BC%88Conda%EF%BC%89"><span class="nav-number">1.5.5.5.</span> <span class="nav-text">CPU版本（Conda）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E5%88%86%E6%9E%90%E6%97%B6%E9%97%B4%E5%88%B0%EF%BC%81"><span class="nav-number">1.5.6.</span> <span class="nav-text">依赖分析时间到！</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pip-CPU%E5%88%86%E6%94%AF%E6%8B%86%E8%A7%A3"><span class="nav-number">1.5.6.1.</span> <span class="nav-text">pip CPU分支拆解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#conda-CPU%E5%88%86%E6%94%AF%E6%8B%86%E8%A7%A3"><span class="nav-number">1.5.6.2.</span> <span class="nav-text">conda CPU分支拆解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CUDA-ROCm%E7%89%88%E6%9C%AC%E8%81%94%E5%90%88%E6%8B%86%E8%A7%A3"><span class="nav-number">1.5.6.3.</span> <span class="nav-text">CUDA ROCm版本联合拆解</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BE%9D%E8%B5%96%E8%83%BD%E5%A4%9F%E7%9F%A5%E9%81%93%E7%9A%84%E4%B8%9C%E8%A5%BF"><span class="nav-number">1.6.</span> <span class="nav-text">从安装与依赖能够知道的东西</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">万年学习的小伞君</p>
+  <div class="site-description" itemprop="description">个人知识分享网站！内容包含计算机，数学，物理等个人感兴趣的领域，欢迎各位大佬前来参观。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/SatoriEye" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;SatoriEye" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:lanjiayi_official@163.com" title="E-Mail → mailto:lanjiayi_official@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">万年学习的小伞君</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div> -->
+<script type="text/javascript" src="/js/click-live.js" />
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
